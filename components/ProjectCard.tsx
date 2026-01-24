@@ -44,10 +44,10 @@ export default function ProjectCard({
         transition={{ duration: 0.2 }}
       >
         <div
-          className={`h-full flex flex-col group relative border border-white/10 bg-white/5 dark:bg-white/5 backdrop-blur-md transition-all duration-500 p-6 ${isDemo ? 'cursor-default' : 'cursor-pointer hover:border-cyan-500/50 dark:hover:border-cyan-400/50 hover:bg-white/10 dark:hover:bg-white/10 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(6,182,212,0.3)]'} ${className}`}
+          className={`h-full flex flex-col group relative border border-white/10 bg-white/5 dark:bg-white/5 backdrop-blur-md transition-all duration-500 p-5 sm:p-6 ${isDemo ? 'cursor-default' : 'cursor-pointer hover:border-cyan-500/50 dark:hover:border-cyan-400/50 hover:bg-white/10 dark:hover:bg-white/10 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(6,182,212,0.3)]'} ${className}`}
           onClick={handleClick}
         >
-          <div className="relative w-full h-48 md:h-64 mb-6 overflow-hidden">
+          <div className="relative w-full h-48 sm:h-56 md:h-64 mb-5 sm:mb-6 overflow-hidden">
             <ImageWithFallback
               src={project.image}
               alt={project.title}
@@ -56,7 +56,7 @@ export default function ProjectCard({
               priority={project.size === 'xlarge'}
             />
             <div className={`absolute inset-0 bg-gradient-to-t from-black/60 to-transparent ${isDemo ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} transition-opacity duration-300 flex items-end p-4`}>
-              <span className="text-white font-semibold">
+              <span className="text-white text-sm sm:text-base font-semibold">
                 {isDemo ? 'Concept demo • Coming soon' : 'Click to view →'}
               </span>
             </div>

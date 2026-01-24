@@ -27,7 +27,7 @@ export default function AmazonProject({ className = '' }: AmazonProjectProps) {
 
   return (
     <div
-      className={`glass-card rounded-2xl border border-white/10 overflow-hidden p-6 md:p-8 flex flex-col gap-6 ${className}`}
+      className={`glass-card rounded-2xl border border-white/10 overflow-hidden p-5 sm:p-6 md:p-8 flex flex-col gap-6 ${className}`}
     >
       <div>
         <p className="text-xs md:text-sm font-mono uppercase tracking-[0.2em] text-cyan-400/90 mb-3">
@@ -56,7 +56,7 @@ export default function AmazonProject({ className = '' }: AmazonProjectProps) {
       </div>
 
       <div className="glass-card rounded-2xl border border-white/10 overflow-hidden group relative">
-        <div className="relative h-[300px] w-full overflow-hidden">
+        <div className="relative h-52 sm:h-60 md:h-72 lg:h-[300px] w-full overflow-hidden">
           {banners.map((banner, index) => (
             <Image
               key={banner.src}

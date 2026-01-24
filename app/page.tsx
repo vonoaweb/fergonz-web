@@ -8,7 +8,6 @@ import BentoGrid from '@/components/BentoGrid';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectModal from '@/components/ProjectModal';
 import GlassSphere from '@/components/GlassSphere';
-import GhostCursor from '@/components/GhostCursor';
 import LiquidEtherBackground from '@/components/LiquidEtherBackground';
 import BlurText from '@/components/BlurText';
 import { useProjectModal } from '@/lib/useProjectModal';
@@ -66,9 +65,6 @@ export default function Home() {
         autoResumeDelay={4000}
         autoRampDuration={0.6}
       />
-      
-      {/* Ghost Cursor */}
-      <GhostCursor reducedEffects />
       
       {/* Glass Sphere Background */}
       <GlassSphere />

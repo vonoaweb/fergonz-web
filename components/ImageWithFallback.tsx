@@ -167,7 +167,6 @@ export default function ImageWithFallback({
           sizes={sizes || '100vw'}
           quality={80}
           decoding="async"
-          unoptimized={false}
         />
       </>
     );
@@ -191,7 +190,6 @@ export default function ImageWithFallback({
         sizes={sizes}
         quality={80}
         decoding="async"
-        unoptimized={false}
       />
     </>
   );

@@ -177,7 +177,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
               </button>
 
               {/* Content */}
-              <div className="p-10 md:p-16 lg:p-20 xl:p-24">
+              <div className="p-6 sm:p-8 md:p-12 lg:p-16 xl:p-20">
                 {/* Single Image (if no gallery) */}
                 {(!project.images || project.images.length === 0) && (
                   <div className="relative w-full h-64 md:h-80 lg:h-96 mb-16 md:mb-20 overflow-hidden rounded-2xl">
@@ -192,36 +192,36 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                 )}
 
                 {/* Title & Role */}
-                <div className="mb-16 md:mb-20">
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold mb-6 md:mb-8 text-gray-900 dark:text-white tracking-tight leading-[0.95]">
+                <div className="mb-12 sm:mb-16 md:mb-20">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold mb-5 md:mb-8 text-gray-900 dark:text-white tracking-tight leading-[0.95]">
                     {project.title}
                   </h2>
-                  <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-white/50 font-mono uppercase tracking-widest">
+                  <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-gray-600 dark:text-white/50 font-mono uppercase tracking-widest">
                     {project.role}
                   </p>
                 </div>
 
                 {/* Problem */}
-                <div className="mb-16 md:mb-20">
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-8 md:mb-10 text-gray-900 dark:text-white tracking-tight flex items-center">
+                <div className="mb-12 sm:mb-16 md:mb-20">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-6 md:mb-10 text-gray-900 dark:text-white tracking-tight flex items-center">
                     <span className="w-2 h-2 rounded-full bg-red-500 mr-4"></span>
                     The Challenge
                   </h3>
-                  <div className="border-l-4 border-red-500/40 pl-8 md:pl-10">
-                    <p className="text-base md:text-lg lg:text-xl text-gray-700 dark:text-white/70 leading-relaxed font-light">
+                  <div className="border-l-4 border-red-500/40 pl-6 md:pl-10">
+                    <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 dark:text-white/70 leading-relaxed font-light">
                       {project.problem}
                     </p>
                   </div>
                 </div>
 
                 {/* Solution */}
-                <div className="mb-16 md:mb-20">
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-8 md:mb-10 text-gray-900 dark:text-white tracking-tight flex items-center">
+                <div className="mb-12 sm:mb-16 md:mb-20">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-6 md:mb-10 text-gray-900 dark:text-white tracking-tight flex items-center">
                     <span className="w-2 h-2 rounded-full bg-blue-500 mr-4"></span>
                     The Solution
                   </h3>
-                  <div className="border-l-4 border-blue-500/40 pl-8 md:pl-10">
-                    <p className="text-base md:text-lg lg:text-xl text-gray-700 dark:text-white/70 leading-relaxed font-light">
+                  <div className="border-l-4 border-blue-500/40 pl-6 md:pl-10">
+                    <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 dark:text-white/70 leading-relaxed font-light">
                       {project.solution}
                     </p>
                   </div>
@@ -252,13 +252,13 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 
                 {/* Results */}
                 {project.results && (
-                  <div className="mb-12 md:mb-16">
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-8 md:mb-10 text-gray-900 dark:text-white tracking-tight flex items-center">
+                  <div className="mb-10 sm:mb-12 md:mb-16">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-6 md:mb-10 text-gray-900 dark:text-white tracking-tight flex items-center">
                       <span className="w-2 h-2 rounded-full bg-green-500 mr-4"></span>
                       Results
                     </h3>
-                    <div className="border-l-4 border-green-500/40 pl-8 md:pl-10">
-                      <p className="text-base md:text-lg lg:text-xl text-gray-800 dark:text-white/80 leading-relaxed font-light">
+                    <div className="border-l-4 border-green-500/40 pl-6 md:pl-10">
+                      <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-800 dark:text-white/80 leading-relaxed font-light">
                         {project.results}
                       </p>
                     </div>
@@ -267,8 +267,8 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 
                 {/* Image Gallery - At the bottom */}
                 {project.images && project.images.length > 0 && (
-                  <div className="mt-16 md:mt-20 pt-12 md:pt-16 border-t border-gray-200 dark:border-white/10">
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-8 md:mb-10 text-gray-900 dark:text-white tracking-tight flex items-center">
+                  <div className="mt-12 sm:mt-16 md:mt-20 pt-10 md:pt-16 border-t border-gray-200 dark:border-white/10">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-6 md:mb-10 text-gray-900 dark:text-white tracking-tight flex items-center">
                       <span className="w-2 h-2 rounded-full bg-cyan-500 mr-4"></span>
                       Project Gallery
                     </h3>
@@ -280,7 +280,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.4, delay: index * 0.1 }}
-                          className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden rounded-2xl cursor-pointer group"
+                          className="relative w-full h-56 sm:h-64 md:h-80 lg:h-96 overflow-hidden rounded-2xl cursor-pointer group"
                           onClick={() => openLightbox(img, index)}
                         >
                           <ImageWithFallback
