@@ -235,8 +235,8 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                       Before & After Comparison
                     </h3>
                     <InsuranceComparison
-                      beforeImage="/images/seguros_before.webp"
-                      afterImage="/images/Seguros_after.webp"
+                      beforeImage="/images/pantalla_5.webp"
+                      afterImage="/images/pantalla_6.webp"
                       beforeLabel="Legacy Interface (2016)"
                       afterLabel="My Redesign (2025)"
                     />
