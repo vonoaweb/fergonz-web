@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 export default function ThemeSwitcher() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function ThemeSwitcher() {
       setTheme(savedTheme);
       document.documentElement.classList.toggle('dark', savedTheme === 'dark');
     } else {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('dark');
     }
   }, []);
 
