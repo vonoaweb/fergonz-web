@@ -282,7 +282,11 @@ export default function Home() {
               Let's Work Together
             </h2>
             <div className="border border-white/10 dark:border-white/10 bg-white/5 dark:bg-white/5 backdrop-blur-md p-8 md:p-12">
-              <form className="space-y-8">
+              <form
+                className="space-y-8"
+                action="https://formspree.io/f/xeeljrpo"
+                method="POST"
+              >
                 <div>
                   <label
                     htmlFor="name"
