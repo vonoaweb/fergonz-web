@@ -86,15 +86,11 @@ export default function Home() {
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               className="text-center"
             >
-              {/* Large Title with Blur Effect - 2026 Trend: Extra Large Typography */}
+              {/* Large Title */}
               <div className="mb-16 md:mb-20 text-center flex justify-center items-center">
-                <BlurText
-                  text="FerGonz"
-                  delay={60}
-                  animateBy="chars"
-                  direction="top"
-                  className="text-[5rem] md:text-[7rem] lg:text-[9rem] xl:text-[11rem] font-display font-bold text-gray-900 dark:text-white tracking-[-0.03em] leading-[0.9] glow-effect"
-                />
+                <h1 className="text-[5rem] md:text-[7rem] lg:text-[9rem] xl:text-[11rem] font-display font-bold text-gray-900 dark:text-white tracking-[-0.03em] leading-[0.9] glow-effect">
+                  FerGonz
+                </h1>
               </div>
               
               {/* Subtitle - 2026 Trend: Bold and Expressive */}
