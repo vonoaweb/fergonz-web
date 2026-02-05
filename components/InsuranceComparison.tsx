@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { GripVertical } from 'lucide-react';
@@ -21,39 +21,60 @@ export default function InsuranceComparison({
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+  const pendingPosition = useRef<number | null>(null);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !containerRef.current) return;
-    
+  const updateFromClientX = useCallback((clientX: number) => {
+    if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const percentage = (x / rect.width) * 100;
-    setSliderPosition(Math.max(0, Math.min(100, percentage)));
+    const x = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    pendingPosition.current = percentage;
+
+    if (rafRef.current !== null) return;
+    rafRef.current = window.requestAnimationFrame(() => {
+      if (pendingPosition.current !== null) {
+        setSliderPosition(pendingPosition.current);
+      }
+      pendingPosition.current = null;
+      rafRef.current = null;
+    });
+  }, []);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    updateFromClientX(e.clientX);
+    e.currentTarget.setPointerCapture(e.pointerId);
   };
 
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!isDragging || !containerRef.current) return;
-    
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = e.touches[0].clientX - rect.left;
-    const percentage = (x / rect.width) * 100;
-    setSliderPosition(Math.max(0, Math.min(100, percentage)));
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging && e.buttons !== 1 && e.pointerType !== 'touch') return;
+    updateFromClientX(e.clientX);
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    updateFromClientX(e.clientX);
   };
 
   useEffect(() => {
-    const handleMouseUp = () => setIsDragging(false);
-    const handleTouchEnd = () => setIsDragging(false);
-
+    const handlePointerUp = () => setIsDragging(false);
     if (isDragging) {
-      window.addEventListener('mouseup', handleMouseUp);
-      window.addEventListener('touchend', handleTouchEnd);
+      window.addEventListener('pointerup', handlePointerUp);
+      window.addEventListener('pointercancel', handlePointerUp);
     }
-
     return () => {
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointercancel', handlePointerUp);
     };
   }, [isDragging]);
+
+  useEffect(() => {
+    return () => {
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="w-full my-12 md:my-16">
@@ -66,11 +87,10 @@ export default function InsuranceComparison({
       >
         <div
           ref={containerRef}
-          className="relative w-full h-[500px] md:h-[700px] lg:h-[800px] cursor-col-resize select-none"
-          onMouseMove={handleMouseMove}
-          onMouseDown={() => setIsDragging(true)}
-          onTouchMove={handleTouchMove}
-          onTouchStart={() => setIsDragging(true)}
+          className="relative w-full h-[500px] md:h-[700px] lg:h-[800px] cursor-col-resize select-none touch-none"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onClick={handleClick}
         >
           {/* After Image (Background - Right Side - Always visible) */}
           <div className="absolute inset-0 w-full h-full">
@@ -112,7 +132,7 @@ export default function InsuranceComparison({
           >
             {/* Handle Circle */}
             <motion.div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-white dark:bg-cyan-400 rounded-full border-4 border-white dark:border-cyan-400 shadow-2xl flex items-center justify-center group"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white dark:bg-cyan-400 rounded-full border-4 border-white dark:border-cyan-400 shadow-2xl flex items-center justify-center group"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -122,7 +142,7 @@ export default function InsuranceComparison({
 
           {/* Before Label (Left Side) */}
           <motion.div
-            className="absolute top-6 left-6 px-5 py-3 bg-black/70 dark:bg-black/80 backdrop-blur-md rounded-xl border border-white/20 dark:border-white/20 shadow-lg z-10"
+            className="absolute top-6 left-6 px-5 py-3 bg-black/70 dark:bg-black/80 backdrop-blur-md rounded-xl border border-white/20 dark:border-white/20 shadow-lg z-10 pointer-events-none"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -135,7 +155,7 @@ export default function InsuranceComparison({
 
           {/* After Label (Right Side) */}
           <motion.div
-            className="absolute top-6 right-6 px-5 py-3 bg-black/70 dark:bg-black/80 backdrop-blur-md rounded-xl border border-white/20 dark:border-white/20 shadow-lg z-10"
+            className="absolute top-6 right-6 px-5 py-3 bg-black/70 dark:bg-black/80 backdrop-blur-md rounded-xl border border-white/20 dark:border-white/20 shadow-lg z-10 pointer-events-none"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -148,7 +168,7 @@ export default function InsuranceComparison({
 
           {/* Instruction Text (Bottom Center) */}
           <motion.div
-            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-black/50 dark:bg-black/60 backdrop-blur-sm rounded-lg border border-white/10 dark:border-white/10 z-10"
+            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-black/50 dark:bg-black/60 backdrop-blur-sm rounded-lg border border-white/10 dark:border-white/10 z-10 pointer-events-none"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

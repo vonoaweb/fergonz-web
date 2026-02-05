@@ -178,18 +178,17 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 
               {/* Content */}
               <div className="p-6 sm:p-8 md:p-12 lg:p-16 xl:p-20">
-                {/* Single Image (if no gallery) */}
-                {(!project.images || project.images.length === 0) && (
-                  <div className="relative w-full h-64 md:h-80 lg:h-96 mb-16 md:mb-20 overflow-hidden rounded-2xl">
-                    <ImageWithFallback
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-                    />
-                  </div>
-                )}
+                {/* Header image */}
+                <div className="relative w-full h-64 md:h-80 lg:h-96 mb-12 sm:mb-16 md:mb-20 overflow-hidden rounded-2xl">
+                  <ImageWithFallback
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                    priority
+                  />
+                </div>
 
                 {/* Title & Role */}
                 <div className="mb-12 sm:mb-16 md:mb-20">
@@ -230,13 +229,21 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                 {/* Insurance Comparison - Only for Insurance Transformation */}
                 {project.title.toLowerCase().includes('insurance') && (
                   <div className="mb-16 md:mb-20 w-full">
+                    <div className="mb-6 md:mb-8">
+                      <h4 className="text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-white">
+                        Insurance Transformation – Legacy to Modern UX Redesign
+                      </h4>
+                      <p className="text-sm md:text-base text-gray-600 dark:text-white/60 font-mono uppercase tracking-widest">
+                        UX/UI Designer & Product Designer
+                      </p>
+                    </div>
                     <h3 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-8 md:mb-10 text-gray-900 dark:text-white tracking-tight flex items-center">
                       <span className="w-2 h-2 rounded-full bg-purple-500 mr-4"></span>
                       Before & After Comparison
                     </h3>
                     <InsuranceComparison
-                      beforeImage="/images/pantalla_5.webp"
-                      afterImage="/images/pantalla_6.webp"
+                      beforeImage="/images/seguros_before.jpg"
+                      afterImage="/images/seguros_after.jpg"
                       beforeLabel="Legacy Interface (2016)"
                       afterLabel="My Redesign (2025)"
                     />

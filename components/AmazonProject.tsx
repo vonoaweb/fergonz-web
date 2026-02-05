@@ -65,7 +65,7 @@ export default function AmazonProject({ className = '' }: AmazonProjectProps) {
               fill
               className={`object-cover transition-all duration-700 ease-out group-hover:scale-105 ${
                 index === activeIndex ? 'opacity-100' : 'opacity-0'
-              } [object-position:0%_100%]`}
+              } [object-position:50%_100%]`}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
               priority={index === 0}
             />
