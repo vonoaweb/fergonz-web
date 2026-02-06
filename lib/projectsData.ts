@@ -24,7 +24,7 @@ export const projects: Project[] = [
       '/images/Seguros_wireframe_v4.jpg',
     ],
     link: '#',
-    size: 'medium',
+    size: 'small',
     problem:
       'The legacy insurance website (K&K) suffered from outdated design, poor user experience, and low conversion rates. Users struggled with complex forms, unclear navigation, and a lack of transparency in policy information. The platform failed to meet modern user expectations and was losing potential customers to competitors with better digital experiences.',
     solution:
@@ -44,7 +44,7 @@ export const projects: Project[] = [
       '/images/paypal-project-4.webp',
     ],
     link: '#',
-    size: 'medium',
+    size: 'small',
     problem:
       'PayPal required a unified user experience across its global markets while respecting unique regional requirements. The main challenge was to standardize the visual interface (UI) for the EMEA region (UK, France, Spain) without breaking the Global Design System, while simultaneously adapting content for: local currencies (seamlessly integrating Pounds £ and Euros €), regional products (highlighting specific credit offers like "Pay in 3" in UK vs. "Paiement en 4X" in France), and legal compliance (strict adherence to regulations such as FCA - Financial Conduct Authority mandates in the UK).',
     solution:
