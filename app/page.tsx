@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import { motion } from 'framer-motion';
 import GlassCard from '@/components/GlassCard';
@@ -44,6 +44,29 @@ const services = [
 
 export default function Home() {
   const { selectedProject, isOpen, openModal, closeModal } = useProjectModal();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleContactSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isSubmitting || isSubmitted) return;
+    setIsSubmitting(true);
+    try {
+      const form = event.currentTarget;
+      const formData = new FormData(form);
+      const response = await fetch('https://formspree.io/f/xeeljrpo', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData,
+      });
+      if (response.ok) {
+        form.reset();
+        setIsSubmitted(true);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <main className="min-h-screen relative">
@@ -282,68 +305,76 @@ export default function Home() {
               Let's Work Together
             </h2>
             <div className="border border-white/10 dark:border-white/10 bg-white/5 dark:bg-white/5 backdrop-blur-md p-8 md:p-12">
-              <form
-                className="space-y-8"
-                action="https://formspree.io/f/xeeljrpo"
-                method="POST"
-              >
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-xs font-mono uppercase tracking-widest mb-3 text-gray-600 dark:text-white/60"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    className="w-full px-4 py-4 bg-white/80 dark:bg-white/5 border border-white/10 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/30 focus:outline-none focus:border-cyan-400/50 dark:focus:border-cyan-400/50 focus:bg-white/90 dark:focus:bg-white/10 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all duration-300 font-light"
-                    placeholder="Your name"
-                  />
+              {isSubmitted ? (
+                <div className="py-10 text-center">
+                  <p className="text-2xl md:text-3xl font-display font-semibold text-gray-900 dark:text-white">
+                    Enviado
+                  </p>
+                  <p className="mt-4 text-sm md:text-base text-gray-600 dark:text-white/60 font-mono uppercase tracking-widest">
+                    Gracias por tu mensaje
+                  </p>
                 </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-xs font-mono uppercase tracking-widest mb-3 text-gray-600 dark:text-white/60"
+              ) : (
+                <form className="space-y-8" onSubmit={handleContactSubmit}>
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-xs font-mono uppercase tracking-widest mb-3 text-gray-600 dark:text-white/60"
+                    >
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      className="w-full px-4 py-4 bg-white/80 dark:bg-white/5 border border-white/10 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/30 focus:outline-none focus:border-cyan-400/50 dark:focus:border-cyan-400/50 focus:bg-white/90 dark:focus:bg-white/10 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all duration-300 font-light"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-xs font-mono uppercase tracking-widest mb-3 text-gray-600 dark:text-white/60"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      className="w-full px-4 py-4 bg-white/80 dark:bg-white/5 border border-white/10 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/30 focus:outline-none focus:border-cyan-400/50 dark:focus:border-cyan-400/50 focus:bg-white/90 dark:focus:bg-white/10 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all duration-300 font-light"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="block text-xs font-mono uppercase tracking-widest mb-3 text-gray-600 dark:text-white/60"
+                    >
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={5}
+                      required
+                      className="w-full px-4 py-4 bg-white/80 dark:bg-white/5 border border-white/10 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/30 focus:outline-none focus:border-cyan-400/50 dark:focus:border-cyan-400/50 focus:bg-white/90 dark:focus:bg-white/10 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] resize-none transition-all duration-300 font-light"
+                      placeholder="Tell me about your project..."
+                    />
+                  </div>
+                  <motion.button
+                    type="submit"
+                    whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                    whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                    disabled={isSubmitting}
+                    className="w-full px-8 py-5 bg-gray-900 dark:bg-white text-white dark:text-black font-mono text-sm uppercase tracking-widest hover:bg-gray-800 dark:hover:bg-white/90 hover:border-cyan-400/50 dark:hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] border border-white/10 dark:border-white/20 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="w-full px-4 py-4 bg-white/80 dark:bg-white/5 border border-white/10 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/30 focus:outline-none focus:border-cyan-400/50 dark:focus:border-cyan-400/50 focus:bg-white/90 dark:focus:bg-white/10 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] transition-all duration-300 font-light"
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-xs font-mono uppercase tracking-widest mb-3 text-gray-600 dark:text-white/60"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    required
-                    className="w-full px-4 py-4 bg-white/80 dark:bg-white/5 border border-white/10 dark:border-white/10 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-white/30 focus:outline-none focus:border-cyan-400/50 dark:focus:border-cyan-400/50 focus:bg-white/90 dark:focus:bg-white/10 focus:shadow-[0_0_15px_rgba(6,182,212,0.2)] resize-none transition-all duration-300 font-light"
-                    placeholder="Tell me about your project..."
-                  />
-                </div>
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full px-8 py-5 bg-gray-900 dark:bg-white text-white dark:text-black font-mono text-sm uppercase tracking-widest hover:bg-gray-800 dark:hover:bg-white/90 hover:border-cyan-400/50 dark:hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] border border-white/10 dark:border-white/20 transition-all duration-300"
-                >
-                  Send Message
-                </motion.button>
-              </form>
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                  </motion.button>
+                </form>
+              )}
 
               {/* Social Links */}
               <div className="mt-12 pt-8 border-t border-gray-300 dark:border-white/10">
