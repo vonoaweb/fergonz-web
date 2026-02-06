@@ -14,6 +14,26 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 7,
+    title: 'PayPal EMEA – UI Standardization & Localization',
+    role: 'UI/UX Designer & Localization Specialist',
+    image: '/images/paypal-project.webp',
+    images: [
+      '/images/paypal-project-1.webp',
+      '/images/paypal-project-2.webp',
+      '/images/paypal-project-3.webp',
+      '/images/paypal-project-4.webp',
+    ],
+    link: '#',
+    size: 'medium',
+    problem:
+      'PayPal required a unified user experience across its global markets while respecting unique regional requirements. The main challenge was to standardize the visual interface (UI) for the EMEA region (UK, France, Spain) without breaking the Global Design System, while simultaneously adapting content for: local currencies (seamlessly integrating Pounds £ and Euros €), regional products (highlighting specific credit offers like "Pay in 3" in UK vs. "Paiement en 4X" in France), and legal compliance (strict adherence to regulations such as FCA - Financial Conduct Authority mandates in the UK).',
+    solution:
+      'I worked on UI adaptation using Figma, leveraging Master Components to maintain brand integrity across all localized pages. Visual Standardization: I ensured that typography, color palettes (PayPal Blue & Gold), and iconography remained consistent with global brand guidelines. Responsive Content: Using Figma\'s Auto Layout, I managed text expansion challenges typical of multi-language support (e.g., French/Spanish copy requiring more space than English) to prevent layout breakage. Production Oversight: I collaborated with engineering teams to ensure the final live build matched design specifications pixel-for-pixel. Tools: Figma (Auto Layout, Component Management). Regions: UK, France, Spain, Mexico.',
+    results:
+      'The project resulted in the successful launch of fully localized landing pages that maintain 100% visual consistency with the US global brand while meeting all local legal and commercial requirements.',
+  },
+  {
     id: 1,
     title: 'Insurance Transformation – Legacy to Modern UX Redesign',
     role: 'UX/UI Designer & Product Designer',
@@ -31,26 +51,6 @@ export const projects: Project[] = [
       'I conducted comprehensive UX research including user interviews, persona development, and competitive analysis. Redesigned the entire platform with a modern, user-centered approach focusing on clarity, transparency, and ease of use. Implemented a clean, intuitive interface with simplified forms, clear policy information, and improved mobile responsiveness. Created a visual comparison system to showcase the transformation from legacy to modern design.',
     results:
       'The redesign resulted in a dramatic improvement in user experience, with increased engagement, higher conversion rates, and positive user feedback. The new design successfully modernized the insurance platform while maintaining trust and credibility.',
-  },
-  {
-    id: 7,
-    title: 'PayPal EMEA – UI Standardization & Localization',
-    role: 'UI/UX Designer & Localization Specialist',
-    image: '/images/paypal-project.webp',
-    images: [
-      '/images/paypal-project-1.webp',
-      '/images/paypal-project-2.webp',
-      '/images/paypal-project-3.webp',
-      '/images/paypal-project-4.webp',
-    ],
-    link: '#',
-    size: 'small',
-    problem:
-      'PayPal required a unified user experience across its global markets while respecting unique regional requirements. The main challenge was to standardize the visual interface (UI) for the EMEA region (UK, France, Spain) without breaking the Global Design System, while simultaneously adapting content for: local currencies (seamlessly integrating Pounds £ and Euros €), regional products (highlighting specific credit offers like "Pay in 3" in UK vs. "Paiement en 4X" in France), and legal compliance (strict adherence to regulations such as FCA - Financial Conduct Authority mandates in the UK).',
-    solution:
-      'I worked on UI adaptation using Figma, leveraging Master Components to maintain brand integrity across all localized pages. Visual Standardization: I ensured that typography, color palettes (PayPal Blue & Gold), and iconography remained consistent with global brand guidelines. Responsive Content: Using Figma\'s Auto Layout, I managed text expansion challenges typical of multi-language support (e.g., French/Spanish copy requiring more space than English) to prevent layout breakage. Production Oversight: I collaborated with engineering teams to ensure the final live build matched design specifications pixel-for-pixel. Tools: Figma (Auto Layout, Component Management). Regions: UK, France, Spain, Mexico.',
-    results:
-      'The project resulted in the successful launch of fully localized landing pages that maintain 100% visual consistency with the US global brand while meeting all local legal and commercial requirements.',
   },
   {
     id: 2,
