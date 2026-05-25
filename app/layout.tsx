@@ -23,9 +23,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Ferguson González | UX/UI Designer & Digital Product Developer',
-  description: 'UX/UI Designer with 10+ years of experience. Worked with Amazon, PayPal, and Urrea. Based in Guadalajara, Mexico.',
-  keywords: ['UX Designer', 'UI Designer', 'Product Designer', 'Frontend Developer', 'Guadalajara', 'Ferguson González'],
+  title: 'Ferguson González | Senior UX/UI Designer — 10+ Years of Digital Experience',
+  description: 'Senior UX/UI Designer with 10+ years transforming business goals into seamless digital experiences. Worked with Amazon, PayPal, and Grupo Urrea. Based in Guadalajara, Mexico.',
+  keywords: ['UX Designer', 'UI Designer', 'Product Designer', 'Frontend Developer', 'Guadalajara', 'Ferguson González', 'Web Design', 'E-commerce', 'React Native', 'WordPress', 'VonoaWeb'],
   authors: [{ name: 'Ferguson González' }],
   openGraph: {
     title: 'Ferguson González | UX/UI Designer & Developer',

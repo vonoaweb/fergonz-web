@@ -54,22 +54,24 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    title: 'E-commerce Platform',
-    role: 'UX/UI Designer',
+    title: 'Urrea Online – E-commerce for 10,000+ SKUs',
+    role: 'Digital Platforms Administrator & UX Designer',
     image: '/images/URREAONLINE.COM_Mesa_de_trabajo_1.webp',
     images: [
+      '/images/urr_1.webp',
       '/images/urr_2.webp',
+      '/images/urr_5.webp',
       '/images/urr_6.webp',
     ],
     link: '#',
     size: 'medium',
     isDemo: false,
     problem:
-      'As a Digital Platforms Administrator, I identified that the platform had a low conversion rate (1.2%) and users reported difficulty finding products. The design was outdated and not responsive, creating friction on mobile devices.',
+      'Grupo Urrea needed a unified e-commerce platform to manage 10,000+ SKUs across three tool brands (Urrea, Surtek, Lock). The existing platform had a low conversion rate (1.2%), users struggled to find products, and the design was outdated and not responsive — creating friction on mobile devices and slowing down bulk ordering for distributors.',
     solution:
-      'With my team, we redesigned the experience with a mobile-first approach. We implemented improved search with smart filters, clear categorization, and personalized recommendations. We also optimized visual hierarchy and calls-to-action to better guide purchase decisions.',
+      'Redesigned the complete e-commerce experience with a mobile-first approach on WooCommerce. Implemented advanced filtering and smart search across 10K+ products, tiered pricing for distributors, bulk ordering capabilities, and an internal operations dashboard. Optimized visual hierarchy and calls-to-action to better guide purchase decisions.',
     results:
-      'Conversion rate increased to 3.8%, time on site +45%, bounce rate -30%. Mobile sales increased by 120%.',
+      'Conversion rate increased to 3.8%, time on site +45%, bounce rate -30%. Mobile sales increased by 120%. Order processing time reduced by 60%.',
   },
   {
     id: 8,
@@ -117,10 +119,10 @@ export const projects: Project[] = [
     size: 'medium',
     isDemo: false,
     problem:
-      'Operations relied on isolated views and manual reports, which caused delays in decision-making and limited visibility into the real status of clients, orders, and operations.',
+      'A field service company relied on isolated views and manual reports, causing delays in decision-making and zero visibility into the real status of clients, orders, and operations. Report generation was entirely manual, consuming hours every week.',
     solution:
-      'With my team, we consolidated information into operational and client dashboards, prioritizing critical KPIs, alerts, and clear workflows. We standardized layouts and components to speed up maintenance and daily scanning.',
+      'Built a real-time operations management system with consolidated operational and client dashboards, prioritizing critical KPIs, automated alerts, and clear workflows. Created a client portal for self-service tracking and automated reporting pipelines that eliminated manual report generation.',
     results:
-      'Analysis time decreased, cross-team coordination improved, and a unified view of operational status was achieved.',
+      '100% digitized operations, 40% faster decision-making, and zero manual report hours per week. Cross-team coordination improved with a unified view of operational status.',
   },
 ];

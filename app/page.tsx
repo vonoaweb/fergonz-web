@@ -16,24 +16,24 @@ import AmazonProject from '@/components/AmazonProject';
 
 const services = [
   {
-    title: 'Product Design',
-    description: 'End-to-end product design from research to implementation',
-    icon: '🎨',
-  },
-  {
-    title: 'UI/UX Design',
-    description: 'Creating intuitive and beautiful user interfaces',
+    title: 'UX/UI Design',
+    description: 'User research, wireframing, prototyping, and high-fidelity interfaces that convert',
     icon: '✨',
   },
   {
-    title: 'Frontend Development',
-    description: 'Building responsive and performant web applications',
-    icon: '💻',
+    title: 'Web & E-commerce',
+    description: 'Custom websites and online stores built on WordPress, WooCommerce, and Next.js',
+    icon: '🛒',
   },
   {
-    title: 'Design Systems',
-    description: 'Creating scalable design systems and component libraries',
-    icon: '🔧',
+    title: 'Mobile Apps',
+    description: 'Native and cross-platform mobile applications with React Native',
+    icon: '📱',
+  },
+  {
+    title: 'Dashboards & Platforms',
+    description: 'Custom web applications, admin panels, and real-time operations dashboards',
+    icon: '📊',
   },
 ];
 
@@ -169,28 +169,31 @@ export default function Home() {
 
               <div className="space-y-8 md:space-y-10 text-xl md:text-2xl text-gray-700 dark:text-white/70 font-sans font-light leading-relaxed text-center max-w-4xl mx-auto">
                 <p>
-                  I&apos;m a UX/UI Designer with a passion for technology, constantly updated.
-                  My approach is aimed at solving projects in co-construction to find optimal
-                  and effective solutions. With over 10 years of experience across companies like
-                  Amazon, PayPal, Urrea, and Derevo, I bring ideas to life from concept to code.
+                  Senior UX/UI Designer with 10+ years transforming business goals into
+                  seamless digital experiences. I&apos;ve worked with companies like Amazon,
+                  PayPal, and Grupo Urrea — designing everything from high-conversion
+                  e-commerce platforms to real-time operations dashboards.
                 </p>
                 <p>
-                  My approach combines user research, strategic thinking, and technical
-                  execution to deliver products that are not only beautiful but also
-                  functional and scalable.
+                  Currently leading digital strategy at VonoaWeb, where I&apos;ve delivered
+                  20+ projects across web design, mobile apps, e-commerce, and custom platforms.
+                  My approach combines user research, strategic thinking, and hands-on
+                  development to deliver products that drive real business results.
                 </p>
               </div>
 
               <div className="mt-16 md:mt-20 flex flex-wrap gap-3 md:gap-4 justify-center">
                 {[
-                  'Product Design',
-                  'UI/UX Design',
-                  'Frontend Development',
-                  'React / Next.js',
-                  'TypeScript',
+                  'UX/UI Design',
+                  'User Research',
                   'Figma',
-                  'Design Systems',
+                  'React / Next.js',
+                  'React Native',
+                  'WordPress',
+                  'WooCommerce',
                   'Adobe Suite',
+                  'Design Systems',
+                  'SEO',
                 ].map((skill, index) => (
                   <motion.div
                     key={skill}

@@ -30,6 +30,13 @@ export const certificationsData: Certification[] = [
     type: "Course"
   },
   {
+    title: "Google Dynamic UI Creation for Websites",
+    issuer: "Google / Coursera",
+    date: "Dec 2022",
+    link: null,
+    type: "Course"
+  },
+  {
     title: "Digital Marketing Fundamentals",
     issuer: "Google Actívate",
     date: "Feb 2022",
@@ -49,5 +56,19 @@ export const certificationsData: Certification[] = [
     date: "Apr 2020",
     link: null,
     credentialId: "TAE ZS5 JVZ"
+  },
+  {
+    title: "WordPress & Divi Advanced Course",
+    issuer: "Udemy",
+    date: "Jun 2019",
+    link: null,
+    type: "Course"
+  },
+  {
+    title: "Web Design Diploma",
+    issuer: "eduMac",
+    date: "Oct 2018",
+    link: null,
+    type: "Diploma"
   }
 ];

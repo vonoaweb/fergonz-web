@@ -25,4 +25,9 @@ export const educationData: Education[] = [
     institution: "ITESO",
     year: "2016",
   },
+  {
+    title: "Human Development Certificate",
+    institution: "UNIVA",
+    year: "2009",
+  },
 ];
