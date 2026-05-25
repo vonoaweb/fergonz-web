@@ -42,7 +42,7 @@ export default function GlassSphere() {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none z-[1] overflow-hidden"
+      className="fixed inset-0 pointer-events-none z-[1] overflow-hidden opacity-40 dark:opacity-100"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >

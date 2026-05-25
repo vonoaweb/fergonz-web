@@ -6,22 +6,22 @@ export interface Education {
 
 export const educationData: Education[] = [
   {
-    title: "Licenciatura en Diseño Integral",
+    title: "Bachelor's in Integral Design",
     institution: "ITESO",
     year: "2010 - 2015",
   },
   {
-    title: "Técnico en Diseño Gráfico",
+    title: "Graphic Design Technician",
     institution: "UNIVA",
     year: "2006 - 2009",
   },
   {
-    title: "Diploma en Programación Básica",
+    title: "Diploma in Basic Programming",
     institution: "ITESO",
     year: "2017",
   },
   {
-    title: "Diploma en Manejo y Gestión de Redes Sociales",
+    title: "Diploma in Social Media Management",
     institution: "ITESO",
     year: "2016",
   },

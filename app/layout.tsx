@@ -23,8 +23,23 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Ferguson González | Digital Product Designer & Developer',
-  description: 'Digital Product Designer & Developer creating beautiful, user-centered experiences',
+  title: 'Ferguson González | UX/UI Designer & Digital Product Developer',
+  description: 'UX/UI Designer with 10+ years of experience. Worked with Amazon, PayPal, and Urrea. Based in Guadalajara, Mexico.',
+  keywords: ['UX Designer', 'UI Designer', 'Product Designer', 'Frontend Developer', 'Guadalajara', 'Ferguson González'],
+  authors: [{ name: 'Ferguson González' }],
+  openGraph: {
+    title: 'Ferguson González | UX/UI Designer & Developer',
+    description: 'UX/UI Designer with 10+ years of experience creating user-centered digital experiences.',
+    url: 'https://fergonz-web.vercel.app',
+    siteName: 'Ferguson González Portfolio',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ferguson González | UX/UI Designer & Developer',
+    description: 'UX/UI Designer with 10+ years of experience creating user-centered digital experiences.',
+  },
 };
 
 export default function RootLayout({

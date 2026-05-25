@@ -16,37 +16,37 @@ export const certificationsData: Certification[] = [
     type: "Professional Certificate"
   },
   {
-    title: "Especialización en Desarrollo Web",
+    title: "Web Development Specialization",
     issuer: "Coursera",
     date: "2023", 
     link: "https://www.coursera.org/account/accomplishments/verify/H5N7KMHBGABS",
     type: "Specialization"
   },
   {
-    title: "Curso Completo de Desarrollo Web",
+    title: "Complete Web Development Course",
     issuer: "Udemy",
     date: "2023",
     link: "https://www.udemy.com/certificate/UC-D63IBHE5/",
     type: "Course"
   },
   {
-    title: "Fundamentos de Marketing Digital",
+    title: "Digital Marketing Fundamentals",
     issuer: "Google Actívate",
     date: "Feb 2022",
     link: null,
     credentialId: "3AY NSD 3CC"
   },
   {
-    title: "Introducción al Desarrollo Web II",
+    title: "Introduction to Web Development II",
     issuer: "Google Actívate",
     date: "May 2020",
     link: null,
     credentialId: "L2T RR7 GDX"
   },
   {
-    title: "Introducción al Desarrollo Web I",
+    title: "Introduction to Web Development I",
     issuer: "Google Actívate",
-    date: "Abr 2020",
+    date: "Apr 2020",
     link: null,
     credentialId: "TAE ZS5 JVZ"
   }
