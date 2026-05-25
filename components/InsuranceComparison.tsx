@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { GripVertical } from 'lucide-react';
 
 interface InsuranceComparisonProps {
   beforeImage: string;
@@ -18,63 +17,7 @@ export default function InsuranceComparison({
   beforeLabel = 'Legacy Interface (2016)',
   afterLabel = 'My Redesign (2025)',
 }: InsuranceComparisonProps) {
-  const [sliderPosition, setSliderPosition] = useState(50);
-  const [isDragging, setIsDragging] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number | null>(null);
-  const pendingPosition = useRef<number | null>(null);
-
-  const updateFromClientX = useCallback((clientX: number) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percentage = Math.max(5, Math.min(95, (x / rect.width) * 100));
-    pendingPosition.current = percentage;
-
-    if (rafRef.current !== null) return;
-    rafRef.current = window.requestAnimationFrame(() => {
-      if (pendingPosition.current !== null) {
-        setSliderPosition(pendingPosition.current);
-      }
-      pendingPosition.current = null;
-      rafRef.current = null;
-    });
-  }, []);
-
-  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    setIsDragging(true);
-    updateFromClientX(e.clientX);
-    e.currentTarget.setPointerCapture(e.pointerId);
-  };
-
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging && e.buttons !== 1 && e.pointerType !== 'touch') return;
-    updateFromClientX(e.clientX);
-  };
-
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    updateFromClientX(e.clientX);
-  };
-
-  useEffect(() => {
-    const handlePointerUp = () => setIsDragging(false);
-    if (isDragging) {
-      window.addEventListener('pointerup', handlePointerUp);
-      window.addEventListener('pointercancel', handlePointerUp);
-    }
-    return () => {
-      window.removeEventListener('pointerup', handlePointerUp);
-      window.removeEventListener('pointercancel', handlePointerUp);
-    };
-  }, [isDragging]);
-
-  useEffect(() => {
-    return () => {
-      if (rafRef.current !== null) {
-        window.cancelAnimationFrame(rafRef.current);
-      }
-    };
-  }, []);
+  const [showAfter, setShowAfter] = useState(false);
 
   return (
     <div className="w-full my-12 md:my-16">
@@ -83,78 +26,91 @@ export default function InsuranceComparison({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="relative w-full rounded-2xl overflow-hidden border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-white/5 shadow-xl"
       >
-        <div
-          ref={containerRef}
-          className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] cursor-col-resize select-none touch-none"
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onClick={handleClick}
-        >
-          {/* After Image — full background */}
-          <div className="absolute inset-0">
-            <Image
-              src={afterImage}
-              alt={afterLabel}
-              fill
-              className="object-cover object-top"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
-            />
-          </div>
-
-          {/* Before Image — clipped by container width */}
-          <div
-            className="absolute top-0 left-0 h-full overflow-hidden z-10"
-            style={{ width: `${sliderPosition}%` }}
-          >
-            <div
-              className="relative h-full"
-              style={{ width: `${10000 / Math.max(sliderPosition, 1)}%` }}
+        {/* Toggle Buttons */}
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex rounded-full bg-gray-100 dark:bg-white/10 p-1 border border-gray-200 dark:border-white/10">
+            <button
+              onClick={() => setShowAfter(false)}
+              className={`relative px-5 py-2.5 rounded-full text-sm font-semibold font-mono uppercase tracking-wider transition-all duration-300 ${
+                !showAfter
+                  ? 'bg-white dark:bg-white/20 text-gray-900 dark:text-white shadow-md'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+              }`}
             >
-              <Image
-                src={beforeImage}
-                alt={beforeLabel}
-                fill
-                className="object-cover object-top"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
-              />
-            </div>
+              Before
+            </button>
+            <button
+              onClick={() => setShowAfter(true)}
+              className={`relative px-5 py-2.5 rounded-full text-sm font-semibold font-mono uppercase tracking-wider transition-all duration-300 ${
+                showAfter
+                  ? 'bg-white dark:bg-white/20 text-gray-900 dark:text-white shadow-md'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+              }`}
+            >
+              After
+            </button>
+          </div>
+        </div>
+
+        {/* Image Container */}
+        <div className="relative w-full rounded-2xl overflow-hidden border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-white/5 shadow-xl">
+          <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px]">
+            <AnimatePresence mode="wait">
+              {!showAfter ? (
+                <motion.div
+                  key="before"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={beforeImage}
+                    alt={beforeLabel}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
+                  />
+                  {/* Label */}
+                  <div className="absolute top-4 left-4 px-3 py-2 bg-black/60 backdrop-blur-sm rounded-lg">
+                    <span className="text-xs md:text-sm font-mono font-semibold text-white uppercase tracking-wider">
+                      {beforeLabel}
+                    </span>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="after"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={afterImage}
+                    alt={afterLabel}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
+                  />
+                  {/* Label */}
+                  <div className="absolute top-4 right-4 px-3 py-2 bg-black/60 backdrop-blur-sm rounded-lg">
+                    <span className="text-xs md:text-sm font-mono font-semibold text-white uppercase tracking-wider">
+                      {afterLabel}
+                    </span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          {/* Slider Line */}
-          <div
-            className="absolute top-0 bottom-0 w-[3px] bg-white z-20 pointer-events-none"
-            style={{
-              left: `${sliderPosition}%`,
-              transform: 'translateX(-50%)',
-              boxShadow: '0 0 12px rgba(0,0,0,0.4)',
-            }}
-          >
-            {/* Handle */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center border-2 border-gray-300">
-              <GripVertical className="w-5 h-5 text-gray-600" />
-            </div>
-          </div>
-
-          {/* Before Label */}
-          <div className="absolute top-4 left-4 px-3 py-2 bg-black/60 backdrop-blur-sm rounded-lg z-10 pointer-events-none">
-            <span className="text-xs md:text-sm font-mono font-semibold text-white uppercase tracking-wider">
-              {beforeLabel}
-            </span>
-          </div>
-
-          {/* After Label */}
-          <div className="absolute top-4 right-4 px-3 py-2 bg-black/60 backdrop-blur-sm rounded-lg z-10 pointer-events-none">
-            <span className="text-xs md:text-sm font-mono font-semibold text-white uppercase tracking-wider">
-              {afterLabel}
-            </span>
-          </div>
-
-          {/* Drag instruction */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-md z-10 pointer-events-none">
+          {/* Click hint */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-black/50 backdrop-blur-sm rounded-md pointer-events-none">
             <p className="text-xs font-mono text-white/80">
-              ← Drag to compare →
+              Toggle to compare
             </p>
           </div>
         </div>
