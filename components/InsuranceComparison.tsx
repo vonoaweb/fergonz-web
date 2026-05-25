@@ -107,7 +107,7 @@ export default function InsuranceComparison({
           {/* Before Image (Overlay - Left Side - Visible when slider is left, hidden when slider moves right) */}
           <div
             className="absolute inset-0 w-full h-full overflow-hidden"
-            style={{ clipPath: `inset(0 ${sliderPosition}% 0 0)` }}
+            style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
           >
             <Image
               src={beforeImage}

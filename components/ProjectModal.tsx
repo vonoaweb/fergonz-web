@@ -229,14 +229,6 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                 {/* Insurance Comparison - Only for Insurance Transformation */}
                 {project.title.toLowerCase().includes('insurance') && (
                   <div className="mb-16 md:mb-20 w-full">
-                    <div className="mb-6 md:mb-8">
-                      <h4 className="text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-white">
-                        Insurance Transformation – Legacy to Modern UX Redesign
-                      </h4>
-                      <p className="text-sm md:text-base text-gray-600 dark:text-white/60 font-mono uppercase tracking-widest">
-                        UX/UI Designer & Product Designer
-                      </p>
-                    </div>
                     <h3 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-8 md:mb-10 text-gray-900 dark:text-white tracking-tight flex items-center">
                       <span className="w-2 h-2 rounded-full bg-purple-500 mr-4"></span>
                       Before & After Comparison
