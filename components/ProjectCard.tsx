@@ -65,7 +65,16 @@ export default function ProjectCard({
             <h3 className="text-xl md:text-2xl font-light mb-2 text-gray-900 dark:text-white group-hover:text-primary transition-colors">
               {project.title}
             </h3>
-            <p className="text-sm text-gray-600 dark:text-white/50 mb-4 font-light">{project.role}</p>
+            <p className="text-sm text-gray-600 dark:text-white/50 mb-3 font-light">{project.role}</p>
+            {project.tags && (
+              <div className="flex flex-wrap gap-1.5 mb-4">
+                {project.tags.slice(0, 3).map((tag, i) => (
+                  <span key={i} className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-cyan-50 dark:bg-cyan-400/10 text-cyan-700 dark:text-cyan-300 border border-cyan-200/50 dark:border-cyan-400/20">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
             <div className={`text-gray-700 dark:text-white/60 font-mono text-xs uppercase tracking-widest mt-auto flex items-center ${isDemo ? '' : 'group-hover:text-cyan-400'} transition-colors`}>
               {isDemo ? 'Case study in progress' : 'View case study'}
               {!isDemo && (

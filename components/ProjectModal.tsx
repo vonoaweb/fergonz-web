@@ -198,6 +198,15 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                   <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-gray-600 dark:text-white/50 font-mono uppercase tracking-widest">
                     {project.role}
                   </p>
+                  {project.tags && (
+                    <div className="flex flex-wrap gap-2 mt-5 md:mt-6">
+                      {project.tags.map((tag, i) => (
+                        <span key={i} className="text-xs font-mono uppercase tracking-wider px-3 py-1 rounded-full bg-cyan-50 dark:bg-cyan-400/10 text-cyan-700 dark:text-cyan-300 border border-cyan-200/50 dark:border-cyan-400/20">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Problem */}
