@@ -13,6 +13,9 @@ import { projects } from '@/lib/projectsData';
 import CertificationsSection from '@/components/CertificationsSection';
 import EducationSection from '@/components/EducationSection';
 import AmazonProject from '@/components/AmazonProject';
+import ExperienceSection from '@/components/ExperienceSection';
+import ProcessSection from '@/components/ProcessSection';
+import ClientsSection from '@/components/ClientsSection';
 
 // Service icon SVGs matching Figma designs (brand colors: navy #1B2A4A + cyan #06B6D3)
 const ServiceIconUX = () => (
@@ -258,6 +261,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Clients */}
+      <ClientsSection />
+
       {/* Work */}
       <section id="work" className="relative flex items-center justify-center bg-transparent dark:bg-transparent backdrop-blur-sm py-24 md:py-32 z-10">
         <div className="container mx-auto px-6 md:px-12 lg:px-16 relative z-10">
@@ -287,6 +293,12 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Experience */}
+      <ExperienceSection />
+
+      {/* Process */}
+      <ProcessSection />
 
       {/* Services */}
       <section id="services" className="relative flex items-center justify-center bg-transparent dark:bg-transparent backdrop-blur-sm py-24 md:py-32 z-10">
