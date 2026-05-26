@@ -14,26 +14,70 @@ import CertificationsSection from '@/components/CertificationsSection';
 import EducationSection from '@/components/EducationSection';
 import AmazonProject from '@/components/AmazonProject';
 
+// Service icon SVGs matching Figma designs (brand colors: navy #1B2A4A + cyan #06B6D3)
+const ServiceIconUX = () => (
+  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M28 4L48 24L28 52L8 24Z" fill="#06B6D3" />
+    <circle cx="28" cy="4" r="4" fill="#1B2A4A" />
+    <circle cx="48" cy="24" r="4" fill="#1B2A4A" />
+    <circle cx="28" cy="52" r="4" fill="#1B2A4A" />
+    <circle cx="8" cy="24" r="4" fill="#1B2A4A" />
+  </svg>
+);
+
+const ServiceIconWeb = () => (
+  <svg width="60" height="56" viewBox="0 0 60 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect y="6" width="60" height="44" rx="8" fill="#1B2A4A" />
+    <rect x="4" y="10" width="52" height="8" rx="4" fill="#68DDE8" opacity="0.5" />
+    <rect x="18" y="26" width="24" height="16" rx="3" fill="#06B6D3" />
+    <circle cx="24" cy="52" r="3" fill="#68DDE8" />
+    <circle cx="36" cy="52" r="3" fill="#68DDE8" />
+  </svg>
+);
+
+const ServiceIconMobile = () => (
+  <svg width="40" height="64" viewBox="0 0 40 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="40" height="64" rx="8" fill="#1B2A4A" />
+    <rect x="4" y="6" width="32" height="44" rx="4" fill="#06B6D3" opacity="0.3" />
+    <rect x="7" y="10" width="10" height="10" rx="3" fill="#06B6D3" />
+    <rect x="21" y="10" width="10" height="10" rx="3" fill="#68DDE8" />
+    <rect x="7" y="24" width="10" height="10" rx="3" fill="#68DDE8" />
+    <rect x="21" y="24" width="10" height="10" rx="3" fill="#06B6D3" />
+    <rect x="13" y="55" width="14" height="3" rx="1.5" fill="#68DDE8" />
+  </svg>
+);
+
+const ServiceIconDashboard = () => (
+  <svg width="60" height="52" viewBox="0 0 60 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="60" height="52" rx="8" fill="#1B2A4A" />
+    <rect x="8" y="4" width="44" height="4" rx="2" fill="white" opacity="0.3" />
+    <rect x="8" y="28" width="8" height="16" rx="2" fill="#06B6D3" />
+    <rect x="20" y="18" width="8" height="26" rx="2" fill="#68DDE8" />
+    <rect x="32" y="24" width="8" height="20" rx="2" fill="#06B6D3" />
+    <rect x="44" y="10" width="8" height="34" rx="2" fill="#68DDE8" />
+  </svg>
+);
+
 const services = [
   {
     title: 'UX/UI Design',
     description: 'User research, wireframing, prototyping, and high-fidelity interfaces that convert',
-    icon: '✨',
+    Icon: ServiceIconUX,
   },
   {
     title: 'Web & E-commerce',
     description: 'Custom websites and online stores built on WordPress, WooCommerce, and Next.js',
-    icon: '🛒',
+    Icon: ServiceIconWeb,
   },
   {
     title: 'Mobile Apps',
     description: 'Native and cross-platform mobile applications with React Native',
-    icon: '📱',
+    Icon: ServiceIconMobile,
   },
   {
     title: 'Dashboards & Platforms',
     description: 'Custom web applications, admin panels, and real-time operations dashboards',
-    icon: '📊',
+    Icon: ServiceIconDashboard,
   },
 ];
 
@@ -265,9 +309,11 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className="border border-gray-200 dark:border-white/10 bg-gray-50/80 dark:bg-white/5 backdrop-blur-md hover:border-cyan-400/50 dark:hover:border-cyan-400/50 hover:bg-white dark:hover:bg-white/10 hover:shadow-[0_0_20px_rgba(6,182,212,0.2)] transition-all duration-500 p-8 hover:scale-[1.02]"
+                  className="rounded-3xl border border-gray-200 dark:border-white/10 bg-gray-50/80 dark:bg-white/5 backdrop-blur-md hover:border-cyan-400/50 dark:hover:border-cyan-400/50 hover:bg-white dark:hover:bg-white/10 hover:shadow-[0_0_24px_rgba(6,182,212,0.15)] transition-all duration-500 p-8 hover:scale-[1.02]"
                 >
-                  <div className="text-5xl md:text-6xl mb-8">{service.icon}</div>
+                  <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-cyan-50 dark:bg-cyan-400/10 flex items-center justify-center mb-8">
+                    <service.Icon />
+                  </div>
                   <h3 className="text-2xl md:text-3xl font-display font-semibold mb-4 text-gray-900 dark:text-white tracking-tight">
                     {service.title}
                   </h3>
