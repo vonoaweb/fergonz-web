@@ -45,7 +45,7 @@ export const projects: Project[] = [
       '/images/Seguros_wireframe_v1.jpg',
       '/images/Seguros_wireframe_v3.jpg',
       '/images/Seguros_wireframe_v4.jpg',
-      '/images/11.jpg',
+      '/images/seguros_after.jpg',
     ],
     link: '#',
     size: 'small',
@@ -149,7 +149,7 @@ export const projects: Project[] = [
   // Row 4: Operations (2 cols) + Medical (1 col) = 3
   {
     id: 9,
-    title: 'Operations Platform & Client Dashboard',
+    title: 'Grupo Urrea – Operations & Client Dashboards',
     role: 'Digital Platforms Administrator',
     image: '/images/proyecto_cliente.webp',
     images: [
@@ -163,11 +163,11 @@ export const projects: Project[] = [
     isDemo: false,
     tags: ['Dashboard', 'Data Visualization', 'UX Design', 'Real-time'],
     problem:
-      'A field service company relied on isolated views and manual reports, causing delays in decision-making and zero visibility into the real status of clients, orders, and operations. Report generation was entirely manual, consuming hours every week.',
+      'At Grupo Urrea, operations relied on isolated views and manual reports, causing delays in decision-making and limited visibility into the real status of clients, orders, and day-to-day operations. Report generation was entirely manual, consuming hours every week.',
     solution:
-      'Built a real-time operations management system with consolidated operational and client dashboards, prioritizing critical KPIs, automated alerts, and clear workflows. Created a client portal for self-service tracking and automated reporting pipelines that eliminated manual report generation.',
+      'Designed and administered a real-time operations management system with consolidated operational and client dashboards, prioritizing critical KPIs, automated alerts, and clear workflows. Built a client portal for self-service tracking and automated reporting that replaced the manual report process.',
     results:
-      '100% digitized operations, 40% faster decision-making, and zero manual report hours per week. Cross-team coordination improved with a unified view of operational status.',
+      'Digitized operations end to end, accelerated decision-making, and eliminated manual report hours each week. Cross-team coordination improved with a single unified view of operational status.',
   },
   {
     id: 12,
@@ -187,7 +187,28 @@ export const projects: Project[] = [
     results:
       'The website established a strong digital presence for the medical practice, driving new patient inquiries through organic search and a clear, professional online experience.',
   },
-  // Row 5: DEV Consultores (1 col) + AmazonProject (2 cols from page.tsx) = 3
+  // Row 5: Derevo (2 cols) + DEV Consultores (1 col) = 3
+  {
+    id: 3,
+    title: 'Derevo – Web & Mobile UX for Multiple Clients',
+    role: 'UX/UI Designer',
+    image: '/images/1.jpg',
+    images: [
+      '/images/1.jpg',
+      '/images/pantalla_2.webp',
+      '/images/11.jpg',
+      '/images/tuul_m1.webp',
+    ],
+    link: '#',
+    size: 'medium',
+    tags: ['UX Research', 'Wireframing', 'Mobile Design', 'Prototyping'],
+    problem:
+      'As a UX/UI Designer at Derevo, I worked across a rotating portfolio of client products — content and quiz platforms (DRed), web apps (Tuul), and mobile experiences — each with different audiences, goals, and technical constraints. The challenge was delivering consistent, research-backed design quickly across very different products.',
+    solution:
+      'Owned the end-to-end UX/UI process for multiple clients: ran user research, mapped flows, produced detailed wireframes, and built high-fidelity, interactive prototypes for both web and mobile. Established reusable patterns and component thinking so each new product could move from concept to handoff faster.',
+    results:
+      'Shipped web and mobile interfaces for several clients over a two-year span, with prototypes that streamlined developer handoff and design decisions grounded in user research.',
+  },
   {
     id: 14,
     title: 'DEV Consultores – Enterprise Dashboards & Web Apps',
@@ -208,5 +229,25 @@ export const projects: Project[] = [
       'Designed intuitive enterprise dashboards and web applications focused on data clarity and ease of use. Created consistent UI component libraries, defined interaction patterns for complex data tables, and ensured responsive layouts for both desktop and tablet use cases.',
     results:
       'Delivered a suite of enterprise tools that improved client satisfaction and reduced support requests through clearer, more intuitive interfaces.',
+  },
+  // Row 6: Gusanito (1 col) + AmazonProject (2 cols from page.tsx) = 3
+  {
+    id: 4,
+    title: 'Gusanito – Greeting Card Platform Redesign',
+    role: 'UX/UI Designer',
+    image: '/images/10.jpg',
+    images: [
+      '/images/10.jpg',
+      '/images/4.jpg',
+    ],
+    link: '#',
+    size: 'small',
+    tags: ['UX Design', 'Web', 'Mobile', 'Responsive'],
+    problem:
+      'Gusanito, one of Latin America\'s most popular greeting-card and entertainment platforms, had a dated, cluttered interface. With thousands of cards, characters, games, and seasonal content, users struggled to browse, find, and send cards — especially on mobile.',
+    solution:
+      'Redesigned the user experience across desktop and mobile, simplifying navigation around categories, characters, and seasonal events. Reworked the card-browsing and sending flows, cleaned up the visual hierarchy, and ensured the playful brand stayed front and center while making content far easier to discover.',
+    results:
+      'Delivered a clearer, more modern experience for a high-traffic consumer platform, improving content discovery and the card-sending flow on both desktop and mobile.',
   },
 ];
