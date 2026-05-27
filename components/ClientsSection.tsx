@@ -11,7 +11,6 @@ const clients = [
   { name: 'Fortius', logo: '/images/client-fortius.png' },
   { name: 'Tuul', logo: '/images/client-tuul.png' },
   { name: 'DEV Consultores', logo: '/images/client-devconsultores.png' },
-  { name: 'Panther', logo: '/images/client-panther.png' },
 ];
 
 export default function ClientsSection() {

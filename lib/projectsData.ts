@@ -14,6 +14,7 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  // Row 1: PayPal (2 cols) + Insurance (1 col) = 3
   {
     id: 7,
     title: 'PayPal EMEA – UI Standardization & Localization',
@@ -56,6 +57,7 @@ export const projects: Project[] = [
     results:
       'Dramatic improvement in user experience with increased engagement, higher conversion rates, and positive user feedback. Successfully modernized the platform while maintaining trust and credibility.',
   },
+  // Row 2: Urrea (2 cols) + Fortius (1 col) = 3
   {
     id: 2,
     title: 'Urrea Online – E-commerce for 10,000+ SKUs',
@@ -80,6 +82,26 @@ export const projects: Project[] = [
       'Conversion rate increased from 1.2% to 3.8%. Time on site +45%, bounce rate -30%. Mobile sales increased by 120%. Order processing time reduced by 60%.',
   },
   {
+    id: 10,
+    title: 'Fortius – Corporate Website & Brand Presence',
+    role: 'Web Designer & Developer',
+    image: '/images/fortius.jpg',
+    images: [
+      '/images/fortius_mok.jpg',
+      '/images/fortius.jpg',
+    ],
+    link: 'https://www.fortius.com.mx/',
+    size: 'small',
+    tags: ['WordPress', 'Web Design', 'Responsive', 'Corporate'],
+    problem:
+      'Fortius, a financial and investment company, needed a professional digital presence to establish credibility and attract high-value clients. Their existing website was outdated and did not reflect the company\'s positioning in the market.',
+    solution:
+      'Designed and developed a clean, modern corporate website on WordPress that communicates trust and professionalism. Created a responsive layout with clear value propositions, service breakdowns, and streamlined contact flows. Focused on a premium aesthetic with careful typography and whitespace.',
+    results:
+      'Delivered a polished, responsive website that strengthened Fortius\' digital brand presence and improved client acquisition through a professional online experience.',
+  },
+  // Row 3: Vytal (2 cols) + Eres Mi Tipo (1 col) = 3
+  {
     id: 8,
     title: 'Vytal – Healthcare E-commerce & Prescription Dashboard',
     role: 'Product Designer / UI Designer',
@@ -94,7 +116,7 @@ export const projects: Project[] = [
       '/images/XL - Ecom - Consumer - Orders.png',
     ],
     link: '#',
-    size: 'xlarge',
+    size: 'medium',
     tags: ['Product Design', 'Figma', 'Healthcare', 'Dashboard'],
     problem:
       'Healthcare interfaces are often cluttered and confusing, especially when dealing with insurance copays versus cash payments. Patients struggled with managing prescriptions, understanding payment structures, and tracking medication deliveries — leading to anxiety and confusion in an already stressful context.',
@@ -103,6 +125,28 @@ export const projects: Project[] = [
     results:
       'Successfully transformed prescription management from a stressful experience into an intuitive, modern journey. Users gained clear visibility into order status and payment breakdowns, improving trust in the healthcare delivery process.',
   },
+  {
+    id: 11,
+    title: 'Eres Mi Tipo – Blood Donation App',
+    role: 'UX/UI Designer & Co-creator',
+    image: '/images/eresmitipo1.jpg',
+    images: [
+      '/images/eresmitipo1.jpg',
+      '/images/eresmitipo2.jpg',
+      '/images/voy_iteso.png',
+      '/images/unete_1.png',
+    ],
+    link: '#',
+    size: 'small',
+    tags: ['Mobile App', 'Social Impact', 'UX Research', 'Award Winner'],
+    problem:
+      'Mexico faces a critical blood donation shortage — fewer than 3% of donations are voluntary. There was no accessible platform connecting willing donors with blood banks in real time, making it difficult for people to find nearby donation centers or understand eligibility requirements.',
+    solution:
+      'Co-created "Eres Mi Tipo," a mobile app that connects blood donors with nearby blood banks in Guadalajara. Designed the complete UX/UI including donor profiles, real-time blood bank locations, donation scheduling, and educational content about blood donation. The app was developed at ITESO\'s Mobile Lab in partnership with Microsoft.',
+    results:
+      'Won the COECYTJAL 2015 award for innovation. Featured in ITESO news, Tec Review, and CONACYT Press. The app raised awareness and facilitated voluntary blood donations across the Guadalajara metropolitan area.',
+  },
+  // Row 4: Operations (2 cols) + Medical (1 col) = 3
   {
     id: 9,
     title: 'Operations Platform & Client Dashboard',
@@ -126,46 +170,6 @@ export const projects: Project[] = [
       '100% digitized operations, 40% faster decision-making, and zero manual report hours per week. Cross-team coordination improved with a unified view of operational status.',
   },
   {
-    id: 10,
-    title: 'Fortius – Corporate Website & Brand Presence',
-    role: 'Web Designer & Developer',
-    image: '/images/fortius.jpg',
-    images: [
-      '/images/fortius_mok.jpg',
-      '/images/fortius.jpg',
-    ],
-    link: 'https://www.fortius.com.mx/',
-    size: 'small',
-    tags: ['WordPress', 'Web Design', 'Responsive', 'Corporate'],
-    problem:
-      'Fortius, a financial and investment company, needed a professional digital presence to establish credibility and attract high-value clients. Their existing website was outdated and did not reflect the company\'s positioning in the market.',
-    solution:
-      'Designed and developed a clean, modern corporate website on WordPress that communicates trust and professionalism. Created a responsive layout with clear value propositions, service breakdowns, and streamlined contact flows. Focused on a premium aesthetic with careful typography and whitespace.',
-    results:
-      'Delivered a polished, responsive website that strengthened Fortius\' digital brand presence and improved client acquisition through a professional online experience.',
-  },
-  {
-    id: 11,
-    title: 'Eres Mi Tipo – Blood Donation App',
-    role: 'UX/UI Designer & Co-creator',
-    image: '/images/eresmitipo1.jpg',
-    images: [
-      '/images/eresmitipo1.jpg',
-      '/images/eresmitipo2.jpg',
-      '/images/voy_iteso.png',
-      '/images/unete_1.png',
-    ],
-    link: '#',
-    size: 'small',
-    tags: ['Mobile App', 'Social Impact', 'UX Research', 'Award Winner'],
-    problem:
-      'Mexico faces a critical blood donation shortage — fewer than 3% of donations are voluntary. There was no accessible platform connecting willing donors with blood banks in real time, making it difficult for people to find nearby donation centers or understand eligibility requirements.',
-    solution:
-      'Co-created "Eres Mi Tipo," a mobile app that connects blood donors with nearby blood banks in Guadalajara. Designed the complete UX/UI including donor profiles, real-time blood bank locations, donation scheduling, and educational content about blood donation. The app was developed at ITESO\'s Mobile Lab in partnership with Microsoft.',
-    results:
-      'Won the COECYTJAL 2015 award for innovation. Featured in ITESO news, Tec Review, and CONACYT Press. The app raised awareness and facilitated voluntary blood donations across the Guadalajara metropolitan area.',
-  },
-  {
     id: 12,
     title: 'Medical Practice – Doctor Website',
     role: 'Web Designer & Developer',
@@ -183,29 +187,7 @@ export const projects: Project[] = [
     results:
       'The website established a strong digital presence for the medical practice, driving new patient inquiries through organic search and a clear, professional online experience.',
   },
-  {
-    id: 13,
-    title: 'Panther – Mobile & Web Design Projects',
-    role: 'UX/UI Designer',
-    image: '/images/floujo_panther.webp',
-    images: [
-      '/images/floujo_panther.webp',
-      '/images/pantalla_2.webp',
-      '/images/pantalla_3.webp',
-      '/images/pantalla_6.jpg',
-      '/images/oiqdl.png',
-      '/images/1.jpg',
-    ],
-    link: '#',
-    size: 'medium',
-    tags: ['User Flows', 'Wireframing', 'Mobile Design', 'Prototyping'],
-    problem:
-      'Panther, a digital agency, needed a versatile UX/UI designer to handle multiple client projects simultaneously — from mobile apps to web platforms — each with different target audiences and business requirements.',
-    solution:
-      'Led the UX/UI design process for multiple projects: created detailed user flows, wireframes, and high-fidelity mockups. Worked across quiz platforms, landing pages, and mobile applications. Established a consistent design workflow using Sketch and InVision for rapid prototyping and client feedback loops.',
-    results:
-      'Successfully delivered multiple client projects on time with positive feedback. Established reusable design patterns that increased team efficiency across future projects.',
-  },
+  // Row 5: DEV Consultores (1 col) + AmazonProject (2 cols from page.tsx) = 3
   {
     id: 14,
     title: 'DEV Consultores – Enterprise Dashboards & Web Apps',

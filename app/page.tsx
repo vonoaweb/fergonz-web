@@ -288,7 +288,7 @@ export default function Home() {
                   onClick={openModal}
                 />
               ))}
-              <AmazonProject className="md:col-span-2 lg:col-span-3" />
+              <AmazonProject className="col-span-1 md:col-span-2" />
             </BentoGrid>
           </motion.div>
         </div>
