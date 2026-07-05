@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const alt = 'Ferguson González – UX/UI Designer & Digital Product Developer';
+export const alt = 'Fernando González – UX/UI Designer & Digital Product Developer';
 export const size = {
   width: 1200,
   height: 630,

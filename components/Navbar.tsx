@@ -19,7 +19,6 @@ export default function Navbar() {
     { href: '#work', label: 'Work' },
     { href: '#experience', label: 'Experience' },
     { href: '#services', label: 'Services' },
-    { href: '#contact', label: 'Contact' },
   ];
 
   return (
@@ -39,7 +38,7 @@ export default function Navbar() {
             FG<span className="text-cyan-400">.</span>
           </a>
 
-          <div className="hidden md:flex items-center space-x-12">
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-10">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -50,6 +49,12 @@ export default function Navbar() {
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
               </a>
             ))}
+            <a
+              href="#contact"
+              className="whitespace-nowrap px-5 lg:px-6 py-2.5 rounded-full border border-cyan-500/60 dark:border-cyan-400/50 text-cyan-700 dark:text-cyan-300 font-mono text-xs lg:text-sm uppercase tracking-widest hover:bg-cyan-500 hover:text-white dark:hover:bg-cyan-400 dark:hover:text-black hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all duration-300"
+            >
+              Let&apos;s Talk
+            </a>
           </div>
 
           <ThemeSwitcher />

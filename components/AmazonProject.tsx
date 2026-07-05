@@ -37,7 +37,7 @@ export default function AmazonProject({ className = '' }: AmazonProjectProps) {
           Amazon – Seasonal Campaign Design
         </h3>
         <p className="mt-2 text-xs md:text-sm font-mono uppercase tracking-widest text-gray-600 dark:text-white/60">
-          Visual Designer (Contract)
+          Digital Designer · Contract via 121 Corp
         </p>
         <p className="mt-4 text-sm md:text-base text-gray-700 dark:text-white/70 max-w-3xl">
           Designed high-conversion promotional assets for Amazon&apos;s Magazine category during Prime Day and Black Friday.
