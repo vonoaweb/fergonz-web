@@ -85,7 +85,7 @@ export default function ImpactSection() {
             Design that moves numbers
           </h2>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 dark:bg-white/10 border border-gray-200 dark:border-white/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 dark:bg-white/10 border border-gray-200 dark:border-white/10">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
