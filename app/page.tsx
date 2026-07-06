@@ -8,6 +8,7 @@ import ProjectModal from '@/components/ProjectModal';
 import GlassSphere from '@/components/GlassSphere';
 import LiquidEtherBackground from '@/components/LiquidEtherBackground';
 import BlurText from '@/components/BlurText';
+import ImpactSection from '@/components/ImpactSection';
 import { useProjectModal } from '@/lib/useProjectModal';
 import { projects } from '@/lib/projectsData';
 import CertificationsSection from '@/components/CertificationsSection';
@@ -16,6 +17,7 @@ import AmazonProject from '@/components/AmazonProject';
 import ExperienceSection from '@/components/ExperienceSection';
 import ProcessSection from '@/components/ProcessSection';
 import ClientsSection from '@/components/ClientsSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
 
 // Service icon SVGs matching Figma designs (brand colors: navy #1B2A4A + cyan #06B6D3)
 const ServiceIconUX = () => (
@@ -119,7 +121,7 @@ export default function Home() {
   return (
     <main className="min-h-screen relative">
       <LiquidEtherBackground
-        colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+        colors={['#06B6D4', '#5227FF', '#8B5CF6']}
         mouseForce={14}
         cursorSize={90}
         isViscous={false}
@@ -154,7 +156,17 @@ export default function Home() {
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
               className="text-center"
             >
-              <div className="mb-12 md:mb-16 text-center flex justify-center items-center">
+              <div className="mb-8 flex justify-center">
+                <span className="inline-flex items-center gap-2.5 px-4 md:px-5 py-2 rounded-full border border-gray-200 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-md text-[10px] md:text-xs font-mono uppercase tracking-[0.14em] md:tracking-[0.2em] text-gray-700 dark:text-white/70 whitespace-nowrap">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  Open to new projects — GDL · Remote
+                </span>
+              </div>
+
+              <div className="mb-10 md:mb-12 text-center flex justify-center items-center">
                 <h1 className="text-[5rem] md:text-[7rem] lg:text-[9rem] xl:text-[11rem] font-display font-bold text-gray-900 dark:text-white tracking-[-0.03em] leading-[0.9] glow-effect">
                   FerGonz
                 </h1>
@@ -169,16 +181,44 @@ export default function Home() {
               />
 
               <p className="text-xl md:text-2xl text-gray-600 dark:text-white/60 mb-16 md:mb-20 max-w-3xl mx-auto font-sans font-light leading-relaxed">
-                Creating beautiful, user-centered digital experiences that drive results. Based in Guadalajara, Mexico.
+                10+ years shipping high-conversion e-commerce, real-time dashboards
+                and mobile apps for{' '}
+                <span className="font-medium text-gray-900 dark:text-white">Amazon</span>,{' '}
+                <span className="font-medium text-gray-900 dark:text-white">PayPal</span> and{' '}
+                <span className="font-medium text-gray-900 dark:text-white">Grupo Urrea</span>.
               </p>
 
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+                <motion.a
+                  href="#work"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-block px-12 py-5 bg-gray-900 dark:bg-white text-white dark:text-black font-mono text-sm uppercase tracking-widest hover:bg-gray-800 dark:hover:bg-white/90 transition-all duration-300 border border-gray-900 dark:border-white/20 hover:border-cyan-400/50 dark:hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]"
+                >
+                  View Case Studies
+                </motion.a>
+                <motion.a
+                  href="#contact"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-block px-12 py-5 bg-transparent text-gray-900 dark:text-white font-mono text-sm uppercase tracking-widest border border-gray-300 dark:border-white/25 hover:border-cyan-500 dark:hover:border-cyan-400 hover:text-cyan-600 dark:hover:text-cyan-400 hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] transition-all duration-300"
+                >
+                  Let&apos;s Talk
+                </motion.a>
+              </div>
+
               <motion.a
-                href="#work"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block px-12 py-5 bg-gray-900 dark:bg-white text-white dark:text-black font-mono text-sm uppercase tracking-widest hover:bg-gray-800 dark:hover:bg-white/90 transition-all duration-300 border border-gray-900 dark:border-white/20 hover:border-cyan-400/50 dark:hover:border-cyan-400/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.2, duration: 0.8 }}
+                href="/Fernando_Gonzalez_CV.pdf"
+                download
+                className="inline-flex items-center gap-2 mt-8 text-xs font-mono uppercase tracking-widest text-gray-500 dark:text-white/40 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors duration-300"
               >
-                View My Work
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4" />
+                </svg>
+                Download Résumé (PDF)
               </motion.a>
             </motion.div>
           </div>
@@ -188,7 +228,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
+          className="hidden md:block absolute bottom-12 left-1/2 transform -translate-x-1/2"
         >
           <motion.div
             animate={{ y: [0, 10, 0] }}
@@ -199,6 +239,12 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </section>
+
+      {/* Clients */}
+      <ClientsSection />
+
+      {/* Impact */}
+      <ImpactSection />
 
       {/* About */}
       <section id="about" className="relative flex items-center justify-center bg-transparent dark:bg-transparent backdrop-blur-sm py-24 md:py-32 z-10">
@@ -260,9 +306,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Clients */}
-      <ClientsSection />
 
       {/* Work */}
       <section id="work" className="relative flex items-center justify-center bg-transparent dark:bg-transparent backdrop-blur-sm py-24 md:py-32 z-10">
@@ -341,6 +384,9 @@ export default function Home() {
 
       <CertificationsSection />
       <EducationSection />
+
+      {/* Testimonials */}
+      <TestimonialsSection />
 
       {/* Contact */}
       <section id="contact" className="relative flex items-center justify-center bg-transparent dark:bg-transparent backdrop-blur-sm py-24 md:py-32 z-10">
@@ -433,7 +479,16 @@ export default function Home() {
               )}
 
               <div className="mt-10 pt-6 border-t border-gray-200 dark:border-white/10">
-                <div className="flex justify-center space-x-8">
+                <p className="text-center text-sm text-gray-600 dark:text-white/50 font-sans font-light mb-6">
+                  Prefer email?{' '}
+                  <a
+                    href="mailto:contacto@fergonz.com"
+                    className="font-medium text-cyan-700 dark:text-cyan-300 hover:text-cyan-500 dark:hover:text-cyan-400 underline underline-offset-4 decoration-cyan-400/40 transition-colors duration-300"
+                  >
+                    contacto@fergonz.com
+                  </a>
+                </p>
+                <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
                   <a
                     href="https://www.linkedin.com/in/fergonz/"
                     target="_blank"
@@ -441,6 +496,13 @@ export default function Home() {
                     className="text-gray-600 dark:text-white/40 hover:text-cyan-400 dark:hover:text-cyan-400 text-xs font-mono uppercase tracking-widest transition-colors duration-300"
                   >
                     LinkedIn
+                  </a>
+                  <a
+                    href="/Fernando_Gonzalez_CV.pdf"
+                    download
+                    className="text-gray-600 dark:text-white/40 hover:text-cyan-400 dark:hover:text-cyan-400 text-xs font-mono uppercase tracking-widest transition-colors duration-300"
+                  >
+                    Download CV
                   </a>
                   <a
                     href="https://en.fergonz.com"
@@ -460,7 +522,7 @@ export default function Home() {
       <footer className="py-10 border-t border-gray-200 dark:border-white/10 bg-transparent dark:bg-transparent backdrop-blur-sm relative z-10">
         <div className="container mx-auto px-6 md:px-12 lg:px-16">
           <p className="text-center text-gray-500 dark:text-white/30 text-xs font-mono uppercase tracking-widest">
-            © 2026 Ferguson González. All rights reserved.
+            © 2026 Fernando González. All rights reserved.
           </p>
         </div>
       </footer>
