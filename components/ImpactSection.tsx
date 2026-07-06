@@ -93,9 +93,9 @@ export default function ImpactSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-white/90 dark:bg-black/60 backdrop-blur-md p-6 md:p-8 flex flex-col group hover:bg-gray-50 dark:hover:bg-white/5 transition-colors duration-500"
+                className="bg-white/90 dark:bg-black/60 backdrop-blur-md p-6 xl:p-8 flex flex-col group hover:bg-gray-50 dark:hover:bg-white/5 transition-colors duration-500"
               >
-                <span className="block text-4xl md:text-5xl lg:text-6xl leading-none font-display font-bold tracking-[-0.03em] text-gradient tabular-nums whitespace-nowrap">
+                <span className="block text-4xl md:text-5xl xl:text-6xl leading-none font-display font-bold tracking-[-0.03em] text-gradient tabular-nums whitespace-nowrap">
                   <CountUp stat={stat} />
                 </span>
                 <span className="mt-4 text-sm md:text-base font-mono uppercase tracking-widest text-gray-900 dark:text-white">
