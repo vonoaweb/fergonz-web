@@ -10,10 +10,12 @@ barras de un libro físico para añadirlo en un toque.
 | --- | --- | --- |
 | Descubre | `/` | Buscador sobre Open Library, chips de temas favoritos y recomendaciones explicadas ("coincide con distopía y feminismo"). |
 | Biblioteca | `/biblioteca` | Tus libros por estado (por leer / leyendo / leído / abandonado), con puntuación y progreso de página. |
+| Notas | `/notas` | Todas tus notas juntas, buscables por texto, cita, etiqueta o título del libro. |
 | Escanear | `/escanear` | Cámara + lectura de EAN-13, o ISBN a mano. Resuelve el libro y lo añade a la estantería. |
 | Comunidad | `/comunidad` | Feed de reseñas, recomendaciones y finales compartidos, con "me gusta". |
 | Finales | `/finales` | Todos los finales alternativos, ordenados por votos o por fecha y filtrables por tono. |
 | Ficha de libro | `/libro?id=…` | Notas con citas y etiquetas, y el editor de finales alternativos. |
+| Ajustes | `/ajustes` | Perfil, tema, copia de seguridad y borrado total. |
 
 ### Escaneo de ISBN
 
@@ -53,6 +55,33 @@ número de finales escritos. Cada tarjeta muestra por qué salió.
   cuentas: la comunidad viene sembrada en `lib/seed.ts` y tus publicaciones se
   añaden en local. Es el punto natural por donde meter una base de datos real.
 
+### Copia de seguridad
+
+Como todo vive en el navegador, borrar los datos del sitio se lo lleva todo.
+`/ajustes` descarga un JSON con el estado completo y lo vuelve a cargar.
+
+El archivo que se importa viene de fuera, así que `lib/backup.ts` no se fía de
+él: valida la cabecera, y luego revisa cada libro, nota, final y publicación por
+separado. Lo que no cuadra se descarta —y se dice cuántas entradas fueron— en
+vez de tumbar la importación entera. Un campo con el tipo equivocado se ignora;
+un tono de final desconocido cae a «ambiguo»; sólo una cabecera irreconocible
+aborta.
+
+## Pruebas
+
+```bash
+npm test
+```
+
+63 tests sobre la lógica que puede romperse en silencio: validación de ISBN
+(dígito de control de ISBN-10 y EAN-13, prefijos 978/979), el motor de
+recomendaciones, el reductor del estado y el saneado de las copias. La red se
+simula, así que la suite corre sin conexión.
+
+Están comprobados por mutación: al invertir el rechazo de códigos que no son de
+libro, la exclusión de los libros ya guardados y la normalización del tono,
+fallan cuatro tests concretos.
+
 ## Diseño
 
 Un solo sistema, dos temas: **noche** (por defecto) y **papel**, una página
@@ -89,6 +118,7 @@ npm run dev        # http://localhost:3000
 npm run build
 npm run lint
 npm run typecheck
+npm test
 ```
 
 ## Stack
@@ -116,9 +146,11 @@ lib/
   openlibrary.ts      Cliente de la API + validación de ISBN
   recommend.ts        Motor de recomendaciones
   store.tsx           Estado global y persistencia
+  backup.ts           Exportar / importar con validación defensiva
   theme.ts            Lectura y escritura del tema
   seed.ts             Catálogo y comunidad iniciales
   prompts.ts          Ideas para finales
+  *.test.ts           Pruebas (vitest)
 ```
 
 [bd]: https://developer.mozilla.org/en-US/docs/Web/API/Barcode_Detection_API

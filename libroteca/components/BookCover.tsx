@@ -35,6 +35,11 @@ interface Props {
   className?: string;
   /** Desactiva la inclinación al pasar el ratón (útil en listas densas). */
   flat?: boolean;
+  /**
+   * Miniatura decorativa: por debajo de ~40 px de ancho no cabe ni el título,
+   * así que la portada de respaldo se queda en el color de tela.
+   */
+  mini?: boolean;
 }
 
 export default function BookCover({
@@ -42,6 +47,7 @@ export default function BookCover({
   size = 'M',
   className = '',
   flat = false,
+  mini = false,
 }: Props) {
   const [failed, setFailed] = useState(false);
   const url = bookCoverUrl(book, size);
@@ -58,8 +64,9 @@ export default function BookCover({
           <FallbackCover
             title={book.title}
             author={book.authors[0]}
-            // A tamaño miniatura sólo cabe el título sin que se recorte.
+            // A tamaño pequeño sólo cabe el título sin que se recorte.
             compact={size === 'S'}
+            mini={mini}
           />
         ) : (
           /* eslint-disable-next-line @next/next/no-img-element */
@@ -104,12 +111,18 @@ function FallbackCover({
   title,
   author,
   compact,
+  mini,
 }: {
   title: string;
   author?: string;
   compact?: boolean;
+  mini?: boolean;
 }) {
   const cloth = clothFor(title);
+
+  if (mini) {
+    return <div className="h-full w-full" style={{ backgroundColor: cloth }} />;
+  }
 
   if (compact) {
     return (

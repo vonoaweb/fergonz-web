@@ -2,12 +2,22 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, Compass, Library, ScanLine, Users, PenLine } from 'lucide-react';
+import {
+  BookOpen,
+  Compass,
+  Library,
+  NotebookPen,
+  PenLine,
+  ScanLine,
+  Settings,
+  Users,
+} from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 const LINKS = [
   { href: '/', label: 'Descubre', icon: Compass },
   { href: '/biblioteca', label: 'Biblioteca', icon: Library },
+  { href: '/notas', label: 'Notas', icon: NotebookPen },
   { href: '/escanear', label: 'Escanear', icon: ScanLine },
   { href: '/comunidad', label: 'Comunidad', icon: Users },
   { href: '/finales', label: 'Finales', icon: PenLine },
@@ -19,11 +29,12 @@ function isActive(pathname: string, href: string): boolean {
 
 export default function Nav() {
   const pathname = usePathname();
+  const settingsActive = isActive(pathname, '/ajustes');
 
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-line/50 bg-bg/70 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-5xl items-center gap-4 px-5 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-5xl items-center gap-3 px-5 py-3 sm:px-6">
           <Link
             href="/"
             className="flex items-center gap-2 font-display text-lg tracking-tight text-ink"
@@ -34,7 +45,7 @@ export default function Nav() {
             Libroteca
           </Link>
 
-          <nav className="ml-auto hidden items-center gap-0.5 sm:flex">
+          <nav className="ml-auto hidden items-center gap-0.5 lg:flex">
             {LINKS.map(({ href, label, icon: Icon }) => {
               const active = isActive(pathname, href);
               return (
@@ -43,9 +54,7 @@ export default function Nav() {
                   href={href}
                   aria-current={active ? 'page' : undefined}
                   className={`relative flex items-center gap-1.5 rounded-pill px-3 py-1.5 text-sm transition duration-200 ${
-                    active
-                      ? 'text-ink'
-                      : 'text-muted hover:bg-surface/70 hover:text-ink'
+                    active ? 'text-ink' : 'text-muted hover:bg-surface/70 hover:text-ink'
                   }`}
                 >
                   {active && (
@@ -61,15 +70,27 @@ export default function Nav() {
             })}
           </nav>
 
-          <div className="ml-auto sm:ml-1">
+          <div className="ml-auto flex items-center gap-1.5 lg:ml-2">
+            <Link
+              href="/ajustes"
+              aria-label="Ajustes"
+              aria-current={settingsActive ? 'page' : undefined}
+              className={`rounded-pill border p-2 transition ${
+                settingsActive
+                  ? 'border-accent/40 bg-accent/12 text-accent'
+                  : 'border-line/60 bg-surface/60 text-muted hover:border-line hover:text-ink'
+              }`}
+            >
+              <Settings size={15} />
+            </Link>
             <ThemeToggle />
           </div>
         </div>
       </header>
 
-      {/* Barra inferior en móvil: la app se usa con el libro en la otra mano. */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-line/50 bg-bg/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl sm:hidden">
-        <div className="flex">
+      {/* Barra inferior hasta lg: la app se usa con el libro en la otra mano. */}
+      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-line/50 bg-bg/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden">
+        <div className="mx-auto flex max-w-lg">
           {LINKS.map(({ href, label, icon: Icon }) => {
             const active = isActive(pathname, href);
             return (
@@ -77,19 +98,22 @@ export default function Nav() {
                 key={href}
                 href={href}
                 aria-current={active ? 'page' : undefined}
-                className="relative flex flex-1 flex-col items-center gap-1 py-2.5 text-[10px]"
+                className="relative flex flex-1 flex-col items-center gap-1 py-2.5"
               >
                 {active && (
                   <span
                     aria-hidden
-                    className="absolute inset-x-4 top-0 h-0.5 rounded-b bg-accent"
+                    className="absolute inset-x-3 top-0 h-0.5 rounded-b bg-accent"
                   />
                 )}
-                <Icon
-                  size={19}
-                  className={active ? 'text-accent' : 'text-faint'}
-                />
-                <span className={active ? 'text-ink' : 'text-faint'}>{label}</span>
+                <Icon size={18} className={active ? 'text-accent' : 'text-faint'} />
+                <span
+                  className={`text-[9px] leading-none ${
+                    active ? 'text-ink' : 'text-faint'
+                  }`}
+                >
+                  {label}
+                </span>
               </Link>
             );
           })}

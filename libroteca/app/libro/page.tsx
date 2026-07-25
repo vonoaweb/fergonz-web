@@ -160,6 +160,15 @@ function BookDetail() {
         role="tablist"
         aria-label="Contenido del libro"
         className="flex gap-1 border-b border-line/60"
+        // Las flechas cambian de pestaña y arrastran el foco, como espera el
+        // patrón de tabs de ARIA con tabindex móvil.
+        onKeyDown={(event) => {
+          if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+          event.preventDefault();
+          const next: Tab = tab === 'notas' ? 'finales' : 'notas';
+          setTab(next);
+          document.getElementById(`tab-${next}`)?.focus();
+        }}
       >
         {(
           [
@@ -176,6 +185,8 @@ function BookDetail() {
               id={`tab-${key}`}
               aria-controls={`panel-${key}`}
               aria-selected={active}
+              // Sólo la pestaña activa entra en el orden de tabulación.
+              tabIndex={active ? 0 : -1}
               onClick={() => setTab(key)}
               className={`-mb-px flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm transition duration-200 ${
                 active

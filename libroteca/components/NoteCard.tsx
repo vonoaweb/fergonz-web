@@ -1,15 +1,37 @@
 'use client';
 
+import Link from 'next/link';
 import { Lock, Trash2 } from 'lucide-react';
+import BookCover from './BookCover';
 import TimeAgo from './TimeAgo';
+import { bookHref } from '@/lib/format';
 import { useStore } from '@/lib/store';
 import type { Note } from '@/lib/types';
 
-export default function NoteCard({ note }: { note: Note }) {
-  const { dispatch } = useStore();
+interface Props {
+  note: Note;
+  /** En la vista global hace falta saber de qué libro es cada nota. */
+  showBook?: boolean;
+}
+
+export default function NoteCard({ note, showBook = false }: Props) {
+  const { state, dispatch } = useStore();
+  const book = showBook ? state.books[note.bookId] : undefined;
 
   return (
     <article className="card group p-4">
+      {book && (
+        <Link
+          href={bookHref(book.id)}
+          className="mb-3 flex items-center gap-2.5 text-xs text-muted transition hover:text-ink"
+        >
+          <BookCover book={book} size="S" flat mini className="h-9 w-6 shrink-0" />
+          <span className="font-display text-sm text-ink line-clamp-1">
+            {book.title}
+          </span>
+        </Link>
+      )}
+
       {note.quote && (
         <blockquote className="mb-3 border-l-2 border-accent/60 pl-4 font-read text-[0.95rem] italic leading-relaxed text-ink/85">
           “{note.quote}”
@@ -34,10 +56,7 @@ export default function NoteCard({ note }: { note: Note }) {
         )}
 
         {note.tags.map((tag) => (
-          <span
-            key={tag}
-            className="rounded-pill bg-raised/70 px-2 py-0.5 text-muted"
-          >
+          <span key={tag} className="rounded-pill bg-raised/70 px-2 py-0.5 text-muted">
             #{tag}
           </span>
         ))}

@@ -22,9 +22,9 @@ import type {
   ShelfEntry,
 } from './types';
 
-const STORAGE_KEY = 'libroteca:v1';
+export const STORAGE_KEY = 'libroteca:v1';
 
-type Action =
+export type Action =
   | { type: 'hydrate'; state: AppState }
   | { type: 'setProfileName'; name: string }
   | { type: 'toggleFavoriteSubject'; subject: string }
@@ -42,9 +42,11 @@ type Action =
   | { type: 'deleteEnding'; endingId: string }
   | { type: 'addPost'; post: CommunityPost }
   | { type: 'likePost'; postId: string }
+  | { type: 'importState'; state: AppState }
   | { type: 'reset' };
 
-function reducer(state: AppState, action: Action): AppState {
+/** Exportado aparte del proveedor para poder probarlo sin montar React. */
+export function appReducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'hydrate':
       return action.state;
@@ -192,6 +194,9 @@ function reducer(state: AppState, action: Action): AppState {
         ),
       };
 
+    case 'importState':
+      return action.state;
+
     case 'reset':
       return createInitialState();
 
@@ -230,7 +235,7 @@ interface StoreValue {
 const StoreContext = createContext<StoreValue | null>(null);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, undefined, createInitialState);
+  const [state, dispatch] = useReducer(appReducer, undefined, createInitialState);
   const [ready, setReady] = useState(false);
 
   // El primer render debe coincidir con el HTML del servidor, así que el
