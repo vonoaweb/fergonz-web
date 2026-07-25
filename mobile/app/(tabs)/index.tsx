@@ -106,6 +106,19 @@ export default function Home() {
             <StatTile icon="location" value={CENTERS.length} label="Centros" tint={colors.secondary} />
           </View>
 
+          <Pressable onPress={() => router.push('/request-new')} style={{ marginTop: spacing.lg }}>
+            <LinearGradient colors={gradients.primary} style={styles.needCard}>
+              <Ionicons name="heart" size={26} color="#fff" />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.needTitle}>¿Un conocido necesita sangre?</Text>
+                <Text style={styles.needSub}>
+                  Crea una solicitud y compártela con tus contactos.
+                </Text>
+              </View>
+              <Ionicons name="chevron-forward" size={20} color="#fff" />
+            </LinearGradient>
+          </Pressable>
+
           <SectionHeader
             title="Dónde donar en Jalisco"
             action="Ver todos"
@@ -223,6 +236,16 @@ const styles = StyleSheet.create({
   eligBtnText: { color: colors.primary, fontWeight: '700', fontSize: 13.5 },
   body: { paddingHorizontal: spacing.xl, paddingTop: 64 },
   statsRow: { flexDirection: 'row', gap: spacing.md },
+  needCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    padding: spacing.lg,
+    borderRadius: radius.xl,
+    overflow: 'hidden',
+  },
+  needTitle: { color: '#fff', fontSize: 15, fontWeight: '800' },
+  needSub: { color: 'rgba(255,255,255,0.92)', fontSize: 12.5, marginTop: 2 },
   alertCard: { paddingVertical: spacing.xs },
   alertIntro: {
     fontSize: 12.5,

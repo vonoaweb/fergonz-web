@@ -23,6 +23,7 @@ export default function RootLayout() {
             <Stack.Screen name="onboarding" options={{ animation: 'fade' }} />
             <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
             <Stack.Screen name="center/[id]" options={{ presentation: 'card' }} />
+            <Stack.Screen name="request-new" options={{ presentation: 'card' }} />
           </Stack>
         </DonorProvider>
       </SafeAreaProvider>
