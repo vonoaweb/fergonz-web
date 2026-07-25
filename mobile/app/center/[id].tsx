@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/Button';
-import { Card, Divider, Tag } from '@/components/ui';
+import { Card, Divider } from '@/components/ui';
 import { useDonor } from '@/context/DonorContext';
 import { CENTERS } from '@/data';
 import { colors, gradients, radius, spacing } from '@/theme';
@@ -72,10 +72,18 @@ export default function CenterDetail() {
             <Pressable onPress={() => router.back()} style={styles.backBtn}>
               <Ionicons name="chevron-back" size={22} color="#fff" />
             </Pressable>
-            <Tag
-              label={center.acceptsWalkIns ? 'Recibe sin cita' : 'Requiere cita'}
-              tone={center.acceptsWalkIns ? 'success' : 'neutral'}
-            />
+            <View style={styles.headTags}>
+              <View style={styles.headPill}>
+                <Text style={styles.headPillText}>
+                  {center.sector === 'privado' ? 'Privado' : 'Público'}
+                </Text>
+              </View>
+              <View style={styles.headPill}>
+                <Text style={styles.headPillText}>
+                  {center.acceptsWalkIns ? 'Sin cita' : 'Con cita'}
+                </Text>
+              </View>
+            </View>
           </View>
           <Text style={styles.name}>{center.name}</Text>
           <Text style={styles.type}>
@@ -175,6 +183,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  headTags: { flexDirection: 'row', gap: spacing.sm },
+  headPill: {
+    backgroundColor: 'rgba(255,255,255,0.22)',
+    paddingHorizontal: spacing.md,
+    paddingVertical: 6,
+    borderRadius: radius.pill,
+  },
+  headPillText: { color: '#fff', fontSize: 11.5, fontWeight: '800' },
   backBtn: {
     width: 40,
     height: 40,

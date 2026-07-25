@@ -45,10 +45,11 @@ export function SectionHeader({
 
 const TONES = {
   primary: { bg: colors.primarySoft, fg: colors.primary },
-  urgent: { bg: '#FEE2E2', fg: colors.urgent },
+  urgent: { bg: '#FFE4E9', fg: colors.urgent },
   warning: { bg: colors.warningSoft, fg: '#B45309' },
-  success: { bg: colors.successSoft, fg: colors.success },
-  info: { bg: colors.infoSoft, fg: colors.info },
+  success: { bg: colors.successSoft, fg: '#0F9155' },
+  info: { bg: colors.infoSoft, fg: '#2563EB' },
+  secondary: { bg: colors.secondarySoft, fg: '#0C8177' },
   neutral: { bg: colors.surfaceAlt, fg: colors.textSecondary },
 } as const;
 

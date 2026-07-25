@@ -9,9 +9,13 @@ necesitan sangre. Construida con **Expo + React Native + TypeScript** y
 - **Onboarding** guiado: nombre y tipo de sangre (o "no lo sé").
 - **Dashboard de elegibilidad**: anillo de progreso con la cuenta regresiva
   (sangre completa cada 2 meses) y estado "puedes donar / en recuperación".
-- **Centros de donación REALES (Jalisco)**: CETS Jalisco, Antiguo y Nuevo
-  Hospital Civil de Guadalajara e IMSS CMN de Occidente, con dirección,
-  teléfono y horario verificados; "cómo llegar" (Google Maps) y llamada directa.
+- **Centros de donación REALES (Jalisco), públicos y privados**: CETS Jalisco,
+  Antiguo y Nuevo Hospital Civil de Guadalajara, IMSS CMN de Occidente y
+  hospitales privados (San Javier, Country 2000, Ángeles del Carmen), con
+  dirección, teléfono y horario verificados, filtro público/privado, "cómo
+  llegar" (Google Maps) y llamada directa.
+- **Aviso legal**: la app es informativa y **sin fines de lucro** (no compra,
+  vende ni intermedia sangre, ni cobra); la donación es altruista y gratuita.
 - **Requisitos y datos oficiales**: elegibilidad, frecuencia y preguntas
   frecuentes según CETS Jalisco, Hospital Civil e IMSS, con fuentes citadas.
 - **Compatibilidad sanguínea**: matriz de a quién puedes donar y de quién puedes

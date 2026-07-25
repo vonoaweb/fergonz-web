@@ -235,7 +235,7 @@ export default function Profile() {
           </Card>
 
           <Text style={styles.footerNote}>
-            VidaLink · Donación de sangre altruista{'\n'}
+            VidaLink · Donación de sangre altruista · Sin fines de lucro{'\n'}
             Tus datos se guardan solo en tu dispositivo.
           </Text>
         </View>

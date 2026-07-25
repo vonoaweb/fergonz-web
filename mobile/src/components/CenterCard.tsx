@@ -22,13 +22,19 @@ export function CenterCard({
             </View>
             <View style={styles.headText}>
               <Text style={styles.name}>{center.name}</Text>
-              <Text style={styles.type} numberOfLines={1}>
-                {center.type}
-              </Text>
+              <View style={styles.sectorRow}>
+                <Tag
+                  label={center.sector === 'privado' ? 'Privado' : 'Público'}
+                  tone={center.sector === 'privado' ? 'warning' : 'info'}
+                />
+                <Text style={styles.type} numberOfLines={1}>
+                  {center.alcaldia}
+                </Text>
+              </View>
             </View>
             <Tag
               label={center.acceptsWalkIns ? 'Sin cita' : 'Con cita'}
-              tone={center.acceptsWalkIns ? 'success' : 'neutral'}
+              tone={center.acceptsWalkIns ? 'secondary' : 'neutral'}
             />
           </View>
 
@@ -75,7 +81,8 @@ const styles = StyleSheet.create({
   },
   headText: { flex: 1 },
   name: { fontSize: 15, fontWeight: '700', color: colors.text, lineHeight: 19 },
-  type: { fontSize: 12.5, color: colors.textSecondary, marginTop: 2 },
+  sectorRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginTop: 5, flexWrap: 'wrap' },
+  type: { fontSize: 12.5, color: colors.textSecondary, flexShrink: 1 },
   addressRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 5 },
   address: { fontSize: 13, color: colors.textSecondary, flex: 1 },
   stats: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.lg },

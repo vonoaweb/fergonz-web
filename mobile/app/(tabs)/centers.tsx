@@ -1,16 +1,30 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CenterCard } from '@/components/CenterCard';
-import { CENTERS } from '@/data';
+import { CENTERS, Sector } from '@/data';
 import { colors, gradients, radius, spacing } from '@/theme';
+
+type Filter = 'all' | Sector;
+
+const FILTERS: { key: Filter; label: string }[] = [
+  { key: 'all', label: 'Todos' },
+  { key: 'publico', label: 'Públicos' },
+  { key: 'privado', label: 'Privados' },
+];
 
 export default function Centers() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const [filter, setFilter] = useState<Filter>('all');
+
+  const list = useMemo(
+    () => (filter === 'all' ? CENTERS : CENTERS.filter((c) => c.sector === filter)),
+    [filter],
+  );
 
   return (
     <View style={styles.root}>
@@ -19,6 +33,23 @@ export default function Centers() {
         <Text style={styles.subtitle}>
           {CENTERS.length} bancos de sangre reales · Jalisco
         </Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.filters}
+        >
+          {FILTERS.map((f) => (
+            <Pressable
+              key={f.key}
+              onPress={() => setFilter(f.key)}
+              style={[styles.chip, filter === f.key && styles.chipActive]}
+            >
+              <Text style={[styles.chipText, filter === f.key && styles.chipTextActive]}>
+                {f.label}
+              </Text>
+            </Pressable>
+          ))}
+        </ScrollView>
       </View>
 
       <ScrollView
@@ -31,13 +62,13 @@ export default function Centers() {
             <Ionicons name="location" size={30} color="#fff" />
             <Ionicons name="location" size={18} color="rgba(255,255,255,0.75)" />
           </View>
-          <Text style={styles.bannerTitle}>Bancos de sangre verificados</Text>
+          <Text style={styles.bannerTitle}>Públicos y privados</Text>
           <Text style={styles.bannerSub}>
             Toca un centro para ver dirección, teléfono y horario. Datos de fuentes oficiales.
           </Text>
         </LinearGradient>
 
-        {CENTERS.map((c) => (
+        {list.map((c) => (
           <CenterCard key={c.id} center={c} onPress={() => router.push(`/center/${c.id}`)} />
         ))}
 
@@ -60,6 +91,18 @@ const styles = StyleSheet.create({
   },
   title: { fontSize: 24, fontWeight: '800', color: colors.text, letterSpacing: -0.4 },
   subtitle: { fontSize: 13, color: colors.textSecondary, marginTop: 3 },
+  filters: { gap: spacing.sm, paddingTop: spacing.md },
+  chip: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.pill,
+    backgroundColor: colors.surfaceAlt,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  chipActive: { backgroundColor: colors.primary, borderColor: colors.primary },
+  chipText: { fontSize: 13.5, fontWeight: '700', color: colors.textSecondary },
+  chipTextActive: { color: '#fff' },
   list: { padding: spacing.xl, gap: spacing.md, paddingBottom: spacing.xxxl },
   banner: {
     borderRadius: radius.xl,

@@ -4,7 +4,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Card, Divider, SectionHeader } from '@/components/ui';
-import { FAQ, FRECUENCIA, REQUISITOS } from '@/data';
+import { FAQ, FRECUENCIA, LEGAL_NOTICE, REQUISITOS } from '@/data';
 import { colors, gradients, radius, spacing } from '@/theme';
 
 export default function Info() {
@@ -75,11 +75,18 @@ export default function Info() {
           ))}
         </Card>
 
+        <SectionHeader title="Aviso legal" />
+        <Card style={styles.legal}>
+          <Ionicons name="shield-checkmark-outline" size={20} color={colors.textSecondary} />
+          <Text style={styles.legalText}>{LEGAL_NOTICE}</Text>
+        </Card>
+
         <Card style={styles.sources}>
           <Text style={styles.sourcesText}>
             <Text style={{ fontWeight: '700' }}>Fuentes: </Text>
-            CETS Jalisco (Secretaría de Salud Jalisco), Hospital Civil de Guadalajara e IMSS.
-            Los requisitos pueden variar por centro; confirma antes de acudir.
+            CETS Jalisco (Secretaría de Salud Jalisco), Hospital Civil de Guadalajara, IMSS y
+            los sitios oficiales de cada hospital. Los datos son orientativos; confirma con
+            cada institución antes de acudir.
           </Text>
         </Card>
       </ScrollView>
@@ -133,6 +140,14 @@ const styles = StyleSheet.create({
   faqItem: { paddingVertical: spacing.sm, gap: 3 },
   faqQ: { fontSize: 14.5, fontWeight: '700', color: colors.text },
   faqA: { fontSize: 13, color: colors.textSecondary, lineHeight: 19 },
-  sources: { marginTop: spacing.lg, backgroundColor: colors.surfaceAlt, borderColor: colors.border },
+  legal: {
+    flexDirection: 'row',
+    gap: spacing.md,
+    alignItems: 'flex-start',
+    backgroundColor: colors.surfaceAlt,
+    borderColor: colors.border,
+  },
+  legalText: { flex: 1, fontSize: 12.5, color: colors.textSecondary, lineHeight: 19 },
+  sources: { marginTop: spacing.md, backgroundColor: colors.surfaceAlt, borderColor: colors.border },
   sourcesText: { fontSize: 12.5, color: colors.textSecondary, lineHeight: 18 },
 });

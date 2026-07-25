@@ -6,8 +6,11 @@
  * instituciones verificadas a través de un backend con validación.
  */
 
+export type Sector = 'publico' | 'privado';
+
 export interface DonationCenter {
   id: string;
+  sector: Sector;
   name: string;
   type: string;
   alcaldia: string; // municipio / zona
@@ -22,6 +25,7 @@ export interface DonationCenter {
 export const CENTERS: DonationCenter[] = [
   {
     id: 'c1',
+    sector: 'publico',
     name: 'CETS Jalisco · Centro Estatal de la Transfusión Sanguínea',
     type: 'Secretaría de Salud Jalisco',
     alcaldia: 'Zapopan, Jal.',
@@ -34,6 +38,7 @@ export const CENTERS: DonationCenter[] = [
   },
   {
     id: 'c2',
+    sector: 'publico',
     name: 'Banco de Sangre · Antiguo Hospital Civil "Fray Antonio Alcalde"',
     type: 'Hospital Civil de Guadalajara',
     alcaldia: 'Guadalajara Centro, Jal.',
@@ -46,6 +51,7 @@ export const CENTERS: DonationCenter[] = [
   },
   {
     id: 'c3',
+    sector: 'publico',
     name: 'Banco de Sangre · IMSS CMN de Occidente',
     type: 'IMSS · UMAE de Especialidades',
     alcaldia: 'Guadalajara (Independencia), Jal.',
@@ -58,6 +64,7 @@ export const CENTERS: DonationCenter[] = [
   },
   {
     id: 'c4',
+    sector: 'publico',
     name: 'Banco de Sangre · Nuevo Hospital Civil "Dr. Juan I. Menchaca"',
     type: 'Hospital Civil de Guadalajara',
     alcaldia: 'Guadalajara (Independencia Ote.), Jal.',
@@ -68,7 +75,55 @@ export const CENTERS: DonationCenter[] = [
     acceptsWalkIns: true,
     note: 'Segundo banco de sangre de los Hospitales Civiles de Guadalajara.',
   },
+  {
+    id: 'p1',
+    sector: 'privado',
+    name: 'Banco de Sangre · Hospital San Javier',
+    type: 'Hospital privado',
+    alcaldia: 'Guadalajara (Providencia), Jal.',
+    address: 'Av. Pablo Casals 640, Col. Prados Providencia, C.P. 44670',
+    hours: 'Lun–Vie 8:00–19:30 · Sáb 8:00–15:30 · Dom 9:00–12:30',
+    phone: '33 3669 0222',
+    site: 'sanjavier.com.mx',
+    acceptsWalkIns: true,
+    note: 'Banco de sangre privado; recibe donadores altruistas y de reposición.',
+  },
+  {
+    id: 'p2',
+    sector: 'privado',
+    name: 'Banco de Sangre · Hospital Country 2000',
+    type: 'Hospital privado',
+    alcaldia: 'Guadalajara (Chapultepec Country), Jal.',
+    address: 'Av. Circunvalación Jorge Álvarez del Castillo 1542, C.P. 44620',
+    hours: 'Lun a Dom · 8:00–20:00',
+    phone: '33 3854 4500',
+    site: 'hospitalcountry2000.com',
+    acceptsWalkIns: true,
+    note: 'Amplio horario, incluidos fines de semana.',
+  },
+  {
+    id: 'p3',
+    sector: 'privado',
+    name: 'Banco de Sangre · Hospital Ángeles del Carmen',
+    type: 'Hospital privado',
+    alcaldia: 'Guadalajara (Monraz), Jal.',
+    address: 'Calle Tarascos 3435, Fracc. Monraz, C.P. 44670',
+    hours: 'Consulta horario por teléfono',
+    phone: '33 3813 0042',
+    site: 'hospitalangeles.com',
+    acceptsWalkIns: true,
+    note: 'Banco de sangre de la red Hospital Ángeles.',
+  },
 ];
+
+/** Aviso legal: la app no lucra y solo informa. */
+export const LEGAL_NOTICE =
+  'VidaLink es una herramienta informativa y sin fines de lucro. No compra, vende ni ' +
+  'intermedia sangre, no cobra por sus servicios y no obtiene ningún beneficio económico. ' +
+  'Solo comparte información pública de instituciones y orienta a los donadores hacia ' +
+  'bancos de sangre autorizados. La donación de sangre es altruista, voluntaria y gratuita ' +
+  'conforme a la ley; vender o comprar sangre está prohibido. Los nombres y datos de los ' +
+  'centros pertenecen a sus respectivas instituciones.';
 
 export interface Requisito {
   icon: string;
