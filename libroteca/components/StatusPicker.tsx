@@ -1,5 +1,7 @@
 'use client';
 
+import { BookMarked, BookOpenCheck, Bookmark, PauseCircle } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import type { ReadingStatus } from '@/lib/types';
 
 export const STATUS_LABELS: Record<ReadingStatus, string> = {
@@ -9,20 +11,36 @@ export const STATUS_LABELS: Record<ReadingStatus, string> = {
   abandonado: 'Abandonado',
 };
 
+export const STATUS_ICONS: Record<ReadingStatus, LucideIcon> = {
+  pendiente: Bookmark,
+  leyendo: BookMarked,
+  leido: BookOpenCheck,
+  abandonado: PauseCircle,
+};
+
+/**
+ * Cada estado tiene su propio matiz. Los tonos claros van primero y `dark:`
+ * cubre el tema noche, donde el mismo color necesita más luminosidad.
+ */
 export const STATUS_STYLES: Record<ReadingStatus, string> = {
-  pendiente: 'bg-sky-500/15 text-sky-300 ring-sky-400/30',
-  leyendo: 'bg-ember-500/15 text-ember-400 ring-ember-400/30',
-  leido: 'bg-emerald-500/15 text-emerald-300 ring-emerald-400/30',
-  abandonado: 'bg-white/5 text-paper-100/50 ring-white/15',
+  pendiente:
+    'border-sky-600/30 bg-sky-500/12 text-sky-700 dark:border-sky-400/35 dark:text-sky-300',
+  leyendo:
+    'border-amber-600/35 bg-amber-500/14 text-amber-700 dark:border-amber-400/35 dark:text-amber-300',
+  leido:
+    'border-emerald-600/30 bg-emerald-500/12 text-emerald-700 dark:border-emerald-400/35 dark:text-emerald-300',
+  abandonado: 'border-line/70 bg-surface/60 text-faint',
 };
 
 const ORDER: ReadingStatus[] = ['pendiente', 'leyendo', 'leido', 'abandonado'];
 
 export function StatusBadge({ status }: { status: ReadingStatus }) {
+  const Icon = STATUS_ICONS[status];
   return (
     <span
-      className={`rounded-full px-2 py-0.5 text-[11px] font-medium ring-1 ${STATUS_STYLES[status]}`}
+      className={`inline-flex items-center gap-1 rounded-pill border px-2 py-0.5 text-2xs font-medium ${STATUS_STYLES[status]}`}
     >
+      <Icon size={11} />
       {STATUS_LABELS[status]}
     </span>
   );
@@ -36,21 +54,26 @@ interface Props {
 export default function StatusPicker({ value, onChange }: Props) {
   return (
     <div className="flex flex-wrap gap-1.5">
-      {ORDER.map((status) => (
-        <button
-          key={status}
-          type="button"
-          onClick={() => onChange(status)}
-          aria-pressed={value === status}
-          className={`rounded-full px-3 py-1.5 text-xs font-medium ring-1 transition ${
-            value === status
-              ? STATUS_STYLES[status]
-              : 'text-paper-100/60 ring-white/10 hover:bg-white/5 hover:text-paper-50'
-          }`}
-        >
-          {STATUS_LABELS[status]}
-        </button>
-      ))}
+      {ORDER.map((status) => {
+        const Icon = STATUS_ICONS[status];
+        const active = value === status;
+        return (
+          <button
+            key={status}
+            type="button"
+            onClick={() => onChange(status)}
+            aria-pressed={active}
+            className={`inline-flex items-center gap-1.5 rounded-pill border px-3 py-1.5 text-xs font-medium transition duration-200 ease-out ${
+              active
+                ? STATUS_STYLES[status]
+                : 'border-line/60 bg-surface/50 text-muted hover:border-line hover:bg-raised hover:text-ink'
+            }`}
+          >
+            <Icon size={12} />
+            {STATUS_LABELS[status]}
+          </button>
+        );
+      })}
     </div>
   );
 }

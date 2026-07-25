@@ -2,34 +2,152 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Dos temas con la misma escala semántica. "noche" es el de por defecto;
+ * "papel" imita una página impresa bajo luz cálida.
+ */
 @layer base {
+  :root,
+  [data-theme='noche'] {
+    --c-bg: 11 10 15;
+    --c-surface: 22 20 29;
+    --c-raised: 31 28 41;
+    --c-line: 60 55 74;
+    --c-ink: 245 240 232;
+    --c-muted: 168 160 178;
+    --c-faint: 118 111 130;
+    --c-accent: 240 176 92;
+    --c-accent-soft: 92 62 24;
+    --c-on-accent: 26 18 8;
+    --c-plum: 176 152 250;
+    --c-plum-soft: 62 48 104;
+
+    --grain-opacity: 0.05;
+    --glow-a: 139 109 240;
+    --glow-b: 232 161 63;
+    --glow-strength: 0.16;
+  }
+
+  [data-theme='papel'] {
+    --c-bg: 244 238 227;
+    --c-surface: 253 250 244;
+    --c-raised: 255 253 249;
+    --c-line: 216 205 186;
+    --c-ink: 38 32 27;
+    --c-muted: 106 96 84;
+    --c-faint: 146 134 119;
+    --c-accent: 166 92 18;
+    --c-accent-soft: 245 227 199;
+    --c-on-accent: 255 251 244;
+    --c-plum: 94 62 168;
+    --c-plum-soft: 232 224 249;
+
+    --grain-opacity: 0.035;
+    --glow-a: 120 86 220;
+    --glow-b: 200 130 40;
+    --glow-strength: 0.1;
+  }
+
   html {
-    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
-    @apply bg-ink-950 text-paper-50 antialiased;
+    @apply bg-bg text-ink antialiased;
+    font-family: var(--font-sans), system-ui, sans-serif;
     background-image:
-      radial-gradient(60rem 40rem at 15% -10%, rgba(139, 109, 240, 0.13), transparent 60%),
-      radial-gradient(50rem 35rem at 100% 0%, rgba(232, 161, 63, 0.1), transparent 55%);
+      radial-gradient(
+        58rem 38rem at 12% -8%,
+        rgb(var(--glow-a) / var(--glow-strength)),
+        transparent 62%
+      ),
+      radial-gradient(
+        46rem 32rem at 102% 2%,
+        rgb(var(--glow-b) / var(--glow-strength)),
+        transparent 58%
+      );
     background-attachment: fixed;
   }
 
+  /* Grano de papel: da textura sin cargar ninguna imagen externa. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
   ::selection {
-    @apply bg-ember-500/30 text-paper-50;
+    background: rgb(var(--c-accent) / 0.28);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-accent) / 0.75);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.011em;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-card border border-line/60 bg-surface/80 shadow-card backdrop-blur-sm;
+  }
+
+  .card-hover {
+    @apply transition duration-300 ease-out hover:-translate-y-0.5 hover:border-line hover:shadow-lift;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-line/70 bg-raised/60 px-3.5 py-2.5 text-sm
+      text-ink placeholder:text-faint transition
+      focus:border-accent/60 focus:bg-raised focus:outline-none;
+  }
+
+  .eyebrow {
+    @apply text-2xs font-semibold uppercase tracking-eyebrow text-faint;
+  }
+
+  /* Filo de página: la franja clara del canto derecho de un libro cerrado. */
+  .page-edge {
+    background-image: repeating-linear-gradient(
+      to right,
+      rgb(250 246 238 / 0.85) 0 1px,
+      rgb(196 186 170 / 0.7) 1px 2px
+    );
   }
 }
 
 @layer utilities {
-  /* Deja hueco para la barra de navegación fija en móvil. */
   .pb-nav {
-    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom));
   }
 
   @media (min-width: 640px) {
     .pb-nav {
-      padding-bottom: 3rem;
+      padding-bottom: 4rem;
     }
+  }
+
+  .stack-layer {
+    position: relative;
+    z-index: 1;
   }
 }
 

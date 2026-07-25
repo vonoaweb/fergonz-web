@@ -1,7 +1,7 @@
 'use client';
 
 import { Lock, Trash2 } from 'lucide-react';
-import { relativeTime } from '@/lib/format';
+import TimeAgo from './TimeAgo';
 import { useStore } from '@/lib/store';
 import type { Note } from '@/lib/types';
 
@@ -9,26 +9,35 @@ export default function NoteCard({ note }: { note: Note }) {
   const { dispatch } = useStore();
 
   return (
-    <article className="group rounded-xl border border-white/10 bg-ink-900/50 p-3">
+    <article className="card group p-4">
       {note.quote && (
-        <blockquote className="mb-2 border-l-2 border-ember-400/60 pl-3 font-serif text-sm italic text-paper-100/90">
+        <blockquote className="mb-3 border-l-2 border-accent/60 pl-4 font-read text-[0.95rem] italic leading-relaxed text-ink/85">
           “{note.quote}”
         </blockquote>
       )}
 
-      <p className="whitespace-pre-wrap text-sm text-paper-50/90">{note.text}</p>
+      <p className="whitespace-pre-wrap text-sm leading-relaxed text-ink/90">
+        {note.text}
+      </p>
 
-      <div className="mt-2.5 flex flex-wrap items-center gap-2 text-[11px] text-paper-100/40">
-        {note.page ? <span>pág. {note.page}</span> : null}
-        <span>{relativeTime(note.createdAt)}</span>
+      <div className="mt-3 flex flex-wrap items-center gap-2 text-2xs text-faint">
+        {note.page ? (
+          <span className="rounded border border-line/60 px-1.5 py-0.5">
+            pág. {note.page}
+          </span>
+        ) : null}
+        <TimeAgo at={note.createdAt} />
         {note.private && (
-          <span className="flex items-center gap-1 text-plum-400/80">
+          <span className="flex items-center gap-1 text-plum">
             <Lock size={10} /> privada
           </span>
         )}
 
         {note.tags.map((tag) => (
-          <span key={tag} className="rounded-full bg-white/5 px-2 py-0.5 text-paper-100/55">
+          <span
+            key={tag}
+            className="rounded-pill bg-raised/70 px-2 py-0.5 text-muted"
+          >
             #{tag}
           </span>
         ))}
@@ -37,7 +46,7 @@ export default function NoteCard({ note }: { note: Note }) {
           type="button"
           onClick={() => dispatch({ type: 'deleteNote', noteId: note.id })}
           aria-label="Borrar nota"
-          className="ml-auto rounded p-1 text-paper-100/30 opacity-0 transition hover:text-rose-300 focus-visible:opacity-100 group-hover:opacity-100"
+          className="ml-auto rounded p-1 text-faint opacity-0 transition hover:text-rose-500 focus-visible:opacity-100 group-hover:opacity-100"
         >
           <Trash2 size={13} />
         </button>

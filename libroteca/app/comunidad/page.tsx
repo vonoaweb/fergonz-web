@@ -2,9 +2,11 @@
 
 import { useMemo, useState } from 'react';
 import { Users } from 'lucide-react';
+import Chip from '@/components/Chip';
 import EmptyState from '@/components/EmptyState';
 import PostCard from '@/components/PostCard';
 import PostComposer from '@/components/PostComposer';
+import SectionHeader from '@/components/SectionHeader';
 import { useStore } from '@/lib/store';
 import type { CommunityPost } from '@/lib/types';
 
@@ -31,43 +33,32 @@ export default function CommunityPage() {
 
   return (
     <div className="space-y-6">
-      <header className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="font-serif text-2xl text-paper-50">Comunidad</h1>
-          <p className="mt-1 text-sm text-paper-100/55">
-            Lo que están leyendo, discutiendo y reescribiendo otros lectores.
-          </p>
-        </div>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <SectionHeader
+          eyebrow="Comunidad"
+          title="Qué se está leyendo"
+          description="Reseñas, recomendaciones y finales alternativos de otros lectores."
+        />
 
-        <label className="text-xs text-paper-100/50">
-          Publicas como
+        <label className="mb-5 text-2xs text-faint">
+          <span className="eyebrow block">Publicas como</span>
           <input
             value={state.profile.name}
             onChange={(e) => dispatch({ type: 'setProfileName', name: e.target.value })}
             maxLength={24}
             aria-label="Tu nombre en la comunidad"
-            className="ml-2 w-32 rounded-full border border-white/10 bg-ink-900 px-3 py-1.5 text-xs text-paper-50 focus:border-ember-400/40 focus:outline-none"
+            className="mt-1.5 w-36 rounded-pill border border-line/60 bg-surface/60 px-3.5 py-1.5 text-xs text-ink focus:border-accent/50 focus:outline-none"
           />
         </label>
-      </header>
+      </div>
 
       <PostComposer />
 
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-2">
         {FILTERS.map(({ value, label }) => (
-          <button
-            key={value}
-            type="button"
-            onClick={() => setFilter(value)}
-            aria-pressed={filter === value}
-            className={`rounded-full px-3 py-1.5 text-xs ring-1 transition ${
-              filter === value
-                ? 'bg-ember-500/15 text-ember-400 ring-ember-400/30'
-                : 'text-paper-100/55 ring-white/10 hover:bg-white/5 hover:text-paper-50'
-            }`}
-          >
+          <Chip key={value} active={filter === value} onClick={() => setFilter(value)}>
             {label}
-          </button>
+          </Chip>
         ))}
       </div>
 
@@ -78,7 +69,7 @@ export default function CommunityPage() {
           description="Comparte una recomendación o una reseña y empieza la conversación."
         />
       ) : (
-        <div className="space-y-3">
+        <div className="grid gap-3 sm:grid-cols-2">
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}

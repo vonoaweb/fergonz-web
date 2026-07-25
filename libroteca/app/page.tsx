@@ -1,11 +1,14 @@
 'use client';
 
-import Link from 'next/link';
 import { useMemo } from 'react';
 import { ScanLine, Sparkles } from 'lucide-react';
 import BookCard from '@/components/BookCard';
 import BookSearch from '@/components/BookSearch';
+import Chip from '@/components/Chip';
+import CoverStack from '@/components/CoverStack';
 import EndingCard from '@/components/EndingCard';
+import SectionHeader from '@/components/SectionHeader';
+import { ButtonLink } from '@/components/Button';
 import { popularSubjects, recommend } from '@/lib/recommend';
 import { useStore } from '@/lib/store';
 
@@ -20,77 +23,73 @@ export default function DiscoverPage() {
   );
 
   const favorites = state.profile.favoriteSubjects;
+  const stackBooks = useMemo(
+    () => recommendations.map((r) => r.book).slice(0, 4),
+    [recommendations]
+  );
 
   return (
-    <div className="space-y-10">
-      <section className="animate-fade-up">
-        <h1 className="font-serif text-3xl leading-tight text-paper-50 sm:text-4xl">
-          Lee, anota, y reescribe el final.
-        </h1>
-        <p className="mt-2 max-w-xl text-sm text-paper-100/55">
-          Recomendaciones a partir de lo que ya leíste, notas que no se pierden y una
-          comunidad que discute finales alternativos.
-        </p>
+    <div className="space-y-14">
+      <section className="animate-fade-up grid items-center gap-10 lg:grid-cols-[1.15fr_1fr]">
+        <div>
+          <p className="eyebrow">Tu mesa de noche, ordenada</p>
+          <h1 className="mt-3 font-display text-[2.5rem] font-medium leading-[1.05] tracking-tight text-ink sm:text-5xl">
+            Lee, anota,
+            <br />y reescribe el final.
+          </h1>
+          <p className="mt-4 max-w-md text-[0.95rem] leading-relaxed text-muted">
+            Recomendaciones a partir de lo que ya leíste, notas que no se pierden y una
+            comunidad que discute finales alternativos.
+          </p>
 
-        <div className="mt-5">
-          <BookSearch />
+          <div className="mt-7">
+            <BookSearch />
+          </div>
+
+          <ButtonLink href="/escanear" variant="ghost" className="mt-4 text-xs">
+            <ScanLine size={14} className="text-accent" />
+            ¿Tienes el libro en la mano? Escanea el código de barras
+          </ButtonLink>
         </div>
 
-        <Link
-          href="/escanear"
-          className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-ink-900/60 px-4 py-2 text-xs text-paper-100/70 transition hover:border-ember-400/40 hover:text-ember-400"
-        >
-          <ScanLine size={14} />
-          ¿Tienes el libro en la mano? Escanea el código de barras
-        </Link>
-      </section>
-
-      <section>
-        <h2 className="text-xs font-medium uppercase tracking-widest text-paper-100/40">
-          Tus gustos
-        </h2>
-        <p className="mt-1 text-sm text-paper-100/55">
-          Marca temas para afinar las recomendaciones.
-        </p>
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {subjects.map((subject) => {
-            const active = favorites.includes(subject);
-            return (
-              <button
-                key={subject}
-                type="button"
-                onClick={() => dispatch({ type: 'toggleFavoriteSubject', subject })}
-                aria-pressed={active}
-                className={`rounded-full px-3 py-1.5 text-xs ring-1 transition ${
-                  active
-                    ? 'bg-ember-500/15 text-ember-400 ring-ember-400/30'
-                    : 'text-paper-100/55 ring-white/10 hover:bg-white/5 hover:text-paper-50'
-                }`}
-              >
-                {subject}
-              </button>
-            );
-          })}
+        <div className="hidden lg:block">
+          <CoverStack books={stackBooks} />
         </div>
       </section>
 
       <section>
-        <div className="flex items-baseline justify-between gap-3">
-          <h2 className="flex items-center gap-2 font-serif text-xl text-paper-50">
-            <Sparkles size={17} className="text-ember-400" />
-            Para ti
-          </h2>
-          <Link href="/biblioteca" className="text-xs text-paper-100/45 hover:text-paper-50">
-            Ver mi biblioteca
-          </Link>
+        <SectionHeader
+          eyebrow="Tus gustos"
+          title="Afina lo que te mostramos"
+          description="Marca los temas que te interesan y las recomendaciones se recalculan al instante."
+        />
+        <div className="flex flex-wrap gap-2">
+          {subjects.map((subject) => (
+            <Chip
+              key={subject}
+              active={favorites.includes(subject)}
+              onClick={() => dispatch({ type: 'toggleFavoriteSubject', subject })}
+            >
+              {subject}
+            </Chip>
+          ))}
         </div>
+      </section>
+
+      <section>
+        <SectionHeader
+          eyebrow="Recomendaciones"
+          title="Para ti"
+          icon={<Sparkles size={17} className="text-accent" />}
+          action={{ href: '/biblioteca', label: 'Ver mi biblioteca' }}
+        />
 
         {ready && recommendations.length === 0 ? (
-          <p className="mt-4 text-sm text-paper-100/50">
+          <p className="text-sm text-muted">
             Ya tienes todo el catálogo en tu biblioteca. Busca algo nuevo arriba.
           </p>
         ) : (
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             {recommendations.map(({ book, reasons }) => (
               <BookCard key={book.id} book={book} reasons={reasons} />
             ))}
@@ -100,13 +99,12 @@ export default function DiscoverPage() {
 
       {topEndings.length > 0 && (
         <section>
-          <div className="flex items-baseline justify-between gap-3">
-            <h2 className="font-serif text-xl text-paper-50">Finales más votados</h2>
-            <Link href="/finales" className="text-xs text-paper-100/45 hover:text-paper-50">
-              Ver todos
-            </Link>
-          </div>
-          <div className="mt-4 space-y-3">
+          <SectionHeader
+            eyebrow="Comunidad"
+            title="Finales más votados"
+            action={{ href: '/finales', label: 'Ver todos' }}
+          />
+          <div className="space-y-3">
             {topEndings.map((ending) => (
               <EndingCard key={ending.id} ending={ending} />
             ))}

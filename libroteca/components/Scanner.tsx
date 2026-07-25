@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Camera, CameraOff, Loader2, ScanLine } from 'lucide-react';
+import Button from './Button';
 import {
   createBarcodeDetector,
   isBarcodeDetectorSupported,
@@ -29,8 +30,22 @@ export default function Scanner({ onDetected, paused = false }: Props) {
   const [manual, setManual] = useState('');
   const [manualError, setManualError] = useState<string | null>(null);
 
-  const detectorAvailable = isBarcodeDetectorSupported();
-  const cameraAvailable = isCameraSupported();
+  // `navigator` no existe al prerenderizar, así que la detección de soporte
+  // ocurre tras montar. `null` = todavía no lo sabemos.
+  const [support, setSupport] = useState<{
+    camera: boolean;
+    detector: boolean;
+  } | null>(null);
+
+  useEffect(() => {
+    setSupport({
+      camera: isCameraSupported(),
+      detector: isBarcodeDetectorSupported(),
+    });
+  }, []);
+
+  const cameraAvailable = support?.camera ?? false;
+  const detectorAvailable = support?.detector ?? false;
 
   const stopCamera = useCallback(() => {
     if (loopRef.current !== null) {
@@ -139,8 +154,8 @@ export default function Scanner({ onDetected, paused = false }: Props) {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-ink-900">
+    <div className="space-y-5">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-card border border-line/60 bg-surface/70 shadow-card">
         <video
           ref={videoRef}
           playsInline
@@ -150,54 +165,65 @@ export default function Scanner({ onDetected, paused = false }: Props) {
           }`}
         />
 
-        {cameraState === 'running' && (
+        {cameraState === 'running' ? (
           <>
+            {/* Marco de puntería con las cuatro esquinas recortadas. */}
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-              <div className="relative h-28 w-4/5 overflow-hidden rounded-lg border-2 border-ember-400/70">
-                <div className="absolute inset-x-0 h-0.5 animate-scan-line bg-ember-400 shadow-[0_0_12px_2px_rgba(244,184,96,0.7)]" />
+              <div className="relative h-32 w-4/5">
+                {(
+                  [
+                    'left-0 top-0 border-l-2 border-t-2 rounded-tl-lg',
+                    'right-0 top-0 border-r-2 border-t-2 rounded-tr-lg',
+                    'left-0 bottom-0 border-l-2 border-b-2 rounded-bl-lg',
+                    'right-0 bottom-0 border-r-2 border-b-2 rounded-br-lg',
+                  ] as const
+                ).map((corner) => (
+                  <span
+                    key={corner}
+                    className={`absolute h-7 w-7 border-accent ${corner}`}
+                  />
+                ))}
+                <span className="absolute inset-x-0 top-0 h-px animate-scan-line bg-accent shadow-[0_0_14px_3px_rgb(240_176_92/0.7)]" />
               </div>
             </div>
-            <p className="pointer-events-none absolute inset-x-0 bottom-3 text-center text-xs text-paper-50/80">
+
+            <p className="pointer-events-none absolute inset-x-0 bottom-4 text-center text-xs text-white/85 [text-shadow:0_1px_4px_rgb(0_0_0/0.8)]">
               Apunta al código de barras de la contraportada
             </p>
+
             <button
               type="button"
               onClick={stopCamera}
-              className="absolute right-3 top-3 rounded-full bg-black/50 p-2 text-paper-50 ring-1 ring-white/20 backdrop-blur transition hover:bg-black/70"
               aria-label="Apagar cámara"
+              className="absolute right-3 top-3 rounded-pill border border-white/25 bg-black/50 p-2 text-white backdrop-blur transition hover:bg-black/70"
             >
               <CameraOff size={16} />
             </button>
           </>
-        )}
-
-        {cameraState !== 'running' && (
+        ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
-            <ScanLine size={34} className="text-paper-100/25" />
-            <p className="max-w-xs text-sm text-paper-100/55">
-              {cameraAvailable
-                ? 'Escanea el código de barras y lo buscamos en Open Library.'
-                : 'Este navegador no da acceso a la cámara. Usa el ISBN manual.'}
+            <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-line/60 bg-raised/60 text-accent">
+              <ScanLine size={24} />
+            </span>
+            <p className="max-w-xs text-sm leading-relaxed text-muted">
+              {support && !support.camera
+                ? 'Este navegador no da acceso a la cámara. Usa el ISBN manual.'
+                : 'Escanea el código de barras y lo buscamos en Open Library.'}
             </p>
 
             {cameraAvailable && (
-              <button
-                type="button"
-                onClick={startCamera}
-                disabled={cameraState === 'starting'}
-                className="flex items-center gap-2 rounded-full bg-ember-500 px-5 py-2.5 text-sm font-medium text-ink-950 transition hover:bg-ember-400 disabled:opacity-60"
-              >
+              <Button onClick={startCamera} disabled={cameraState === 'starting'}>
                 {cameraState === 'starting' ? (
                   <Loader2 size={16} className="animate-spin" />
                 ) : (
                   <Camera size={16} />
                 )}
                 {cameraState === 'starting' ? 'Abriendo…' : 'Abrir cámara'}
-              </button>
+              </Button>
             )}
 
             {!detectorAvailable && cameraAvailable && (
-              <p className="text-xs text-paper-100/40">
+              <p className="text-2xs text-faint">
                 Lectura automática no disponible aquí — funciona en Chrome y Edge.
               </p>
             )}
@@ -206,16 +232,16 @@ export default function Scanner({ onDetected, paused = false }: Props) {
       </div>
 
       {error && (
-        <p className="rounded-lg border border-amber-400/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">
+        <p className="rounded-xl border border-amber-500/35 bg-amber-500/10 px-4 py-2.5 text-xs leading-relaxed text-amber-700 dark:text-amber-200">
           {error}
         </p>
       )}
 
-      <form onSubmit={submitManual} className="space-y-2">
-        <label htmlFor="isbn" className="block text-xs font-medium text-paper-100/60">
+      <form onSubmit={submitManual}>
+        <label htmlFor="isbn" className="eyebrow">
           O escribe el ISBN
         </label>
-        <div className="flex gap-2">
+        <div className="mt-2 flex gap-2">
           <input
             id="isbn"
             value={manual}
@@ -226,16 +252,18 @@ export default function Scanner({ onDetected, paused = false }: Props) {
             inputMode="numeric"
             autoComplete="off"
             placeholder="978-84-663-2452-6"
-            className="flex-1 rounded-lg border border-white/10 bg-ink-900 px-3 py-2.5 text-sm text-paper-50 placeholder:text-paper-100/25 focus:border-ember-400/50 focus:outline-none"
+            className="field flex-1 font-mono tracking-wide"
           />
           <button
             type="submit"
-            className="rounded-lg bg-white/10 px-4 py-2.5 text-sm font-medium text-paper-50 transition hover:bg-white/15"
+            className="rounded-xl border border-line/70 bg-raised/70 px-5 text-sm font-medium text-ink transition hover:border-line hover:bg-raised"
           >
             Buscar
           </button>
         </div>
-        {manualError && <p className="text-xs text-rose-300">{manualError}</p>}
+        {manualError && (
+          <p className="mt-2 text-xs text-rose-600 dark:text-rose-300">{manualError}</p>
+        )}
       </form>
     </div>
   );

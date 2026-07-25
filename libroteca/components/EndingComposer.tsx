@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { EyeOff, Send, Sparkles } from 'lucide-react';
+import Chip from './Chip';
 import { makeEnding, useStore } from '@/lib/store';
 import { MOOD_LABELS, MOOD_STYLES, randomSpark } from '@/lib/prompts';
 import { ENDING_MOODS, type Book, type EndingMood } from '@/lib/types';
@@ -22,7 +23,8 @@ export default function EndingComposer({ book, onDone }: Props) {
   const [share, setShare] = useState(true);
   const [spark, setSpark] = useState<string | null>(null);
 
-  const remaining = MIN_BODY - body.trim().length;
+  const length = body.trim().length;
+  const remaining = MIN_BODY - length;
   const canSave = title.trim().length > 2 && remaining <= 0;
 
   const submit = (event: React.FormEvent) => {
@@ -52,22 +54,24 @@ export default function EndingComposer({ book, onDone }: Props) {
   return (
     <form
       onSubmit={submit}
-      className="rounded-xl border border-plum-500/25 bg-gradient-to-b from-plum-600/10 to-transparent p-4"
+      className="relative overflow-hidden rounded-card border border-plum/25 bg-gradient-to-b from-plum/[0.08] to-transparent p-5 shadow-card"
     >
-      <div className="flex items-center justify-between gap-3">
-        <h3 className="font-serif text-base text-paper-50">Escribe tu propio final</h3>
-        <button
-          type="button"
-          onClick={() => setSpark(randomSpark(spark ?? undefined))}
-          className="flex items-center gap-1.5 rounded-full bg-plum-500/15 px-3 py-1.5 text-xs text-plum-400 ring-1 ring-plum-400/30 transition hover:bg-plum-500/25"
-        >
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p className="eyebrow text-plum">Tu propio final</p>
+          <h3 className="mt-1 font-display text-lg text-ink">
+            Reescribe el desenlace
+          </h3>
+        </div>
+
+        <Chip tone="plum" onClick={() => setSpark(randomSpark(spark ?? undefined))}>
           <Sparkles size={13} />
           Dame una idea
-        </button>
+        </Chip>
       </div>
 
       {spark && (
-        <p className="mt-3 rounded-lg border-l-2 border-plum-400/60 bg-ink-950/50 px-3 py-2 text-sm italic text-plum-400/90">
+        <p className="mt-4 animate-pop-in rounded-xl border-l-2 border-plum/60 bg-plum/[0.07] px-4 py-3 font-read text-sm italic leading-relaxed text-ink/85">
           {spark}
         </p>
       )}
@@ -77,25 +81,32 @@ export default function EndingComposer({ book, onDone }: Props) {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Título de tu final"
         maxLength={80}
-        className="mt-3 w-full rounded-lg border border-white/10 bg-ink-950/60 px-3 py-2.5 font-serif text-sm text-paper-50 placeholder:font-sans placeholder:text-paper-100/25 focus:border-plum-400/50 focus:outline-none"
+        className="field mt-4 font-display text-base placeholder:font-sans placeholder:text-sm"
       />
 
       <textarea
         value={body}
         onChange={(e) => setBody(e.target.value)}
-        rows={7}
+        rows={8}
         placeholder={`Reescribe el final de ${book.title}…`}
-        className="mt-2 w-full resize-y rounded-lg border border-white/10 bg-ink-950/60 px-3 py-2.5 font-serif text-sm leading-relaxed text-paper-50 placeholder:font-sans placeholder:text-paper-100/25 focus:border-plum-400/50 focus:outline-none"
+        className="field mt-2.5 resize-y font-read text-[0.95rem] leading-[1.7] placeholder:font-sans placeholder:text-sm placeholder:leading-normal"
       />
 
-      <p className="mt-1 text-right text-[11px] text-paper-100/35">
-        {remaining > 0
-          ? `${remaining} caracteres más para poder publicar`
-          : `${body.trim().length} caracteres`}
-      </p>
+      {/* Medidor de longitud mínima: más claro que un contador a secas. */}
+      <div className="mt-2 flex items-center gap-3">
+        <div className="h-0.5 flex-1 overflow-hidden rounded-pill bg-line/50">
+          <div
+            className="h-full rounded-pill bg-plum transition-[width] duration-300"
+            style={{ width: `${Math.min(100, (length / MIN_BODY) * 100)}%` }}
+          />
+        </div>
+        <span className="text-2xs tabular-nums text-faint">
+          {remaining > 0 ? `faltan ${remaining}` : `${length} caracteres`}
+        </span>
+      </div>
 
-      <fieldset className="mt-3">
-        <legend className="mb-1.5 text-xs font-medium text-paper-100/60">Tono</legend>
+      <fieldset className="mt-4">
+        <legend className="eyebrow mb-2">Tono</legend>
         <div className="flex flex-wrap gap-1.5">
           {ENDING_MOODS.map((option) => (
             <button
@@ -103,10 +114,10 @@ export default function EndingComposer({ book, onDone }: Props) {
               type="button"
               onClick={() => setMood(option)}
               aria-pressed={mood === option}
-              className={`rounded-full px-3 py-1 text-xs ring-1 transition ${
+              className={`rounded-pill border px-3 py-1.5 text-xs font-medium transition duration-200 ${
                 mood === option
                   ? MOOD_STYLES[option]
-                  : 'text-paper-100/55 ring-white/10 hover:bg-white/5'
+                  : 'border-line/60 bg-surface/50 text-muted hover:border-line hover:bg-raised hover:text-ink'
               }`}
             >
               {MOOD_LABELS[option]}
@@ -115,27 +126,18 @@ export default function EndingComposer({ book, onDone }: Props) {
         </div>
       </fieldset>
 
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          onClick={() => setSpoiler((v) => !v)}
-          aria-pressed={spoiler}
-          className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs ring-1 transition ${
-            spoiler
-              ? 'bg-white/10 text-paper-50 ring-white/20'
-              : 'text-paper-100/55 ring-white/10 hover:bg-white/5'
-          }`}
-        >
+      <div className="mt-5 flex flex-wrap items-center gap-3">
+        <Chip active={spoiler} onClick={() => setSpoiler((v) => !v)}>
           <EyeOff size={13} />
           {spoiler ? 'Marcado como spoiler' : 'Sin spoiler'}
-        </button>
+        </Chip>
 
-        <label className="flex cursor-pointer items-center gap-2 text-xs text-paper-100/60">
+        <label className="flex cursor-pointer items-center gap-2 text-xs text-muted">
           <input
             type="checkbox"
             checked={share}
             onChange={(e) => setShare(e.target.checked)}
-            className="h-3.5 w-3.5 accent-plum-500"
+            className="h-3.5 w-3.5 accent-plum"
           />
           Compartir en la comunidad
         </label>
@@ -143,7 +145,7 @@ export default function EndingComposer({ book, onDone }: Props) {
         <button
           type="submit"
           disabled={!canSave}
-          className="ml-auto flex items-center gap-2 rounded-full bg-plum-500 px-5 py-2 text-sm font-medium text-white transition hover:bg-plum-400 disabled:cursor-not-allowed disabled:opacity-40"
+          className="ml-auto inline-flex items-center gap-2 rounded-pill bg-plum px-5 py-2.5 text-sm font-medium text-white shadow-card transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:brightness-100"
         >
           <Send size={14} />
           Publicar final

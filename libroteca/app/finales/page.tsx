@@ -3,8 +3,10 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { PenLine } from 'lucide-react';
+import Chip from '@/components/Chip';
 import EmptyState from '@/components/EmptyState';
 import EndingCard from '@/components/EndingCard';
+import SectionHeader from '@/components/SectionHeader';
 import { ENDING_SPARKS, MOOD_LABELS } from '@/lib/prompts';
 import { useStore } from '@/lib/store';
 import { ENDING_MOODS, type EndingMood } from '@/lib/types';
@@ -27,80 +29,64 @@ export default function EndingsPage() {
   const mine = state.profile.name;
 
   return (
-    <div className="space-y-6">
-      <header>
-        <h1 className="font-serif text-2xl text-paper-50">Tu propio final</h1>
-        <p className="mt-1 max-w-lg text-sm text-paper-100/55">
-          Reescribe el desenlace de cualquier libro de tu biblioteca. Los demás lectores
-          votan el que más les convence.
-        </p>
-      </header>
+    <div className="space-y-7">
+      <SectionHeader
+        eyebrow="Tu propio final"
+        title="Cómo debería haber terminado"
+        description="Reescribe el desenlace de cualquier libro de tu biblioteca. Los demás lectores votan el que más les convence."
+      />
 
-      <div className="rounded-xl border border-plum-500/25 bg-gradient-to-b from-plum-600/10 to-transparent p-4">
-        <h2 className="text-xs font-medium uppercase tracking-widest text-plum-400">
-          Ideas para empezar
-        </h2>
-        <ul className="mt-2.5 grid gap-1.5 sm:grid-cols-2">
+      <section className="rounded-card border border-plum/25 bg-gradient-to-b from-plum/[0.08] to-transparent p-5">
+        <h2 className="eyebrow text-plum">Ideas para empezar</h2>
+        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
           {ENDING_SPARKS.slice(0, 6).map((spark) => (
-            <li key={spark} className="text-sm text-paper-100/70">
-              · {spark}
+            <li
+              key={spark}
+              className="flex gap-2 font-read text-sm italic leading-relaxed text-ink/80"
+            >
+              <span aria-hidden className="mt-2 h-1 w-1 shrink-0 rounded-full bg-plum/70" />
+              {spark}
             </li>
           ))}
         </ul>
-        <p className="mt-3 text-xs text-paper-100/45">
-          Abre cualquier libro y ve a la pestaña <span className="text-plum-400">Finales</span>{' '}
+        <p className="mt-4 text-xs text-muted">
+          Abre cualquier libro y ve a la pestaña <span className="text-plum">Finales</span>{' '}
           para escribir el tuyo.{' '}
-          <Link href="/biblioteca" className="text-ember-400 hover:underline">
+          <Link
+            href="/biblioteca"
+            className="text-accent underline-offset-2 hover:underline"
+          >
             Ir a mi biblioteca
           </Link>
         </p>
-      </div>
+      </section>
 
-      <div className="flex flex-wrap items-center gap-1.5">
+      <div className="flex flex-wrap items-center gap-2">
         {(['votados', 'recientes'] as const).map((option) => (
-          <button
+          <Chip
             key={option}
-            type="button"
+            tone="neutral"
+            active={sort === option}
             onClick={() => setSort(option)}
-            aria-pressed={sort === option}
-            className={`rounded-full px-3 py-1.5 text-xs ring-1 transition ${
-              sort === option
-                ? 'bg-white/10 text-paper-50 ring-white/20'
-                : 'text-paper-100/55 ring-white/10 hover:bg-white/5'
-            }`}
           >
             {option === 'votados' ? 'Más votados' : 'Recientes'}
-          </button>
+          </Chip>
         ))}
 
-        <span className="mx-1 h-4 w-px bg-white/10" aria-hidden />
+        <span className="mx-1 h-5 w-px bg-line/70" aria-hidden />
 
-        <button
-          type="button"
-          onClick={() => setMood('todos')}
-          aria-pressed={mood === 'todos'}
-          className={`rounded-full px-3 py-1.5 text-xs ring-1 transition ${
-            mood === 'todos'
-              ? 'bg-white/10 text-paper-50 ring-white/20'
-              : 'text-paper-100/55 ring-white/10 hover:bg-white/5'
-          }`}
-        >
+        <Chip tone="neutral" active={mood === 'todos'} onClick={() => setMood('todos')}>
           Todos los tonos
-        </button>
+        </Chip>
         {ENDING_MOODS.map((option) => (
-          <button
+          <Chip
             key={option}
-            type="button"
+            tone="plum"
+            active={mood === option}
             onClick={() => setMood(option)}
-            aria-pressed={mood === option}
-            className={`rounded-full px-3 py-1.5 text-xs ring-1 transition ${
-              mood === option
-                ? 'bg-plum-500/15 text-plum-400 ring-plum-400/30'
-                : 'text-paper-100/55 ring-white/10 hover:bg-white/5'
-            }`}
           >
             {MOOD_LABELS[option]}
-          </button>
+          </Chip>
         ))}
       </div>
 

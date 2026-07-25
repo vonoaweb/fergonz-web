@@ -1,10 +1,12 @@
 'use client';
 
-import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { Library } from 'lucide-react';
 import BookCard from '@/components/BookCard';
+import Chip from '@/components/Chip';
 import EmptyState from '@/components/EmptyState';
+import SectionHeader from '@/components/SectionHeader';
+import { ButtonLink } from '@/components/Button';
 import { STATUS_LABELS } from '@/components/StatusPicker';
 import { useStore } from '@/lib/store';
 import type { ReadingStatus } from '@/lib/types';
@@ -45,35 +47,42 @@ export default function LibraryPage() {
       (sum, entry) => sum + (state.books[entry.bookId]?.pages ?? 0),
       0
     );
-    return { read: read.length, pages, notes: state.notes.length };
-  }, [state.shelf, state.books, state.notes]);
+    const mine = state.endings.filter((e) => e.authorName === state.profile.name);
+    return [
+      { label: 'Leídos', value: read.length.toString() },
+      { label: 'Páginas', value: pages.toLocaleString('es') },
+      { label: 'Notas', value: state.notes.length.toString() },
+      { label: 'Finales', value: mine.length.toString() },
+    ];
+  }, [state.shelf, state.books, state.notes, state.endings, state.profile.name]);
 
   return (
-    <div className="space-y-6">
-      <header>
-        <h1 className="font-serif text-2xl text-paper-50">Mi biblioteca</h1>
-        <p className="mt-1 text-sm text-paper-100/55">
-          {stats.read} leídos · {stats.pages.toLocaleString('es')} páginas · {stats.notes}{' '}
-          notas
-        </p>
-      </header>
+    <div className="space-y-7">
+      <SectionHeader
+        eyebrow="Mi biblioteca"
+        title="Todo lo que has guardado"
+        description="Cambia el estado de un libro desde su ficha; aquí sólo eliges qué ver."
+      />
 
-      <div className="flex flex-wrap gap-1.5">
+      <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {stats.map(({ label, value }) => (
+          <div key={label} className="card px-4 py-3.5">
+            <dt className="eyebrow">{label}</dt>
+            <dd className="mt-1 font-display text-2xl tabular-nums text-ink">{value}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <div className="flex flex-wrap gap-2">
         {FILTERS.map((option) => (
-          <button
+          <Chip
             key={option}
-            type="button"
+            active={filter === option}
             onClick={() => setFilter(option)}
-            aria-pressed={filter === option}
-            className={`rounded-full px-3 py-1.5 text-xs ring-1 transition ${
-              filter === option
-                ? 'bg-ember-500/15 text-ember-400 ring-ember-400/30'
-                : 'text-paper-100/55 ring-white/10 hover:bg-white/5 hover:text-paper-50'
-            }`}
           >
             {option === 'todos' ? 'Todos' : STATUS_LABELS[option]}
-            <span className="ml-1.5 tabular-nums opacity-60">{counts[option]}</span>
-          </button>
+            <span className="tabular-nums opacity-55">{counts[option]}</span>
+          </Chip>
         ))}
       </div>
 
@@ -86,14 +95,7 @@ export default function LibraryPage() {
               ? 'Busca un libro o escanea su código de barras para empezar tu biblioteca.'
               : `No tienes libros en «${STATUS_LABELS[filter as ReadingStatus]}».`
           }
-          action={
-            <Link
-              href="/"
-              className="rounded-full bg-ember-500 px-5 py-2 text-sm font-medium text-ink-950 transition hover:bg-ember-400"
-            >
-              Descubrir libros
-            </Link>
-          }
+          action={<ButtonLink href="/">Descubrir libros</ButtonLink>}
         />
       ) : (
         <div className="grid gap-3 sm:grid-cols-2">

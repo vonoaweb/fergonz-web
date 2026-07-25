@@ -10,11 +10,15 @@ interface Props {
 
 export default function EmptyState({ icon: Icon, title, description, action }: Props) {
   return (
-    <div className="rounded-2xl border border-dashed border-white/12 bg-ink-900/40 px-6 py-12 text-center">
-      <Icon size={30} className="mx-auto text-paper-100/25" />
-      <h3 className="mt-3 font-serif text-lg text-paper-50">{title}</h3>
-      <p className="mx-auto mt-1.5 max-w-sm text-sm text-paper-100/50">{description}</p>
-      {action ? <div className="mt-5 flex justify-center">{action}</div> : null}
+    <div className="rounded-card border border-dashed border-line/70 bg-surface/40 px-6 py-14 text-center">
+      <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-line/60 bg-raised/60 text-faint">
+        <Icon size={20} />
+      </span>
+      <h3 className="mt-4 font-display text-lg text-ink">{title}</h3>
+      <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-muted">
+        {description}
+      </p>
+      {action ? <div className="mt-6 flex justify-center">{action}</div> : null}
     </div>
   );
 }

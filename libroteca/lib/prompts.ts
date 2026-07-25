@@ -9,13 +9,23 @@ export const MOOD_LABELS: Record<EndingMood, string> = {
   comico: 'Cómico',
 };
 
+/**
+ * Un matiz por tono. El color claro va primero y `dark:` sube la luminosidad
+ * para el tema noche, donde el mismo tinte se apagaría.
+ */
 export const MOOD_STYLES: Record<EndingMood, string> = {
-  esperanzador: 'bg-emerald-500/15 text-emerald-300 ring-emerald-400/30',
-  tragico: 'bg-rose-500/15 text-rose-300 ring-rose-400/30',
-  ambiguo: 'bg-sky-500/15 text-sky-300 ring-sky-400/30',
-  vengativo: 'bg-orange-500/15 text-orange-300 ring-orange-400/30',
-  onirico: 'bg-plum-500/15 text-plum-400 ring-plum-400/30',
-  comico: 'bg-ember-500/15 text-ember-400 ring-ember-400/30',
+  esperanzador:
+    'border-emerald-600/30 bg-emerald-500/12 text-emerald-700 dark:border-emerald-400/35 dark:text-emerald-300',
+  tragico:
+    'border-rose-600/30 bg-rose-500/12 text-rose-700 dark:border-rose-400/35 dark:text-rose-300',
+  ambiguo:
+    'border-sky-600/30 bg-sky-500/12 text-sky-700 dark:border-sky-400/35 dark:text-sky-300',
+  vengativo:
+    'border-orange-600/30 bg-orange-500/12 text-orange-700 dark:border-orange-400/35 dark:text-orange-300',
+  onirico:
+    'border-violet-600/30 bg-violet-500/12 text-violet-700 dark:border-violet-400/35 dark:text-violet-300',
+  comico:
+    'border-amber-600/35 bg-amber-500/14 text-amber-700 dark:border-amber-400/35 dark:text-amber-300',
 };
 
 /**
@@ -41,8 +51,6 @@ export const ENDING_SPARKS: string[] = [
 ];
 
 export function randomSpark(exclude?: string): string {
-  const pool = exclude
-    ? ENDING_SPARKS.filter((s) => s !== exclude)
-    : ENDING_SPARKS;
+  const pool = exclude ? ENDING_SPARKS.filter((s) => s !== exclude) : ENDING_SPARKS;
   return pool[Math.floor(Math.random() * pool.length)];
 }

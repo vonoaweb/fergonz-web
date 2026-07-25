@@ -53,6 +53,34 @@ número de finales escritos. Cada tarjeta muestra por qué salió.
   cuentas: la comunidad viene sembrada en `lib/seed.ts` y tus publicaciones se
   añaden en local. Es el punto natural por donde meter una base de datos real.
 
+## Diseño
+
+Un solo sistema, dos temas: **noche** (por defecto) y **papel**, una página
+impresa bajo luz cálida. Los colores no se escriben en las clases: son
+variables CSS semánticas (`--c-bg`, `--c-surface`, `--c-ink`, `--c-accent`…)
+declaradas en `app/globals.css` y expuestas a Tailwind como `bg-surface`,
+`text-muted`, `border-line`. Cambiar de tema reasigna las variables; ningún
+componente sabe qué tema está activo. El tema se guarda en `localStorage` y se
+aplica con un script en línea antes del primer pintado, para que el modo claro
+no parpadee en oscuro.
+
+Tres tipografías, una función cada una:
+
+| Familia | Uso |
+| --- | --- |
+| **Fraunces** (variable) | Titulares y títulos de libro. |
+| **Inter** | Interfaz: botones, etiquetas, metadatos. |
+| **Literata** | Lectura larga: citas, notas y finales alternativos. |
+
+Las portadas se dibujan como objetos, no como rectángulos: lomo sombreado,
+canto de páginas, brillo de barniz y una leve inclinación 3D al pasar el ratón.
+Cuando Open Library no tiene portada —o falla la red— `BookCover` genera una
+de tela con la paleta de las colecciones de bolsillo clásicas, en vez de
+mostrar un hueco.
+
+Los controles repetidos están extraídos: `Chip` para filtros y selección,
+`Button` para acciones, `SectionHeader` para los encabezados de sección.
+
 ## Desarrollo
 
 ```bash
@@ -66,8 +94,8 @@ npm run typecheck
 ## Stack
 
 Next.js 14 (App Router) · TypeScript en modo estricto · Tailwind CSS ·
-lucide-react. Sin dependencias de estado externas: `useReducer` + contexto en
-`lib/store.tsx`.
+`next/font` · lucide-react. Sin dependencias de estado ni de UI externas:
+`useReducer` + contexto en `lib/store.tsx`, y los componentes son propios.
 
 ## Estructura
 
@@ -79,11 +107,16 @@ app/
   escanear/           Escáner de ISBN
   finales/            Finales alternativos
   libro/              Ficha: notas + finales
-components/           UI (BookCard, Scanner, EndingComposer, …)
+components/
+  BookCover.tsx       Portada dibujada como libro, con respaldo generado
+  Chip / Button       Primitivas de control reutilizadas en toda la app
+  Scanner.tsx         Cámara + lectura de códigos + ISBN manual
+  …                   BookCard, EndingComposer, PostCard, ThemeToggle…
 lib/
   openlibrary.ts      Cliente de la API + validación de ISBN
   recommend.ts        Motor de recomendaciones
   store.tsx           Estado global y persistencia
+  theme.ts            Lectura y escritura del tema
   seed.ts             Catálogo y comunidad iniciales
   prompts.ts          Ideas para finales
 ```

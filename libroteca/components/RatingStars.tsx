@@ -23,7 +23,7 @@ export default function RatingStars({ value, onChange, size = 16, label }: Props
         const icon = (
           <Star
             size={size}
-            className={filled ? 'fill-ember-400 text-ember-400' : 'text-white/25'}
+            className={filled ? 'fill-accent text-accent' : 'text-faint/50'}
           />
         );
 
@@ -37,7 +37,7 @@ export default function RatingStars({ value, onChange, size = 16, label }: Props
             aria-checked={value === star}
             aria-label={`${star} de 5`}
             onClick={() => onChange(star === value ? 0 : star)}
-            className="rounded transition hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-ember-400"
+            className="rounded transition duration-200 hover:scale-110"
           >
             {icon}
           </button>
