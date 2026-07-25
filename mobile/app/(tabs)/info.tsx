@@ -14,7 +14,7 @@ export default function Info() {
     <View style={styles.root}>
       <View style={[styles.header, { paddingTop: insets.top + spacing.md }]}>
         <Text style={styles.title}>Requisitos y datos</Text>
-        <Text style={styles.subtitle}>Información oficial para donar en México</Text>
+        <Text style={styles.subtitle}>Información oficial para donar en Jalisco</Text>
       </View>
 
       <ScrollView
@@ -78,8 +78,8 @@ export default function Info() {
         <Card style={styles.sources}>
           <Text style={styles.sourcesText}>
             <Text style={{ fontWeight: '700' }}>Fuentes: </Text>
-            Centro Nacional de la Transfusión Sanguínea (CNTS, Secretaría de Salud), IMSS e
-            ISSSTE. Los requisitos pueden variar por centro; confirma antes de acudir.
+            CETS Jalisco (Secretaría de Salud Jalisco), Hospital Civil de Guadalajara e IMSS.
+            Los requisitos pueden variar por centro; confirma antes de acudir.
           </Text>
         </Card>
       </ScrollView>

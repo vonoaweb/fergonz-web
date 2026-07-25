@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 
-const RED = [225, 29, 42];
-const RED_DARK = [142, 15, 26];
+const RED = [245, 51, 76];
+const RED_DARK = [194, 29, 58];
 const WHITE = [255, 255, 255];
 
 function lerp(a, b, t) {

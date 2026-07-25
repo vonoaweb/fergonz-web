@@ -17,7 +17,7 @@ export default function Centers() {
       <View style={[styles.header, { paddingTop: insets.top + spacing.md }]}>
         <Text style={styles.title}>Centros de donación</Text>
         <Text style={styles.subtitle}>
-          {CENTERS.length} bancos de sangre reales · CDMX
+          {CENTERS.length} bancos de sangre reales · Jalisco
         </Text>
       </View>
 
@@ -42,7 +42,7 @@ export default function Centers() {
         ))}
 
         <Text style={styles.footnote}>
-          ¿Estás fuera de CDMX? Consulta el directorio nacional de bancos de sangre del CNTS.
+          El CETS Jalisco tiene más de 20 sitios de donación registrados en el estado.
         </Text>
       </ScrollView>
     </View>

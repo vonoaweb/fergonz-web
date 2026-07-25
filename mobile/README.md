@@ -9,11 +9,11 @@ necesitan sangre. Construida con **Expo + React Native + TypeScript** y
 - **Onboarding** guiado: nombre y tipo de sangre (o "no lo sé").
 - **Dashboard de elegibilidad**: anillo de progreso con la cuenta regresiva
   (sangre completa cada 2 meses) y estado "puedes donar / en recuperación".
-- **Centros de donación REALES (México)**: Cruz Roja Mexicana, CNTS, IMSS CMN
-  Siglo XXI e INCMNSZ, con dirección, teléfono y horario verificados; "cómo
-  llegar" (Google Maps) y llamada directa.
+- **Centros de donación REALES (Jalisco)**: CETS Jalisco, Antiguo y Nuevo
+  Hospital Civil de Guadalajara e IMSS CMN de Occidente, con dirección,
+  teléfono y horario verificados; "cómo llegar" (Google Maps) y llamada directa.
 - **Requisitos y datos oficiales**: elegibilidad, frecuencia y preguntas
-  frecuentes según CNTS, IMSS e ISSSTE, con fuentes citadas.
+  frecuentes según CETS Jalisco, Hospital Civil e IMSS, con fuentes citadas.
 - **Compatibilidad sanguínea**: matriz de a quién puedes donar y de quién puedes
   recibir, con indicadores de donante/receptor universal.
 - **Registro de donaciones e impacto**: "vidas ayudadas", logros/insignias e

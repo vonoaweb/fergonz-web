@@ -1,7 +1,7 @@
 /**
- * Datos reales para México (fuentes oficiales, consultadas jul 2026):
- * - Centros: Cruz Roja Mexicana, CNTS (Secretaría de Salud), IMSS CMN Siglo XXI, INCMNSZ.
- * - Requisitos y frecuencia: CNTS, IMSS, ISSSTE.
+ * Datos reales para Jalisco (fuentes oficiales, consultadas jul 2026):
+ * - Centros: CETS Jalisco (SSJ), Hospital Civil de Guadalajara, IMSS CMN de Occidente.
+ * - Requisitos y frecuencia: CETS Jalisco, Hospital Civil, IMSS.
  * Las solicitudes de pacientes NO se incluyen aquí: solo deben provenir de
  * instituciones verificadas a través de un backend con validación.
  */
@@ -10,7 +10,7 @@ export interface DonationCenter {
   id: string;
   name: string;
   type: string;
-  alcaldia: string;
+  alcaldia: string; // municipio / zona
   address: string;
   hours: string;
   phone: string;
@@ -22,51 +22,51 @@ export interface DonationCenter {
 export const CENTERS: DonationCenter[] = [
   {
     id: 'c1',
-    name: 'Cruz Roja Mexicana · Banco de Sangre',
-    type: 'Organización humanitaria',
-    alcaldia: 'Miguel Hidalgo, CDMX',
-    address: 'Av. Ejército Nacional Mexicano 1032, Polanco, C.P. 11510',
-    hours: 'Lun a Vie · 8:00–14:00',
-    phone: '55 5395 5433',
-    site: 'donacionsangrecruzrojamexicana.org.mx',
+    name: 'CETS Jalisco · Centro Estatal de la Transfusión Sanguínea',
+    type: 'Secretaría de Salud Jalisco',
+    alcaldia: 'Zapopan, Jal.',
+    address: 'Av. Zoquipan 1050, Col. Seattle, C.P. 45170',
+    hours: 'Lun a Vie · 9:00–15:00',
+    phone: '33 3636 7667',
+    site: 'cetsjalisco.org',
     acceptsWalkIns: true,
-    note: 'Puedes agendar tu cita en línea desde su sitio oficial.',
+    note: 'Centro estatal líder en calidad. Puedes agendar cita en línea.',
   },
   {
     id: 'c2',
-    name: 'CNTS · Centro Nacional de la Transfusión Sanguínea',
-    type: 'Autoridad nacional (Secretaría de Salud)',
-    alcaldia: 'Gustavo A. Madero, CDMX',
-    address: 'Av. Othón de Mendizábal 195, Col. Zacatenco, C.P. 07360',
-    hours: 'Consulta horario por teléfono',
-    phone: '55 3922 2500',
-    site: 'gob.mx/cnts',
+    name: 'Banco de Sangre · Antiguo Hospital Civil "Fray Antonio Alcalde"',
+    type: 'Hospital Civil de Guadalajara',
+    alcaldia: 'Guadalajara Centro, Jal.',
+    address: 'Calle Hospital 278, Col. El Retiro, C.P. 44280',
+    hours: 'Lun a Vie · por la mañana',
+    phone: '33 3942 4400',
+    site: 'cbs.hcg.gob.mx',
     acceptsWalkIns: true,
-    note: 'Coordina la donación a nivel nacional y recibe donadores.',
+    note: 'Atiende al hospital escuela más grande de Occidente.',
   },
   {
     id: 'c3',
-    name: 'Banco Central de Sangre · CMN Siglo XXI (IMSS)',
-    type: 'IMSS · Hospital de Especialidades',
-    alcaldia: 'Cuauhtémoc, CDMX',
-    address: 'Av. Cuauhtémoc 330, Col. Doctores, C.P. 06720',
-    hours: 'Consulta horario del banco de sangre',
-    phone: '55 5627 6900',
-    site: 'imss.gob.mx',
+    name: 'Banco de Sangre · IMSS CMN de Occidente',
+    type: 'IMSS · UMAE de Especialidades',
+    alcaldia: 'Guadalajara (Independencia), Jal.',
+    address: 'Belisario Domínguez 1000, Col. Independencia, C.P. 44340',
+    hours: 'Lun a Vie · 9:00–17:00 · Sáb/Dom por la mañana',
+    phone: '33 3617 2207',
+    site: 'bancodesangre.imss.gob.mx',
     acceptsWalkIns: true,
-    note: 'Uno de los bancos de sangre más grandes del país.',
+    note: 'Recibe donadores para derechohabientes y familiares.',
   },
   {
     id: 'c4',
-    name: 'Banco de Sangre · INCMNSZ (Nutrición)',
-    type: 'Instituto Nacional de Salud',
-    alcaldia: 'Tlalpan, CDMX',
-    address: 'Vasco de Quiroga 15, Belisario Domínguez Secc. XVI, C.P. 14080',
-    hours: 'Consulta horario por teléfono',
-    phone: '55 5487 0900',
-    site: 'incmnsz.mx',
-    acceptsWalkIns: false,
-    note: 'Recibe donadores para los pacientes del instituto.',
+    name: 'Banco de Sangre · Nuevo Hospital Civil "Dr. Juan I. Menchaca"',
+    type: 'Hospital Civil de Guadalajara',
+    alcaldia: 'Guadalajara (Independencia Ote.), Jal.',
+    address: 'Salvador Quevedo y Zubieta 750, Independencia Oriente, C.P. 44340',
+    hours: 'Lun a Vie · por la mañana',
+    phone: '33 3942 4400',
+    site: 'hcg.gob.mx',
+    acceptsWalkIns: true,
+    note: 'Segundo banco de sangre de los Hospitales Civiles de Guadalajara.',
   },
 ];
 
@@ -76,35 +76,31 @@ export interface Requisito {
   body: string;
 }
 
-/** Requisitos oficiales para donar en México (CNTS / IMSS / ISSSTE). */
+/** Requisitos oficiales para donar en Jalisco (CETS Jalisco / Hospital Civil / IMSS). */
 export const REQUISITOS: Requisito[] = [
   { icon: 'person-outline', title: 'Edad', body: 'Tener entre 18 y 65 años.' },
   { icon: 'barbell-outline', title: 'Peso', body: 'Pesar más de 50 kg.' },
   {
     icon: 'restaurant-outline',
-    title: 'Ayuno',
-    body: 'Ayuno de 4 a 12 h. Evita alimentos grasosos 24 h antes; puedes tomar agua, jugos o fruta.',
+    title: 'Ayuno moderado',
+    body: 'Acude con 4 h de ayuno. Tu última comida ligera, con líquidos; evita grasas y lácteos.',
   },
-  { icon: 'moon-outline', title: 'Descanso', body: 'Haber dormido al menos 6 horas.' },
-  {
-    icon: 'wine-outline',
-    title: 'Sin alcohol',
-    body: 'No haber ingerido bebidas alcohólicas en las últimas 48 h.',
-  },
+  { icon: 'water-outline', title: 'Hidrátate', body: 'Toma suficiente agua antes de acudir.' },
+  { icon: 'moon-outline', title: 'Descanso', body: 'Duerme bien la noche anterior.' },
   {
     icon: 'shield-checkmark-outline',
-    title: 'Buena salud',
-    body: 'No haber padecido hepatitis, VIH/sida, sífilis, paludismo, cáncer o cardiopatías severas.',
+    title: 'Sin prácticas de riesgo',
+    body: 'Sin riesgo de hepatitis o VIH; no estar tomando medicamentos.',
   },
   {
-    icon: 'bandage-outline',
-    title: 'Sin procedimientos recientes',
-    body: 'Sin cirugías en 6 meses; sin tatuajes, perforaciones o acupuntura en el último año.',
+    icon: 'shirt-outline',
+    title: 'Ropa cómoda',
+    body: 'Usa ropa cómoda de manga corta para facilitar la extracción.',
   },
   {
     icon: 'card-outline',
     title: 'Identificación',
-    body: 'Presenta una identificación oficial vigente con fotografía.',
+    body: 'Lleva identificación oficial con fotografía reciente.',
   },
 ];
 
@@ -184,7 +180,7 @@ export const FAQ = [
   },
   {
     q: '¿Necesito cita?',
-    a: 'Depende del centro. La Cruz Roja permite agendar en línea; otros bancos reciben donadores directamente. Confirma por teléfono.',
+    a: 'El CETS Jalisco permite agendar en línea; varios bancos reciben donadores directamente. Confirma por teléfono.',
   },
 ];
 

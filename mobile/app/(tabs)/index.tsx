@@ -103,11 +103,11 @@ export default function Home() {
           <View style={styles.statsRow}>
             <StatTile icon="water" value={donations.length} label="Donaciones" tint={colors.primary} />
             <StatTile icon="heart" value={livesHelped} label="Vidas ayudadas" tint={colors.success} />
-            <StatTile icon="location" value={CENTERS.length} label="Centros reales" tint={colors.info} />
+            <StatTile icon="location" value={CENTERS.length} label="Centros" tint={colors.secondary} />
           </View>
 
           <SectionHeader
-            title="Centros para donar"
+            title="Dónde donar en Jalisco"
             action="Ver todos"
             onAction={() => router.push('/(tabs)/centers')}
           />
@@ -122,7 +122,7 @@ export default function Home() {
             style={{ marginTop: spacing.lg }}
           >
             <Card style={styles.realCard}>
-              <Ionicons name="information-circle" size={22} color={colors.info} />
+              <Ionicons name="information-circle" size={22} color="#0C8177" />
               <View style={{ flex: 1 }}>
                 <Text style={styles.realTitle}>¿Buscas casos reales de pacientes?</Text>
                 <Text style={styles.realSub}>
@@ -210,12 +210,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: spacing.md,
     alignItems: 'flex-start',
-    backgroundColor: colors.infoSoft,
-    borderColor: '#BFDBFE',
+    backgroundColor: colors.secondarySoft,
+    borderColor: '#B7ECE6',
   },
-  realTitle: { fontSize: 14, fontWeight: '700', color: '#1E3A8A' },
-  realSub: { fontSize: 12.5, color: '#1E40AF', lineHeight: 18, marginTop: 2 },
-  realLink: { fontSize: 12.5, color: colors.primary, fontWeight: '700', marginTop: 6 },
+  realTitle: { fontSize: 14, fontWeight: '800', color: '#0A6E65' },
+  realSub: { fontSize: 12.5, color: '#0C8177', lineHeight: 18, marginTop: 2 },
+  realLink: { fontSize: 12.5, color: '#0C8177', fontWeight: '800', marginTop: 6 },
   tipCard: { width: 210, gap: spacing.sm },
   tipIcon: {
     width: 40,

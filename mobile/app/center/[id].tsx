@@ -116,7 +116,7 @@ export default function CenterDetail() {
           <Card style={styles.reqCard}>
             <Ionicons name="shield-checkmark" size={20} color={colors.info} />
             <Text style={styles.reqText}>
-              Requisitos: 18–65 años, más de 50 kg, ayuno de 4–12 h, buena salud e
+              Requisitos: 18–65 años, más de 50 kg, 4 h de ayuno, buena salud e
               identificación oficial. El personal confirma tu elegibilidad al llegar.
             </Text>
           </Card>
