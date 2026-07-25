@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-ink-950 text-paper-50 antialiased;
+    background-image:
+      radial-gradient(60rem 40rem at 15% -10%, rgba(139, 109, 240, 0.13), transparent 60%),
+      radial-gradient(50rem 35rem at 100% 0%, rgba(232, 161, 63, 0.1), transparent 55%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-ember-500/30 text-paper-50;
+  }
+}
+
+@layer utilities {
+  /* Deja hueco para la barra de navegación fija en móvil. */
+  .pb-nav {
+    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 640px) {
+    .pb-nav {
+      padding-bottom: 3rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
