@@ -11,14 +11,13 @@ import { colors, gradients, radius, spacing } from '@/theme';
 export default function Centers() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const openCount = CENTERS.filter((c) => c.openNow).length;
 
   return (
     <View style={styles.root}>
       <View style={[styles.header, { paddingTop: insets.top + spacing.md }]}>
         <Text style={styles.title}>Centros de donación</Text>
         <Text style={styles.subtitle}>
-          {openCount} abiertos ahora cerca de ti
+          {CENTERS.length} bancos de sangre reales · CDMX
         </Text>
       </View>
 
@@ -26,26 +25,25 @@ export default function Centers() {
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}
       >
-        {/* Map placeholder banner */}
-        <LinearGradient colors={gradients.primary} style={styles.mapBanner}>
-          <View style={styles.mapPins}>
+        <LinearGradient colors={gradients.primary} style={styles.banner}>
+          <View style={styles.pins}>
             <Ionicons name="location" size={22} color="rgba(255,255,255,0.9)" />
             <Ionicons name="location" size={30} color="#fff" />
             <Ionicons name="location" size={18} color="rgba(255,255,255,0.75)" />
           </View>
-          <Text style={styles.mapTitle}>{CENTERS.length} centros en tu zona</Text>
-          <Text style={styles.mapSub}>
-            Toca un centro para ver horarios, tiempo de espera y agendar tu cita.
+          <Text style={styles.bannerTitle}>Bancos de sangre verificados</Text>
+          <Text style={styles.bannerSub}>
+            Toca un centro para ver dirección, teléfono y horario. Datos de fuentes oficiales.
           </Text>
         </LinearGradient>
 
         {CENTERS.map((c) => (
-          <CenterCard
-            key={c.id}
-            center={c}
-            onPress={() => router.push(`/center/${c.id}`)}
-          />
+          <CenterCard key={c.id} center={c} onPress={() => router.push(`/center/${c.id}`)} />
         ))}
+
+        <Text style={styles.footnote}>
+          ¿Estás fuera de CDMX? Consulta el directorio nacional de bancos de sangre del CNTS.
+        </Text>
       </ScrollView>
     </View>
   );
@@ -63,13 +61,21 @@ const styles = StyleSheet.create({
   title: { fontSize: 24, fontWeight: '800', color: colors.text, letterSpacing: -0.4 },
   subtitle: { fontSize: 13, color: colors.textSecondary, marginTop: 3 },
   list: { padding: spacing.xl, gap: spacing.md, paddingBottom: spacing.xxxl },
-  mapBanner: {
+  banner: {
     borderRadius: radius.xl,
     padding: spacing.xl,
     gap: spacing.xs,
     overflow: 'hidden',
   },
-  mapPins: { flexDirection: 'row', alignItems: 'flex-end', gap: spacing.sm },
-  mapTitle: { color: '#fff', fontSize: 18, fontWeight: '800', marginTop: spacing.sm },
-  mapSub: { color: 'rgba(255,255,255,0.9)', fontSize: 13, lineHeight: 18 },
+  pins: { flexDirection: 'row', alignItems: 'flex-end', gap: spacing.sm },
+  bannerTitle: { color: '#fff', fontSize: 18, fontWeight: '800', marginTop: spacing.sm },
+  bannerSub: { color: 'rgba(255,255,255,0.9)', fontSize: 13, lineHeight: 18 },
+  footnote: {
+    fontSize: 12.5,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    paddingHorizontal: spacing.lg,
+    lineHeight: 18,
+    marginTop: spacing.xs,
+  },
 });

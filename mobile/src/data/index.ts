@@ -1,176 +1,119 @@
-import { BloodType } from '@/utils/blood';
-
-export type Urgency = 'critical' | 'high' | 'normal';
-
-export interface BloodRequest {
-  id: string;
-  patientAlias: string;
-  bloodType: BloodType;
-  urgency: Urgency;
-  hospital: string;
-  city: string;
-  distanceKm: number;
-  unitsNeeded: number;
-  unitsFulfilled: number;
-  reason: string;
-  postedHoursAgo: number;
-  contactName: string;
-}
-
-export const REQUESTS: BloodRequest[] = [
-  {
-    id: 'r1',
-    patientAlias: 'Bebé Mateo, 4 meses',
-    bloodType: 'O-',
-    urgency: 'critical',
-    hospital: 'Hospital Infantil de la Ciudad',
-    city: 'Zona Centro',
-    distanceKm: 2.4,
-    unitsNeeded: 6,
-    unitsFulfilled: 2,
-    reason: 'Cirugía cardíaca programada mañana. Reserva crítica de sangre O negativo.',
-    postedHoursAgo: 1,
-    contactName: 'Banco de Sangre · Dra. Rivas',
-  },
-  {
-    id: 'r2',
-    patientAlias: 'Sofía, 28 años',
-    bloodType: 'A+',
-    urgency: 'high',
-    hospital: 'Clínica Santa María',
-    city: 'Colonia Norte',
-    distanceKm: 5.1,
-    unitsNeeded: 4,
-    unitsFulfilled: 1,
-    reason: 'Complicación posparto con pérdida de sangre. Necesita transfusión.',
-    postedHoursAgo: 3,
-    contactName: 'Enfermería · Piso 4',
-  },
-  {
-    id: 'r3',
-    patientAlias: 'Don Ernesto, 61 años',
-    bloodType: 'B+',
-    urgency: 'high',
-    hospital: 'Hospital General Regional',
-    city: 'Zona Sur',
-    distanceKm: 8.7,
-    unitsNeeded: 3,
-    unitsFulfilled: 3,
-    reason: 'Tratamiento de leucemia, requiere transfusiones semanales de plaquetas.',
-    postedHoursAgo: 6,
-    contactName: 'Oncología · Trabajo Social',
-  },
-  {
-    id: 'r4',
-    patientAlias: 'Accidentado vial',
-    bloodType: 'O+',
-    urgency: 'critical',
-    hospital: 'Cruz Roja · Unidad de Trauma',
-    city: 'Av. Reforma',
-    distanceKm: 3.9,
-    unitsNeeded: 8,
-    unitsFulfilled: 5,
-    reason: 'Politraumatismo por accidente de tránsito. Reponiendo reservas de urgencias.',
-    postedHoursAgo: 2,
-    contactName: 'Urgencias · Coordinación',
-  },
-  {
-    id: 'r5',
-    patientAlias: 'Valeria, 34 años',
-    bloodType: 'AB-',
-    urgency: 'normal',
-    hospital: 'Instituto de Maternidad',
-    city: 'Colonia Jardines',
-    distanceKm: 11.2,
-    unitsNeeded: 2,
-    unitsFulfilled: 0,
-    reason: 'Cesárea programada. Tipo poco común, se busca reserva preventiva.',
-    postedHoursAgo: 12,
-    contactName: 'Ginecología',
-  },
-  {
-    id: 'r6',
-    patientAlias: 'Campaña abierta',
-    bloodType: 'A-',
-    urgency: 'normal',
-    hospital: 'Banco de Sangre Municipal',
-    city: 'Centro Cívico',
-    distanceKm: 4.5,
-    unitsNeeded: 20,
-    unitsFulfilled: 8,
-    reason: 'Jornada mensual para mantener reservas de la red hospitalaria.',
-    postedHoursAgo: 20,
-    contactName: 'Coordinación de Donación',
-  },
-];
+/**
+ * Datos reales para México (fuentes oficiales, consultadas jul 2026):
+ * - Centros: Cruz Roja Mexicana, CNTS (Secretaría de Salud), IMSS CMN Siglo XXI, INCMNSZ.
+ * - Requisitos y frecuencia: CNTS, IMSS, ISSSTE.
+ * Las solicitudes de pacientes NO se incluyen aquí: solo deben provenir de
+ * instituciones verificadas a través de un backend con validación.
+ */
 
 export interface DonationCenter {
   id: string;
   name: string;
   type: string;
+  alcaldia: string;
   address: string;
-  distanceKm: number;
-  hoursToday: string;
-  openNow: boolean;
-  rating: number;
-  waitMinutes: number;
+  hours: string;
   phone: string;
+  site: string;
   acceptsWalkIns: boolean;
+  note: string;
 }
 
 export const CENTERS: DonationCenter[] = [
   {
     id: 'c1',
-    name: 'Banco de Sangre Central',
-    type: 'Banco de sangre público',
-    address: 'Av. de la Salud 145, Zona Centro',
-    distanceKm: 1.8,
-    hoursToday: '07:00 – 19:00',
-    openNow: true,
-    rating: 4.8,
-    waitMinutes: 15,
-    phone: '+52 000 000 0001',
+    name: 'Cruz Roja Mexicana · Banco de Sangre',
+    type: 'Organización humanitaria',
+    alcaldia: 'Miguel Hidalgo, CDMX',
+    address: 'Av. Ejército Nacional Mexicano 1032, Polanco, C.P. 11510',
+    hours: 'Lun a Vie · 8:00–14:00',
+    phone: '55 5395 5433',
+    site: 'donacionsangrecruzrojamexicana.org.mx',
     acceptsWalkIns: true,
+    note: 'Puedes agendar tu cita en línea desde su sitio oficial.',
   },
   {
     id: 'c2',
-    name: 'Cruz Roja · Centro de Donación',
-    type: 'Organización humanitaria',
-    address: 'Calle Solidaridad 22, Av. Reforma',
-    distanceKm: 3.6,
-    hoursToday: '08:00 – 20:00',
-    openNow: true,
-    rating: 4.9,
-    waitMinutes: 25,
-    phone: '+52 000 000 0002',
+    name: 'CNTS · Centro Nacional de la Transfusión Sanguínea',
+    type: 'Autoridad nacional (Secretaría de Salud)',
+    alcaldia: 'Gustavo A. Madero, CDMX',
+    address: 'Av. Othón de Mendizábal 195, Col. Zacatenco, C.P. 07360',
+    hours: 'Consulta horario por teléfono',
+    phone: '55 3922 2500',
+    site: 'gob.mx/cnts',
     acceptsWalkIns: true,
+    note: 'Coordina la donación a nivel nacional y recibe donadores.',
   },
   {
     id: 'c3',
-    name: 'Hospital Universitario · Hemocentro',
-    type: 'Hospital escuela',
-    address: 'Circuito Universitario s/n, Zona Sur',
-    distanceKm: 6.2,
-    hoursToday: 'Cerrado (abre 8:00)',
-    openNow: false,
-    rating: 4.6,
-    waitMinutes: 10,
-    phone: '+52 000 000 0003',
-    acceptsWalkIns: false,
+    name: 'Banco Central de Sangre · CMN Siglo XXI (IMSS)',
+    type: 'IMSS · Hospital de Especialidades',
+    alcaldia: 'Cuauhtémoc, CDMX',
+    address: 'Av. Cuauhtémoc 330, Col. Doctores, C.P. 06720',
+    hours: 'Consulta horario del banco de sangre',
+    phone: '55 5627 6900',
+    site: 'imss.gob.mx',
+    acceptsWalkIns: true,
+    note: 'Uno de los bancos de sangre más grandes del país.',
   },
   {
     id: 'c4',
-    name: 'Unidad Móvil · Plaza Mayor',
-    type: 'Colecta itinerante',
-    address: 'Plaza Mayor, frente al kiosco',
-    distanceKm: 2.9,
-    hoursToday: '09:00 – 15:00',
-    openNow: true,
-    rating: 4.7,
-    waitMinutes: 5,
-    phone: '+52 000 000 0004',
-    acceptsWalkIns: true,
+    name: 'Banco de Sangre · INCMNSZ (Nutrición)',
+    type: 'Instituto Nacional de Salud',
+    alcaldia: 'Tlalpan, CDMX',
+    address: 'Vasco de Quiroga 15, Belisario Domínguez Secc. XVI, C.P. 14080',
+    hours: 'Consulta horario por teléfono',
+    phone: '55 5487 0900',
+    site: 'incmnsz.mx',
+    acceptsWalkIns: false,
+    note: 'Recibe donadores para los pacientes del instituto.',
   },
+];
+
+export interface Requisito {
+  icon: string;
+  title: string;
+  body: string;
+}
+
+/** Requisitos oficiales para donar en México (CNTS / IMSS / ISSSTE). */
+export const REQUISITOS: Requisito[] = [
+  { icon: 'person-outline', title: 'Edad', body: 'Tener entre 18 y 65 años.' },
+  { icon: 'barbell-outline', title: 'Peso', body: 'Pesar más de 50 kg.' },
+  {
+    icon: 'restaurant-outline',
+    title: 'Ayuno',
+    body: 'Ayuno de 4 a 12 h. Evita alimentos grasosos 24 h antes; puedes tomar agua, jugos o fruta.',
+  },
+  { icon: 'moon-outline', title: 'Descanso', body: 'Haber dormido al menos 6 horas.' },
+  {
+    icon: 'wine-outline',
+    title: 'Sin alcohol',
+    body: 'No haber ingerido bebidas alcohólicas en las últimas 48 h.',
+  },
+  {
+    icon: 'shield-checkmark-outline',
+    title: 'Buena salud',
+    body: 'No haber padecido hepatitis, VIH/sida, sífilis, paludismo, cáncer o cardiopatías severas.',
+  },
+  {
+    icon: 'bandage-outline',
+    title: 'Sin procedimientos recientes',
+    body: 'Sin cirugías en 6 meses; sin tatuajes, perforaciones o acupuntura en el último año.',
+  },
+  {
+    icon: 'card-outline',
+    title: 'Identificación',
+    body: 'Presenta una identificación oficial vigente con fotografía.',
+  },
+];
+
+/** Frecuencia de donación en México. */
+export const FRECUENCIA: [string, string][] = [
+  ['Sangre completa', 'Cada 2 meses (mín. 56 días)'],
+  ['Máximo al año', 'Hombres 4 veces · Mujeres 3 veces'],
+  ['Plaquetas (aféresis)', 'Cada 2 semanas'],
+  ['Dobles glóbulos rojos', 'Cada 6 meses'],
 ];
 
 export interface Tip {
@@ -185,25 +128,25 @@ export const PRE_TIPS: Tip[] = [
     id: 't1',
     icon: 'water-outline',
     title: 'Hidrátate bien',
-    body: 'Bebe agua extra las 24 horas previas. Un cuerpo hidratado facilita la extracción.',
+    body: 'Bebe agua extra las 24 horas previas. Facilita la extracción.',
   },
   {
     id: 't2',
     icon: 'restaurant-outline',
-    title: 'Come antes de donar',
-    body: 'Un desayuno o comida rica en hierro (sin grasas pesadas) evita el mareo.',
+    title: 'Come ligero',
+    body: 'Desayuna sin grasas. Evita ir en ayuno prolongado.',
   },
   {
     id: 't3',
     icon: 'bed-outline',
-    title: 'Duerme suficiente',
-    body: 'Descansa al menos 6 horas la noche anterior para llegar en tu mejor forma.',
+    title: 'Duerme 6 h+',
+    body: 'Descansa bien la noche anterior para llegar en tu mejor forma.',
   },
   {
     id: 't4',
     icon: 'card-outline',
     title: 'Lleva identificación',
-    body: 'Un documento oficial con foto agiliza tu registro en el centro.',
+    body: 'Un documento oficial con foto agiliza tu registro.',
   },
 ];
 
@@ -212,55 +155,38 @@ export interface Achievement {
   icon: string;
   title: string;
   description: string;
-  threshold: number; // donations needed
+  threshold: number;
 }
 
 export const ACHIEVEMENTS: Achievement[] = [
-  {
-    id: 'a1',
-    icon: 'sparkles-outline',
-    title: 'Primera gota',
-    description: 'Completa tu primera donación.',
-    threshold: 1,
-  },
-  {
-    id: 'a2',
-    icon: 'heart-outline',
-    title: 'Héroe anónimo',
-    description: 'Alcanza 3 donaciones altruistas.',
-    threshold: 3,
-  },
-  {
-    id: 'a3',
-    icon: 'ribbon-outline',
-    title: 'Guardián de vidas',
-    description: 'Llega a 5 donaciones.',
-    threshold: 5,
-  },
-  {
-    id: 'a4',
-    icon: 'trophy-outline',
-    title: 'Leyenda vital',
-    description: 'Dona 10 veces o más.',
-    threshold: 10,
-  },
+  { id: 'a1', icon: 'sparkles-outline', title: 'Primera gota', description: 'Registra tu primera donación.', threshold: 1 },
+  { id: 'a2', icon: 'heart-outline', title: 'Héroe anónimo', description: 'Alcanza 3 donaciones altruistas.', threshold: 3 },
+  { id: 'a3', icon: 'ribbon-outline', title: 'Guardián de vidas', description: 'Llega a 5 donaciones.', threshold: 5 },
+  { id: 'a4', icon: 'trophy-outline', title: 'Leyenda vital', description: 'Dona 10 veces o más.', threshold: 10 },
 ];
 
 export const FAQ = [
   {
     q: '¿Duele donar sangre?',
-    a: 'Solo sientes un pequeño piquete al inicio. Todo el proceso dura entre 8 y 12 minutos.',
+    a: 'Solo sientes un pequeño piquete al inicio. La extracción dura entre 8 y 12 minutos.',
   },
   {
     q: '¿Cada cuánto puedo donar?',
-    a: 'La sangre completa puede donarse cada 56 días (unas 8 semanas). Tu cuerpo repone el plasma en 24-48 h.',
+    a: 'Sangre completa cada 2 meses. Los hombres pueden donar hasta 4 veces al año y las mujeres hasta 3.',
   },
   {
-    q: '¿Quién puede donar?',
-    a: 'En general personas de 18 a 65 años, con más de 50 kg, buena salud y sin ayuno. Cada centro confirma requisitos.',
+    q: '¿A cuántas personas ayuda una donación?',
+    a: 'Una sola donación puede ayudar hasta a 3 personas, porque se separa en glóbulos rojos, plasma y plaquetas.',
   },
   {
-    q: '¿La donación es realmente gratuita?',
-    a: 'Sí. La donación altruista no se paga ni se cobra: es un acto voluntario para quien lo necesite.',
+    q: '¿La donación es gratuita?',
+    a: 'Sí. La donación altruista es voluntaria y no se paga ni se cobra. Vender sangre está prohibido.',
+  },
+  {
+    q: '¿Necesito cita?',
+    a: 'Depende del centro. La Cruz Roja permite agendar en línea; otros bancos reciben donadores directamente. Confirma por teléfono.',
   },
 ];
+
+/** Casos reales de pacientes solo desde plataformas/instituciones verificadas. */
+export const REAL_CASES_URL = 'https://blooders.org';

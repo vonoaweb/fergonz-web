@@ -2,21 +2,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useMemo } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { BloodDrop } from '@/components/BloodDrop';
+import { CenterCard } from '@/components/CenterCard';
 import { ProgressRing } from '@/components/ProgressRing';
-import { RequestCard } from '@/components/RequestCard';
-import { Card, SectionHeader, StatTile, Tag } from '@/components/ui';
+import { Card, SectionHeader, StatTile } from '@/components/ui';
 import { useDonor } from '@/context/DonorContext';
-import { PRE_TIPS, REQUESTS } from '@/data';
+import { CENTERS, PRE_TIPS, REAL_CASES_URL } from '@/data';
 import { colors, gradients, radius, spacing } from '@/theme';
-import { DONATE_TO } from '@/utils/blood';
-import {
-  formatDate,
-  getEligibility,
-  LIVES_PER_DONATION,
-} from '@/utils/eligibility';
+import { getEligibility, LIVES_PER_DONATION } from '@/utils/eligibility';
 
 export default function Home() {
   const router = useRouter();
@@ -28,12 +22,6 @@ export default function Home() {
     [lastDonationDate],
   );
 
-  const compatibleRequests = useMemo(() => {
-    if (!profile.bloodType) return REQUESTS.slice(0, 3);
-    const can = DONATE_TO[profile.bloodType];
-    return REQUESTS.filter((r) => can.includes(r.bloodType)).slice(0, 3);
-  }, [profile.bloodType]);
-
   const livesHelped = donations.length * LIVES_PER_DONATION;
   const firstName = profile.name.split(' ')[0] || 'Donante';
 
@@ -43,7 +31,6 @@ export default function Home() {
         contentContainerStyle={{ paddingBottom: spacing.xxxl }}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header */}
         <LinearGradient
           colors={gradients.hero}
           style={[styles.header, { paddingTop: insets.top + spacing.md }]}
@@ -62,14 +49,28 @@ export default function Home() {
             </View>
           </View>
 
-          {/* Eligibility card overlapping header */}
           <Card style={styles.eligCard}>
             <View style={styles.eligLeft}>
-              <Tag
-                label={eligibility.eligible ? 'Puedes donar' : 'En recuperación'}
-                tone={eligibility.eligible ? 'success' : 'warning'}
-                icon={eligibility.eligible ? 'checkmark-circle' : 'time'}
-              />
+              <View
+                style={[
+                  styles.pill,
+                  { backgroundColor: eligibility.eligible ? colors.successSoft : colors.warningSoft },
+                ]}
+              >
+                <Ionicons
+                  name={eligibility.eligible ? 'checkmark-circle' : 'time'}
+                  size={13}
+                  color={eligibility.eligible ? colors.success : '#B45309'}
+                />
+                <Text
+                  style={[
+                    styles.pillText,
+                    { color: eligibility.eligible ? colors.success : '#B45309' },
+                  ]}
+                >
+                  {eligibility.eligible ? 'Puedes donar' : 'En recuperación'}
+                </Text>
+              </View>
               <Text style={styles.eligTitle}>
                 {eligibility.eligible
                   ? '¡Estás listo para donar!'
@@ -79,16 +80,11 @@ export default function Home() {
                 {eligibility.eligible
                   ? donations.length === 0
                     ? 'Aún no registras donaciones. Da el primer paso.'
-                    : 'Tu cuerpo ya se recuperó. Encuentra una solicitud.'
-                  : `Próxima fecha: ${formatDate(eligibility.nextDate)}`}
+                    : 'Tu cuerpo ya se recuperó (pasaron 2 meses).'
+                  : 'Sangre completa: se dona cada 2 meses.'}
               </Text>
-              <Pressable
-                style={styles.eligBtn}
-                onPress={() => router.push('/(tabs)/requests')}
-              >
-                <Text style={styles.eligBtnText}>
-                  {eligibility.eligible ? 'Buscar dónde donar' : 'Ver solicitudes'}
-                </Text>
+              <Pressable style={styles.eligBtn} onPress={() => router.push('/(tabs)/centers')}>
+                <Text style={styles.eligBtnText}>Ver centros para donar</Text>
                 <Ionicons name="arrow-forward" size={15} color={colors.primary} />
               </Pressable>
             </View>
@@ -97,77 +93,47 @@ export default function Home() {
               strokeWidth={10}
               progress={eligibility.eligible ? 1 : eligibility.progress}
               color={eligibility.eligible ? colors.success : colors.primary}
-              centerTop={
-                eligibility.eligible ? '✓' : String(eligibility.daysRemaining)
-              }
+              centerTop={eligibility.eligible ? '✓' : String(eligibility.daysRemaining)}
               centerBottom={eligibility.eligible ? 'listo' : 'días'}
             />
           </Card>
         </LinearGradient>
 
         <View style={styles.body}>
-          {/* Impact stats */}
           <View style={styles.statsRow}>
-            <StatTile
-              icon="water"
-              value={donations.length}
-              label="Donaciones"
-              tint={colors.primary}
-            />
-            <StatTile
-              icon="heart"
-              value={livesHelped}
-              label="Vidas ayudadas"
-              tint={colors.success}
-            />
-            <StatTile
-              icon="flame"
-              value={compatibleRequests.length}
-              label="Urgencias cerca"
-              tint={colors.warning}
-            />
+            <StatTile icon="water" value={donations.length} label="Donaciones" tint={colors.primary} />
+            <StatTile icon="heart" value={livesHelped} label="Vidas ayudadas" tint={colors.success} />
+            <StatTile icon="location" value={CENTERS.length} label="Centros reales" tint={colors.info} />
           </View>
 
-          {/* Urgent requests */}
           <SectionHeader
-            title="Solicitudes para ti"
-            action="Ver todas"
-            onAction={() => router.push('/(tabs)/requests')}
+            title="Centros para donar"
+            action="Ver todos"
+            onAction={() => router.push('/(tabs)/centers')}
           />
-          {profile.bloodType && (
-            <Text style={styles.compatNote}>
-              Compatibles con tu tipo {profile.bloodType}
-            </Text>
-          )}
           <View style={{ gap: spacing.md }}>
-            {compatibleRequests.map((r) => (
-              <RequestCard
-                key={r.id}
-                request={r}
-                compatible={!!profile.bloodType}
-                onPress={() => router.push(`/request/${r.id}`)}
-              />
+            {CENTERS.slice(0, 2).map((c) => (
+              <CenterCard key={c.id} center={c} onPress={() => router.push(`/center/${c.id}`)} />
             ))}
           </View>
 
-          {/* Compatibility shortcut */}
           <Pressable
-            onPress={() => router.push('/(tabs)/profile')}
-            style={{ marginTop: spacing.xl }}
+            onPress={() => Linking.openURL(REAL_CASES_URL).catch(() => {})}
+            style={{ marginTop: spacing.lg }}
           >
-            <Card style={styles.compatCard}>
-              <BloodDrop size={40} />
+            <Card style={styles.realCard}>
+              <Ionicons name="information-circle" size={22} color={colors.info} />
               <View style={{ flex: 1 }}>
-                <Text style={styles.compatTitle}>¿A quién puedes ayudar?</Text>
-                <Text style={styles.compatSub}>
-                  Descubre la compatibilidad de tu tipo de sangre.
+                <Text style={styles.realTitle}>¿Buscas casos reales de pacientes?</Text>
+                <Text style={styles.realSub}>
+                  Las solicitudes deben venir de instituciones verificadas. Plataformas como
+                  Blooders y los bancos de sangre publican necesidades reales.
                 </Text>
+                <Text style={styles.realLink}>Conocer Blooders →</Text>
               </View>
-              <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
             </Card>
           </Pressable>
 
-          {/* Tips */}
           <SectionHeader title="Antes de donar" />
           <ScrollView
             horizontal
@@ -224,31 +190,33 @@ const styles = StyleSheet.create({
     marginBottom: -52,
   },
   eligLeft: { flex: 1, gap: spacing.xs },
-  eligTitle: { fontSize: 17, fontWeight: '800', color: colors.text, marginTop: 4 },
-  eligSub: { fontSize: 12.5, color: colors.textSecondary, lineHeight: 17 },
-  eligBtn: {
+  pill: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    marginTop: spacing.sm,
+    alignSelf: 'flex-start',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: radius.pill,
   },
+  pillText: { fontSize: 11.5, fontWeight: '700' },
+  eligTitle: { fontSize: 17, fontWeight: '800', color: colors.text, marginTop: 4 },
+  eligSub: { fontSize: 12.5, color: colors.textSecondary, lineHeight: 17 },
+  eligBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: spacing.sm },
   eligBtnText: { color: colors.primary, fontWeight: '700', fontSize: 13.5 },
   body: { paddingHorizontal: spacing.xl, paddingTop: 64 },
   statsRow: { flexDirection: 'row', gap: spacing.md },
-  compatNote: {
-    fontSize: 12.5,
-    color: colors.textSecondary,
-    marginTop: -6,
-    marginBottom: spacing.md,
-  },
-  compatCard: {
+  realCard: {
     flexDirection: 'row',
-    alignItems: 'center',
     gap: spacing.md,
+    alignItems: 'flex-start',
+    backgroundColor: colors.infoSoft,
+    borderColor: '#BFDBFE',
   },
-  compatTitle: { fontSize: 15.5, fontWeight: '700', color: colors.text },
-  compatSub: { fontSize: 12.5, color: colors.textSecondary, marginTop: 2 },
-  tipCard: { width: 220, gap: spacing.sm },
+  realTitle: { fontSize: 14, fontWeight: '700', color: '#1E3A8A' },
+  realSub: { fontSize: 12.5, color: '#1E40AF', lineHeight: 18, marginTop: 2 },
+  realLink: { fontSize: 12.5, color: colors.primary, fontWeight: '700', marginTop: 6 },
+  tipCard: { width: 210, gap: spacing.sm },
   tipIcon: {
     width: 40,
     height: 40,

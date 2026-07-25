@@ -21,31 +21,25 @@ export function CenterCard({
               <Ionicons name="business" size={20} color={colors.primary} />
             </View>
             <View style={styles.headText}>
-              <Text style={styles.name} numberOfLines={1}>
-                {center.name}
-              </Text>
+              <Text style={styles.name}>{center.name}</Text>
               <Text style={styles.type} numberOfLines={1}>
                 {center.type}
               </Text>
             </View>
             <Tag
-              label={center.openNow ? 'Abierto' : 'Cerrado'}
-              tone={center.openNow ? 'success' : 'neutral'}
+              label={center.acceptsWalkIns ? 'Sin cita' : 'Con cita'}
+              tone={center.acceptsWalkIns ? 'success' : 'neutral'}
             />
           </View>
 
           <View style={styles.addressRow}>
             <Ionicons name="location-outline" size={14} color={colors.textMuted} />
-            <Text style={styles.address} numberOfLines={1}>
-              {center.address}
-            </Text>
+            <Text style={styles.address}>{center.address}</Text>
           </View>
 
           <View style={styles.stats}>
-            <Meta icon="navigate-outline" text={`${center.distanceKm} km`} />
-            <Meta icon="time-outline" text={center.hoursToday} />
-            <Meta icon="hourglass-outline" text={`~${center.waitMinutes} min`} />
-            <Meta icon="star" text={center.rating.toFixed(1)} tint={colors.gold} />
+            <Meta icon="time-outline" text={center.hours} />
+            <Meta icon="call-outline" text={center.phone} />
           </View>
         </Card>
       )}
@@ -56,15 +50,13 @@ export function CenterCard({
 function Meta({
   icon,
   text,
-  tint = colors.textSecondary,
 }: {
   icon: keyof typeof Ionicons.glyphMap;
   text: string;
-  tint?: string;
 }) {
   return (
     <View style={styles.meta}>
-      <Ionicons name={icon} size={13} color={tint} />
+      <Ionicons name={icon} size={13} color={colors.textSecondary} />
       <Text style={styles.metaText}>{text}</Text>
     </View>
   );
@@ -82,11 +74,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headText: { flex: 1 },
-  name: { fontSize: 15.5, fontWeight: '700', color: colors.text },
-  type: { fontSize: 12.5, color: colors.textSecondary, marginTop: 1 },
-  addressRow: { flexDirection: 'row', alignItems: 'center', gap: 5 },
+  name: { fontSize: 15, fontWeight: '700', color: colors.text, lineHeight: 19 },
+  type: { fontSize: 12.5, color: colors.textSecondary, marginTop: 2 },
+  addressRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 5 },
   address: { fontSize: 13, color: colors.textSecondary, flex: 1 },
-  stats: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
-  meta: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  stats: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.lg },
+  meta: { flexDirection: 'row', alignItems: 'center', gap: 5 },
   metaText: { fontSize: 12.5, color: colors.textSecondary, fontWeight: '600' },
 });

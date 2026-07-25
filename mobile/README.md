@@ -6,19 +6,27 @@ necesitan sangre. Construida con **Expo + React Native + TypeScript** y
 
 ## ✨ Funcionalidades
 
-- **Onboarding** guiado: nombre, zona y tipo de sangre (o "no lo sé").
-- **Dashboard de elegibilidad**: anillo de progreso con la cuenta regresiva de
-  56 días entre donaciones y estado "puedes donar / en recuperación".
-- **Solicitudes urgentes cercanas**: lista priorizada por urgencia y distancia,
-  con filtros (todas / compatibles con tu tipo / críticas) y detalle completo.
+- **Onboarding** guiado: nombre y tipo de sangre (o "no lo sé").
+- **Dashboard de elegibilidad**: anillo de progreso con la cuenta regresiva
+  (sangre completa cada 2 meses) y estado "puedes donar / en recuperación".
+- **Centros de donación REALES (México)**: Cruz Roja Mexicana, CNTS, IMSS CMN
+  Siglo XXI e INCMNSZ, con dirección, teléfono y horario verificados; "cómo
+  llegar" (Google Maps) y llamada directa.
+- **Requisitos y datos oficiales**: elegibilidad, frecuencia y preguntas
+  frecuentes según CNTS, IMSS e ISSSTE, con fuentes citadas.
 - **Compatibilidad sanguínea**: matriz de a quién puedes donar y de quién puedes
   recibir, con indicadores de donante/receptor universal.
-- **Centros de donación**: horarios, tiempo de espera, cómo llegar y llamada.
-- **Agendar cita**: selector de centro, día y horario con confirmación.
-- **Registro de donaciones e impacto**: "vidas ayudadas", logros/insignias y
+- **Registro de donaciones e impacto**: "vidas ayudadas", logros/insignias e
   historial. Actualiza automáticamente tu elegibilidad.
 - **Persistencia local** con AsyncStorage (los datos viven solo en el dispositivo).
 - Diseño accesible con retroalimentación háptica y tema rojo cohesivo.
+
+> **Sobre las solicitudes de pacientes:** no se incluyen casos ficticios. Las
+> solicitudes reales de pacientes solo deben provenir de instituciones
+> verificadas (bancos de sangre, hospitales) a través de un backend con
+> validación. La app enlaza a plataformas verificadas (p. ej. Blooders) para
+> casos reales. El siguiente paso natural es conectar un backend (Supabase) con
+> publicación restringida a instituciones autorizadas.
 
 ## 🚀 Cómo ejecutar
 
@@ -53,9 +61,8 @@ mobile/
 │   ├── _layout.tsx          # Providers + Stack raíz
 │   ├── index.tsx            # Splash + redirección según onboarding
 │   ├── onboarding.tsx       # Alta del donante
-│   ├── (tabs)/              # Tabs: Inicio, Solicitudes, Centros, Perfil
-│   ├── request/[id].tsx     # Detalle de solicitud + agendar
-│   └── center/[id].tsx      # Detalle de centro + agendar/registrar
+│   ├── (tabs)/              # Tabs: Inicio, Requisitos, Centros, Perfil
+│   └── center/[id].tsx      # Detalle de centro + registrar donación
 ├── src/
 │   ├── components/          # UI reutilizable (Button, Cards, ProgressRing…)
 │   ├── context/             # DonorContext (estado + AsyncStorage)

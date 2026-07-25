@@ -31,11 +31,11 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="requests"
+        name="info"
         options={{
-          title: 'Solicitudes',
+          title: 'Requisitos',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="water" size={size} color={color} />
+            <Ionicons name="information-circle" size={size} color={color} />
           ),
         }}
       />

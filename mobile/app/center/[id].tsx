@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import {
   Alert,
   Linking,
@@ -13,24 +13,16 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '@/components/Button';
-import { ScheduleSheet } from '@/components/ScheduleSheet';
 import { Card, Divider, Tag } from '@/components/ui';
 import { useDonor } from '@/context/DonorContext';
 import { CENTERS } from '@/data';
 import { colors, gradients, radius, spacing } from '@/theme';
-
-const HOURS = [
-  ['Lunes – Viernes', '07:00 – 19:00'],
-  ['Sábado', '08:00 – 14:00'],
-  ['Domingo', 'Cerrado'],
-];
 
 export default function CenterDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { addDonation } = useDonor();
-  const [sheetOpen, setSheetOpen] = useState(false);
 
   const center = useMemo(() => CENTERS.find((c) => c.id === id), [id]);
 
@@ -43,10 +35,14 @@ export default function CenterDetail() {
     );
   }
 
+  const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(
+    `${center.name} ${center.address}`,
+  )}`;
+
   const registerDonation = () => {
     Alert.alert(
       'Registrar donación',
-      `¿Confirmas que donaste hoy en ${center.name}? Se sumará a tu impacto.`,
+      `¿Confirmas que donaste en ${center.name}? Se sumará a tu impacto y actualizará tu elegibilidad.`,
       [
         { text: 'Cancelar', style: 'cancel' },
         {
@@ -55,7 +51,7 @@ export default function CenterDetail() {
             await addDonation({ date: new Date().toISOString(), center: center.name });
             Alert.alert(
               '¡Gracias por donar! ❤️',
-              'Acabas de ayudar hasta a 3 personas. Tu próxima donación se habilitará en 56 días.',
+              'Acabas de ayudar hasta a 3 personas. Tu próxima donación se habilitará en 2 meses.',
               [{ text: 'Ver mi impacto', onPress: () => router.replace('/(tabs)/profile') }],
             );
           },
@@ -77,30 +73,26 @@ export default function CenterDetail() {
               <Ionicons name="chevron-back" size={22} color="#fff" />
             </Pressable>
             <Tag
-              label={center.openNow ? 'Abierto ahora' : 'Cerrado'}
-              tone={center.openNow ? 'success' : 'neutral'}
+              label={center.acceptsWalkIns ? 'Recibe sin cita' : 'Requiere cita'}
+              tone={center.acceptsWalkIns ? 'success' : 'neutral'}
             />
           </View>
           <Text style={styles.name}>{center.name}</Text>
-          <Text style={styles.type}>{center.type}</Text>
-          <View style={styles.headerStats}>
-            <HeaderStat icon="navigate" text={`${center.distanceKm} km`} />
-            <HeaderStat icon="star" text={center.rating.toFixed(1)} />
-            <HeaderStat icon="hourglass" text={`~${center.waitMinutes} min`} />
-          </View>
+          <Text style={styles.type}>
+            {center.type} · {center.alcaldia}
+          </Text>
         </LinearGradient>
 
         <View style={styles.body}>
-          {/* Map placeholder */}
           <Card style={styles.map}>
             <Ionicons name="map-outline" size={30} color={colors.primary} />
             <Text style={styles.mapText}>{center.address}</Text>
             <Pressable
               style={styles.mapBtn}
               onPress={() =>
-                Linking.openURL(
-                  `https://maps.google.com/?q=${encodeURIComponent(center.address)}`,
-                ).catch(() => Alert.alert('Mapa', 'No se pudo abrir el mapa.'))
+                Linking.openURL(mapsUrl).catch(() =>
+                  Alert.alert('Mapa', 'No se pudo abrir el mapa.'),
+                )
               }
             >
               <Ionicons name="navigate" size={15} color={colors.primary} />
@@ -108,86 +100,62 @@ export default function CenterDetail() {
             </Pressable>
           </Card>
 
-          {/* Hours */}
-          <Card style={{ gap: spacing.sm }}>
-            <Text style={styles.cardTitle}>Horarios</Text>
-            {HOURS.map(([d, h], i) => (
-              <View key={i}>
-                {i > 0 && <Divider style={{ marginVertical: spacing.sm }} />}
-                <View style={styles.hourRow}>
-                  <Text style={styles.hourDay}>{d}</Text>
-                  <Text
-                    style={[styles.hourVal, h === 'Cerrado' && { color: colors.textMuted }]}
-                  >
-                    {h}
-                  </Text>
-                </View>
-              </View>
-            ))}
+          <Card style={{ gap: spacing.md }}>
+            <Info icon="time-outline" label="Horario" value={center.hours} />
+            <Divider />
+            <Info icon="call-outline" label="Teléfono" value={center.phone} />
+            <Divider />
+            <Info icon="globe-outline" label="Sitio oficial" value={center.site} />
           </Card>
 
-          {/* Info */}
-          <Card style={{ gap: spacing.md }}>
-            <Text style={styles.cardTitle}>Información</Text>
-            <Info
-              icon={center.acceptsWalkIns ? 'walk' : 'calendar'}
-              text={
-                center.acceptsWalkIns
-                  ? 'Acepta donantes sin cita (walk-in)'
-                  : 'Solo con cita previa'
-              }
-            />
-            <Info icon="call" text={center.phone} />
-            <Info icon="water" text="Sangre completa, plaquetas y plasma" />
-            <Info icon="card" text="Lleva identificación oficial con foto" />
+          <Card style={styles.noteCard}>
+            <Ionicons name="information-circle" size={20} color={colors.success} />
+            <Text style={styles.noteText}>{center.note}</Text>
           </Card>
 
           <Card style={styles.reqCard}>
-            <Ionicons name="shield-checkmark" size={20} color={colors.success} />
+            <Ionicons name="shield-checkmark" size={20} color={colors.info} />
             <Text style={styles.reqText}>
-              Requisitos generales: 18–65 años, más de 50 kg, buena salud y haber comido.
-              El personal confirma tu elegibilidad al llegar.
+              Requisitos: 18–65 años, más de 50 kg, ayuno de 4–12 h, buena salud e
+              identificación oficial. El personal confirma tu elegibilidad al llegar.
             </Text>
           </Card>
         </View>
       </ScrollView>
 
       <View style={[styles.cta, { paddingBottom: insets.bottom + spacing.md }]}>
-        <Pressable style={styles.callBtn} onPress={() => Linking.openURL(`tel:${center.phone}`)}>
+        <Pressable
+          style={styles.callBtn}
+          onPress={() => Linking.openURL(`tel:${center.phone.replace(/\s/g, '')}`)}
+        >
           <Ionicons name="call" size={22} color={colors.primary} />
         </Pressable>
-        <View style={{ flex: 1, gap: spacing.sm }}>
-          <Button label="Agendar cita" icon="calendar" onPress={() => setSheetOpen(true)} />
+        <View style={{ flex: 1 }}>
+          <Button label="Registrar donación" icon="checkmark" onPress={registerDonation} />
         </View>
       </View>
-
-      <ScheduleSheet
-        visible={sheetOpen}
-        onClose={() => setSheetOpen(false)}
-        centerId={center.id}
-        onScheduled={() => {
-          setSheetOpen(false);
-          registerDonation();
-        }}
-      />
     </View>
   );
 }
 
-function HeaderStat({ icon, text }: { icon: keyof typeof Ionicons.glyphMap; text: string }) {
-  return (
-    <View style={styles.hStat}>
-      <Ionicons name={icon} size={15} color="#fff" />
-      <Text style={styles.hStatText}>{text}</Text>
-    </View>
-  );
-}
-
-function Info({ icon, text }: { icon: keyof typeof Ionicons.glyphMap; text: string }) {
+function Info({
+  icon,
+  label,
+  value,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  value: string;
+}) {
   return (
     <View style={styles.info}>
-      <Ionicons name={icon} size={18} color={colors.primary} />
-      <Text style={styles.infoText}>{text}</Text>
+      <View style={styles.infoIcon}>
+        <Ionicons name={icon} size={18} color={colors.primary} />
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.infoLabel}>{label}</Text>
+        <Text style={styles.infoValue}>{value}</Text>
+      </View>
     </View>
   );
 }
@@ -215,11 +183,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  name: { color: '#fff', fontSize: 24, fontWeight: '800', marginTop: spacing.md },
-  type: { color: 'rgba(255,255,255,0.9)', fontSize: 14, marginTop: 2 },
-  headerStats: { flexDirection: 'row', gap: spacing.lg, marginTop: spacing.lg },
-  hStat: { flexDirection: 'row', alignItems: 'center', gap: 5 },
-  hStatText: { color: '#fff', fontWeight: '700', fontSize: 13.5 },
+  name: { color: '#fff', fontSize: 22, fontWeight: '800', marginTop: spacing.md, lineHeight: 27 },
+  type: { color: 'rgba(255,255,255,0.9)', fontSize: 14, marginTop: 4 },
   body: { padding: spacing.xl, gap: spacing.md },
   map: { alignItems: 'center', gap: spacing.sm, paddingVertical: spacing.xl },
   mapText: { fontSize: 14, color: colors.textSecondary, textAlign: 'center' },
@@ -234,20 +199,33 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
   },
   mapBtnText: { color: colors.primary, fontWeight: '700', fontSize: 13.5 },
-  cardTitle: { fontSize: 15.5, fontWeight: '800', color: colors.text, marginBottom: spacing.xs },
-  hourRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  hourDay: { fontSize: 14, color: colors.text, fontWeight: '500' },
-  hourVal: { fontSize: 14, color: colors.text, fontWeight: '700' },
   info: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  infoText: { fontSize: 14, color: colors.text, fontWeight: '500', flex: 1 },
-  reqCard: {
+  infoIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: radius.md,
+    backgroundColor: colors.primarySoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  infoLabel: { fontSize: 12, color: colors.textMuted, fontWeight: '600' },
+  infoValue: { fontSize: 14.5, color: colors.text, fontWeight: '600', marginTop: 1 },
+  noteCard: {
     flexDirection: 'row',
     gap: spacing.md,
     alignItems: 'center',
     backgroundColor: colors.successSoft,
     borderColor: '#BBF7D0',
   },
-  reqText: { flex: 1, fontSize: 13, color: '#166534', fontWeight: '600', lineHeight: 18 },
+  noteText: { flex: 1, fontSize: 13, color: '#166534', fontWeight: '600', lineHeight: 18 },
+  reqCard: {
+    flexDirection: 'row',
+    gap: spacing.md,
+    alignItems: 'center',
+    backgroundColor: colors.infoSoft,
+    borderColor: '#BFDBFE',
+  },
+  reqText: { flex: 1, fontSize: 13, color: '#1E40AF', fontWeight: '600', lineHeight: 18 },
   cta: {
     position: 'absolute',
     left: 0,
