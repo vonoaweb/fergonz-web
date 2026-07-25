@@ -1,0 +1,92 @@
+import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { DonationCenter } from '@/data';
+import { colors, radius, spacing } from '@/theme';
+import { Card, Tag } from './ui';
+
+export function CenterCard({
+  center,
+  onPress,
+}: {
+  center: DonationCenter;
+  onPress?: () => void;
+}) {
+  return (
+    <Pressable onPress={onPress} accessibilityRole="button">
+      {({ pressed }) => (
+        <Card style={[styles.card, { transform: [{ scale: pressed ? 0.99 : 1 }] }]}>
+          <View style={styles.header}>
+            <View style={styles.iconWrap}>
+              <Ionicons name="business" size={20} color={colors.primary} />
+            </View>
+            <View style={styles.headText}>
+              <Text style={styles.name} numberOfLines={1}>
+                {center.name}
+              </Text>
+              <Text style={styles.type} numberOfLines={1}>
+                {center.type}
+              </Text>
+            </View>
+            <Tag
+              label={center.openNow ? 'Abierto' : 'Cerrado'}
+              tone={center.openNow ? 'success' : 'neutral'}
+            />
+          </View>
+
+          <View style={styles.addressRow}>
+            <Ionicons name="location-outline" size={14} color={colors.textMuted} />
+            <Text style={styles.address} numberOfLines={1}>
+              {center.address}
+            </Text>
+          </View>
+
+          <View style={styles.stats}>
+            <Meta icon="navigate-outline" text={`${center.distanceKm} km`} />
+            <Meta icon="time-outline" text={center.hoursToday} />
+            <Meta icon="hourglass-outline" text={`~${center.waitMinutes} min`} />
+            <Meta icon="star" text={center.rating.toFixed(1)} tint={colors.gold} />
+          </View>
+        </Card>
+      )}
+    </Pressable>
+  );
+}
+
+function Meta({
+  icon,
+  text,
+  tint = colors.textSecondary,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  text: string;
+  tint?: string;
+}) {
+  return (
+    <View style={styles.meta}>
+      <Ionicons name={icon} size={13} color={tint} />
+      <Text style={styles.metaText}>{text}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  card: { gap: spacing.md },
+  header: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+  iconWrap: {
+    width: 42,
+    height: 42,
+    borderRadius: radius.md,
+    backgroundColor: colors.primarySoft,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headText: { flex: 1 },
+  name: { fontSize: 15.5, fontWeight: '700', color: colors.text },
+  type: { fontSize: 12.5, color: colors.textSecondary, marginTop: 1 },
+  addressRow: { flexDirection: 'row', alignItems: 'center', gap: 5 },
+  address: { fontSize: 13, color: colors.textSecondary, flex: 1 },
+  stats: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.md },
+  meta: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  metaText: { fontSize: 12.5, color: colors.textSecondary, fontWeight: '600' },
+});
