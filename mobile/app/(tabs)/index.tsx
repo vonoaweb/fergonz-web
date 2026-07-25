@@ -6,9 +6,9 @@ import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-na
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CenterCard } from '@/components/CenterCard';
 import { ProgressRing } from '@/components/ProgressRing';
-import { Card, SectionHeader, StatTile } from '@/components/ui';
+import { Card, Divider, SectionHeader, StatTile } from '@/components/ui';
 import { useDonor } from '@/context/DonorContext';
-import { CENTERS, PRE_TIPS, REAL_CASES_URL } from '@/data';
+import { ALERT_LINKS, CENTERS, PRE_TIPS } from '@/data';
 import { colors, gradients, radius, spacing } from '@/theme';
 import { getEligibility, LIVES_PER_DONATION } from '@/utils/eligibility';
 
@@ -117,22 +117,39 @@ export default function Home() {
             ))}
           </View>
 
-          <Pressable
-            onPress={() => Linking.openURL(REAL_CASES_URL).catch(() => {})}
-            style={{ marginTop: spacing.lg }}
-          >
-            <Card style={styles.realCard}>
-              <Ionicons name="information-circle" size={22} color="#0C8177" />
-              <View style={{ flex: 1 }}>
-                <Text style={styles.realTitle}>¿Buscas casos reales de pacientes?</Text>
-                <Text style={styles.realSub}>
-                  Las solicitudes deben venir de instituciones verificadas. Plataformas como
-                  Blooders y los bancos de sangre publican necesidades reales.
-                </Text>
-                <Text style={styles.realLink}>Conocer Blooders →</Text>
-              </View>
-            </Card>
-          </Pressable>
+          <SectionHeader title="Alertas y campañas" />
+          <Card style={styles.alertCard}>
+            <Text style={styles.alertIntro}>
+              La necesidad de sangre es real y constante. Los casos de pacientes se consultan
+              en fuentes verificadas y en vivo, no en esta app:
+            </Text>
+            {ALERT_LINKS.map((a, i) => {
+              const tint =
+                a.tint === 'primary'
+                  ? colors.primary
+                  : a.tint === 'info'
+                    ? colors.info
+                    : colors.secondary;
+              return (
+                <View key={a.url}>
+                  {i > 0 && <Divider />}
+                  <Pressable
+                    style={styles.linkRow}
+                    onPress={() => Linking.openURL(a.url).catch(() => {})}
+                  >
+                    <View style={[styles.linkIcon, { backgroundColor: tint + '1c' }]}>
+                      <Ionicons name={a.icon as any} size={20} color={tint} />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.linkTitle}>{a.title}</Text>
+                      <Text style={styles.linkSub}>{a.sub}</Text>
+                    </View>
+                    <Ionicons name="open-outline" size={16} color={colors.textMuted} />
+                  </Pressable>
+                </View>
+              );
+            })}
+          </Card>
 
           <SectionHeader title="Antes de donar" />
           <ScrollView
@@ -206,16 +223,23 @@ const styles = StyleSheet.create({
   eligBtnText: { color: colors.primary, fontWeight: '700', fontSize: 13.5 },
   body: { paddingHorizontal: spacing.xl, paddingTop: 64 },
   statsRow: { flexDirection: 'row', gap: spacing.md },
-  realCard: {
-    flexDirection: 'row',
-    gap: spacing.md,
-    alignItems: 'flex-start',
-    backgroundColor: colors.secondarySoft,
-    borderColor: '#B7ECE6',
+  alertCard: { paddingVertical: spacing.xs },
+  alertIntro: {
+    fontSize: 12.5,
+    color: colors.textSecondary,
+    lineHeight: 18,
+    paddingVertical: spacing.sm,
   },
-  realTitle: { fontSize: 14, fontWeight: '800', color: '#0A6E65' },
-  realSub: { fontSize: 12.5, color: '#0C8177', lineHeight: 18, marginTop: 2 },
-  realLink: { fontSize: 12.5, color: '#0C8177', fontWeight: '800', marginTop: 6 },
+  linkRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, paddingVertical: spacing.md },
+  linkIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: radius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  linkTitle: { fontSize: 14, fontWeight: '800', color: colors.text },
+  linkSub: { fontSize: 12, color: colors.textSecondary, marginTop: 1 },
   tipCard: { width: 210, gap: spacing.sm },
   tipIcon: {
     width: 40,

@@ -241,3 +241,39 @@ export const FAQ = [
 
 /** Casos reales de pacientes solo desde plataformas/instituciones verificadas. */
 export const REAL_CASES_URL = 'https://blooders.org';
+
+/**
+ * Alertas y campañas: enlaces a fuentes vivas y verificadas donde aparecen los
+ * llamados reales. La app no publica casos de pacientes por su cuenta.
+ */
+export interface AlertLink {
+  icon: string;
+  title: string;
+  sub: string;
+  url: string;
+  tint: 'secondary' | 'primary' | 'info';
+}
+
+export const ALERT_LINKS: AlertLink[] = [
+  {
+    icon: 'shield-checkmark-outline',
+    title: 'Casos verificados · Blooders',
+    sub: 'Pacientes reales publicados por hospitales',
+    url: 'https://blooders.org',
+    tint: 'secondary',
+  },
+  {
+    icon: 'notifications-outline',
+    title: 'Campañas del CETS Jalisco',
+    sub: 'Llamados oficiales a donar (Instagram)',
+    url: 'https://www.instagram.com/cetsjalisco/',
+    tint: 'primary',
+  },
+  {
+    icon: 'globe-outline',
+    title: 'Menciones en noticias',
+    sub: 'Buscar "donadores de sangre Jalisco"',
+    url: 'https://news.google.com/search?q=donadores%20de%20sangre%20Jalisco&hl=es-419',
+    tint: 'info',
+  },
+];
