@@ -20,6 +20,15 @@ export interface DesignFile {
   frameBg: string;
   /** CSS aspect-ratio for a lone full-width frame, so it isn't swamped by letterboxing. */
   soloAspect?: string;
+  /**
+   * Show the embedded Figma viewer for this file.
+   *
+   * Leave false until the file is shared in Figma as "Anyone with the link →
+   * can view". Without that, embed.figma.com answers with a sign-in wall
+   * rather than the design, which is worse for a visitor than no button at
+   * all. Once a file is public, flip this to true — nothing else to change.
+   */
+  embeddable?: boolean;
   frames: DesignFrame[];
 }
 
