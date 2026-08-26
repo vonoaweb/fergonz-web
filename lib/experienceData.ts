@@ -17,7 +17,7 @@ export const experienceData: Experience[] = [
   {
     company: 'KenisIT',
     role: 'Senior User Interface Designer',
-    period: 'Mar 2021 – Mar 2023',
+    period: 'Mar 2021 – Sep 2023',
     description: 'Led UI design for PayPal EMEA localization, insurance platform redesign, and healthcare e-commerce dashboards.',
   },
   {

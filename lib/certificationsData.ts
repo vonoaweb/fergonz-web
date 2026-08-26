@@ -11,7 +11,7 @@ export const certificationsData: Certification[] = [
   {
     title: "Google UX Design Professional Certificate",
     issuer: "Google / Coursera",
-    date: "2023",
+    date: "Dec 2022",
     link: "https://www.coursera.org/account/accomplishments/professional-cert/GY4UVVKGEP85",
     type: "Professional Certificate"
   },
@@ -66,8 +66,15 @@ export const certificationsData: Certification[] = [
   },
   {
     title: "Web Design Diploma",
-    issuer: "eduMac",
+    issuer: "eduMac Centro de Artes Digitales",
     date: "Oct 2018",
+    link: null,
+    type: "Diploma"
+  },
+  {
+    title: "Social Media Management & Basic Programming Diploma",
+    issuer: "ITESO Universidad Jesuita de Guadalajara",
+    date: "Apr 2017",
     link: null,
     type: "Diploma"
   }

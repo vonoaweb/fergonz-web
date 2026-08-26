@@ -41,30 +41,44 @@ const stats: Stat[] = [
   },
 ];
 
+function formatStat(stat: Stat, value: number) {
+  return `${stat.prefix ?? ''}${value.toFixed(stat.decimals ?? 0)}${stat.suffix ?? ''}`;
+}
+
 function CountUp({ stat }: { stat: Stat }) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
+  // The server renders the real figure, so crawlers, link previews and anyone
+  // without JS read "3.8%" rather than "0.0%". Only once JS is running — and
+  // only if the visitor accepts motion — do we reset to zero to count up.
+  useEffect(() => {
+    if (!ref.current) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    ref.current.textContent = formatStat(stat, 0);
+  }, [stat]);
+
   useEffect(() => {
     if (!isInView || !ref.current) return;
-    const { value, decimals = 0, prefix = '', suffix = '' } = stat;
-    const controls = animate(0, value, {
+    const node = ref.current;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const controls = animate(0, stat.value, {
       duration: 1.8,
       ease: [0.22, 1, 0.36, 1],
       onUpdate: (v) => {
-        if (ref.current) {
-          ref.current.textContent = `${prefix}${v.toFixed(decimals)}${suffix}`;
-        }
+        node.textContent = formatStat(stat, v);
       },
     });
-    return () => controls.stop();
+    // However the animation ends — completed or interrupted — the cell must be
+    // left showing the real number, never a rounding artefact.
+    return () => {
+      controls.stop();
+      node.textContent = formatStat(stat, stat.value);
+    };
   }, [isInView, stat]);
 
-  return (
-    <span ref={ref}>
-      {`${stat.prefix ?? ''}${(0).toFixed(stat.decimals ?? 0)}${stat.suffix ?? ''}`}
-    </span>
-  );
+  return <span ref={ref}>{formatStat(stat, stat.value)}</span>;
 }
 
 export default function ImpactSection() {
@@ -85,7 +99,7 @@ export default function ImpactSection() {
             Design that moves numbers
           </h2>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 dark:bg-white/10 border border-gray-200 dark:border-white/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 dark:bg-white/10 border border-gray-200 dark:border-white/10">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -93,9 +107,9 @@ export default function ImpactSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-white/90 dark:bg-black/60 backdrop-blur-md p-8 md:p-10 flex flex-col group hover:bg-gray-50 dark:hover:bg-white/5 transition-colors duration-500"
+                className="bg-white/90 dark:bg-black/60 backdrop-blur-md p-6 xl:p-8 flex flex-col group hover:bg-gray-50 dark:hover:bg-white/5 transition-colors duration-500"
               >
-                <span className="text-5xl md:text-6xl lg:text-7xl font-display font-bold tracking-[-0.04em] text-gradient tabular-nums">
+                <span className="block text-4xl md:text-5xl xl:text-6xl leading-none font-display font-bold tracking-[-0.03em] text-gradient tabular-nums whitespace-nowrap">
                   <CountUp stat={stat} />
                 </span>
                 <span className="mt-4 text-sm md:text-base font-mono uppercase tracking-widest text-gray-900 dark:text-white">

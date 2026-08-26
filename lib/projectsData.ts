@@ -230,7 +230,69 @@ export const projects: Project[] = [
     results:
       'Delivered a suite of enterprise tools that improved client satisfaction and reduced support requests through clearer, more intuitive interfaces.',
   },
-  // Row 6: Gusanito (1 col) + AmazonProject (2 cols from page.tsx) = 3
+  // Row 6: KROL (1) + LuBlend (1) + Azul de Metileno (1) = 3 — VonoaWeb studio work
+  {
+    id: 15,
+    title: 'KROL Edificación Estructural – Construction Firm Site',
+    role: 'Web Designer & Front-end Developer · VonoaWeb',
+    image: '/images/sites/krol.webp',
+    images: [
+      '/images/sites/krol-home2.webp',
+      '/images/sites/krol-servicios.webp',
+      '/images/sites/krol-proyectos.webp',
+      '/images/sites/krol-nosotros.webp',
+    ],
+    link: 'https://vonoaweb.github.io/krol-web/',
+    size: 'small',
+    tags: ['Web Design', 'GSAP', 'Brand System', 'Front-end'],
+    problem:
+      'KROL is a Jalisco structural construction firm — foundations, concrete structures, retaining walls, industrial floors — with 13 years of work and coverage across 21 states, and no digital presence at all. Prospective industrial and commercial clients had no way to judge the scale or quality of the work before picking up the phone, so the firm kept losing ground to contractors with a weaker track record but a stronger online image.',
+    solution:
+      'Designed and built a six-page site in hand-written HTML, CSS and JavaScript with GSAP scroll animation — no CMS and no page builder, so it loads fast and costs nothing to host. Set a dark industrial art direction (orange on near-black) agreed with the client, structured the offer around the eight core specialities, and let the executed projects carry the credibility argument. Quote requests run through a serverless edge function that fans a single submission out to several inboxes.',
+    results:
+      'Live six-page site presenting 13 years of track record, 21 states of coverage and 100+ executed projects as one narrative, with a working quote pipeline that reaches both the client and the studio. Delivered alongside a brand book for the company.',
+  },
+  {
+    id: 16,
+    title: 'LuBlend – Gourmet Drink Mixes E-commerce',
+    role: 'Web Designer & E-commerce Developer · VonoaWeb',
+    image: '/images/sites/lublend.webp',
+    images: [
+      '/images/sites/lublend-tienda.webp',
+      '/images/sites/lublend-product.webp',
+      '/images/sites/lublend-recetas.webp',
+    ],
+    link: 'https://lublend.com/',
+    size: 'small',
+    tags: ['WooCommerce', 'E-commerce', 'Branding', 'WordPress'],
+    problem:
+      'LuBlend sells powdered gourmet drink mixes — matcha, chai, taro, cacao, cappuccino — but the brand is about the ritual of taking a moment for yourself, not about powder. A generic storefront would have sold the commodity and lost the reason customers come back. They also needed to sell direct, without a marketplace taking a cut of every order.',
+    solution:
+      'Built a WooCommerce storefront where product photography leads and the brand voice carries the page. Every mix ships in two formats — 1.3 kg tubs and boxes of twelve single-serve sachets — with the yield stated up front ("makes up to 52 drinks") so price reads as cost per cup instead of sticker price. A recipes section gives buyers a reason to return, and live chat plus WhatsApp catch pre-purchase questions before they become abandoned carts.',
+    results:
+      'A complete owned sales channel with no intermediaries: catalogue, cart, checkout, customer accounts and a recipe library feeding repeat purchase, with the free-shipping threshold surfaced site-wide to lift average order value.',
+  },
+  {
+    id: 17,
+    title: 'Azul de Metileno México – Pharma-Grade E-commerce',
+    role: 'Web Designer & E-commerce Developer · VonoaWeb',
+    image: '/images/sites/azuldemetileno.webp',
+    images: [
+      '/images/sites/azul-shop.webp',
+      '/images/sites/azul-dosis.webp',
+      '/images/sites/azul-clinicas.webp',
+    ],
+    link: 'https://azuldemetileno.com.mx/',
+    size: 'small',
+    tags: ['WooCommerce', 'Content Design', 'E-commerce', 'SEO'],
+    problem:
+      'Selling a pharmaceutical-grade compound online is a trust problem before it is a commerce problem. Buyers arrive unsure what methylene blue is, what purity they are actually getting and how to dose it — and the category is crowded with sellers who answer none of that. The store had to move six different presentations while carrying enough documented information for a cautious buyer to commit.',
+    solution:
+      'Designed a WooCommerce store where the editorial layer does the selling. Clinical considerations, dosing guidance, a scientific references list, video explainers and a downloadable quality certificate all sit in the main navigation rather than buried in a blog. Product pages separate the formats — 30 ml drops, 50 ml and 100 ml at 1% concentration, 5 g powder and preparation kits — so buyers choose by use case instead of guessing.',
+    results:
+      'Six product presentations selling nationwide with the credibility layer built straight into the navigation: purity certificate, dosing, clinical notes and references are all one click from the storefront.',
+  },
+  // Row 7: Gusanito (1 col) + AmazonProject (2 cols from page.tsx) = 3
   {
     id: 4,
     title: 'Gusanito – Greeting Card Platform Redesign',

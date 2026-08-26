@@ -17,6 +17,8 @@ import AmazonProject from '@/components/AmazonProject';
 import ExperienceSection from '@/components/ExperienceSection';
 import ProcessSection from '@/components/ProcessSection';
 import ClientsSection from '@/components/ClientsSection';
+import LiveSitesSection from '@/components/LiveSitesSection';
+import DesignFilesSection from '@/components/DesignFilesSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 
 // Service icon SVGs matching Figma designs (brand colors: navy #1B2A4A + cyan #06B6D3)
@@ -337,6 +339,12 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Live client sites built through VonoaWeb */}
+      <LiveSitesSection />
+
+      {/* Figma source files */}
+      <DesignFilesSection />
+
       {/* Experience */}
       <ExperienceSection />
 
@@ -503,14 +511,6 @@ export default function Home() {
                     className="text-gray-600 dark:text-white/40 hover:text-cyan-400 dark:hover:text-cyan-400 text-xs font-mono uppercase tracking-widest transition-colors duration-300"
                   >
                     Download CV
-                  </a>
-                  <a
-                    href="https://en.fergonz.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-600 dark:text-white/40 hover:text-cyan-400 dark:hover:text-cyan-400 text-xs font-mono uppercase tracking-widest transition-colors duration-300"
-                  >
-                    Portfolio V1
                   </a>
                 </div>
               </div>
