@@ -11,6 +11,11 @@ const clients = [
   { name: 'Fortius', logo: '/images/client-fortius.png' },
   { name: 'Tuul', logo: '/images/client-tuul.png' },
   { name: 'DEV Consultores', logo: '/images/client-devconsultores.png' },
+  { name: 'KROL', logo: null },
+  { name: 'LuBlend', logo: null },
+  { name: 'Taller Metro', logo: null },
+  { name: 'Moncatu', logo: null },
+  { name: 'Ye6 Otay', logo: null },
 ];
 
 function ClientItem({ client }: { client: (typeof clients)[number] }) {

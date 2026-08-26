@@ -23,7 +23,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://fergonz-web.vercel.app'),
+  metadataBase: new URL('https://fergonz.com'),
   title: 'Fernando González | Senior UX/UI Designer — 10+ Years of Digital Experience',
   description: 'Senior UX/UI Designer with 10+ years transforming business goals into seamless digital experiences. Worked with Amazon, PayPal, and Grupo Urrea. Based in Guadalajara, Mexico.',
   keywords: ['UX Designer', 'UI Designer', 'Product Designer', 'Frontend Developer', 'Guadalajara', 'Fernando González', 'Web Design', 'E-commerce', 'React Native', 'WordPress', 'VonoaWeb'],
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Fernando González | UX/UI Designer & Developer',
     description: 'UX/UI Designer with 10+ years of experience creating user-centered digital experiences.',
-    url: 'https://fergonz-web.vercel.app',
+    url: 'https://fergonz.com',
     siteName: 'Fernando González Portfolio',
     locale: 'en_US',
     type: 'website',
@@ -49,13 +49,13 @@ const personJsonLd = {
   name: 'Fernando González',
   alternateName: 'FerGonz',
   jobTitle: 'Senior UX/UI Designer & Digital Product Developer',
-  url: 'https://fergonz-web.vercel.app',
+  url: 'https://fergonz.com',
   email: 'mailto:contacto@fergonz.com',
   alumniOf: {
     '@type': 'CollegeOrUniversity',
     name: 'ITESO Universidad Jesuita de Guadalajara',
   },
-  sameAs: ['https://www.linkedin.com/in/fergonz/', 'https://en.fergonz.com'],
+  sameAs: ['https://www.linkedin.com/in/fergonz/'],
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Guadalajara',

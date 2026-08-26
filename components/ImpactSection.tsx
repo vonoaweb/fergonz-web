@@ -41,30 +41,44 @@ const stats: Stat[] = [
   },
 ];
 
+function formatStat(stat: Stat, value: number) {
+  return `${stat.prefix ?? ''}${value.toFixed(stat.decimals ?? 0)}${stat.suffix ?? ''}`;
+}
+
 function CountUp({ stat }: { stat: Stat }) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
 
+  // The server renders the real figure, so crawlers, link previews and anyone
+  // without JS read "3.8%" rather than "0.0%". Only once JS is running — and
+  // only if the visitor accepts motion — do we reset to zero to count up.
+  useEffect(() => {
+    if (!ref.current) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    ref.current.textContent = formatStat(stat, 0);
+  }, [stat]);
+
   useEffect(() => {
     if (!isInView || !ref.current) return;
-    const { value, decimals = 0, prefix = '', suffix = '' } = stat;
-    const controls = animate(0, value, {
+    const node = ref.current;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const controls = animate(0, stat.value, {
       duration: 1.8,
       ease: [0.22, 1, 0.36, 1],
       onUpdate: (v) => {
-        if (ref.current) {
-          ref.current.textContent = `${prefix}${v.toFixed(decimals)}${suffix}`;
-        }
+        node.textContent = formatStat(stat, v);
       },
     });
-    return () => controls.stop();
+    // However the animation ends — completed or interrupted — the cell must be
+    // left showing the real number, never a rounding artefact.
+    return () => {
+      controls.stop();
+      node.textContent = formatStat(stat, stat.value);
+    };
   }, [isInView, stat]);
 
-  return (
-    <span ref={ref}>
-      {`${stat.prefix ?? ''}${(0).toFixed(stat.decimals ?? 0)}${stat.suffix ?? ''}`}
-    </span>
-  );
+  return <span ref={ref}>{formatStat(stat, stat.value)}</span>;
 }
 
 export default function ImpactSection() {
