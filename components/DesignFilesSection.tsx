@@ -174,9 +174,9 @@ export default function DesignFilesSection() {
             Straight From Figma
           </h2>
           <p className="text-center text-sm md:text-base text-gray-600 dark:text-white/50 mb-16 md:mb-20 max-w-3xl mx-auto font-light leading-relaxed">
-            {designFiles.length} source files — {frameCount} artboards from product flows, brand
-            systems and icon sets. Each one carries the reasoning behind its decisions, not just the
-            result, and links to the file it came from.
+            {designFiles.length} source files — {frameCount} artboards of brand systems and campaign
+            art direction. Each one carries the reasoning behind its decisions, not just the result,
+            and links to the file it came from.
           </p>
 
           <div className="space-y-16 md:space-y-24">
