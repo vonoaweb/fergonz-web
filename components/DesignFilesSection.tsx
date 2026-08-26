@@ -48,13 +48,15 @@ function FileBlock({ file, index }: { file: DesignFile; index: number }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 17L17 7m0 0H9m8 0v8" />
             </svg>
           </a>
-          <button
-            type="button"
-            onClick={() => setShowEmbed((v) => !v)}
-            className="px-5 py-2.5 rounded-full border border-gray-300 dark:border-white/15 text-gray-700 dark:text-white/70 font-mono text-xs uppercase tracking-widest hover:border-gray-500 dark:hover:border-white/40 hover:text-gray-900 dark:hover:text-white transition-all duration-300"
-          >
-            {showEmbed ? 'Hide live file' : 'Live file'}
-          </button>
+          {file.embeddable && (
+            <button
+              type="button"
+              onClick={() => setShowEmbed((v) => !v)}
+              className="px-5 py-2.5 rounded-full border border-gray-300 dark:border-white/15 text-gray-700 dark:text-white/70 font-mono text-xs uppercase tracking-widest hover:border-gray-500 dark:hover:border-white/40 hover:text-gray-900 dark:hover:text-white transition-all duration-300"
+            >
+              {showEmbed ? 'Hide live file' : 'Live file'}
+            </button>
+          )}
         </div>
       </div>
 
@@ -87,12 +89,8 @@ function FileBlock({ file, index }: { file: DesignFile; index: number }) {
         </dl>
       </div>
 
-      {showEmbed && (
+      {file.embeddable && showEmbed && (
         <div className="mb-9">
-          <p className="mb-3 text-xs text-gray-500 dark:text-white/35 font-light">
-            Figma renders this viewer only while the file is shared publicly. If the frame shows an
-            error, use <span className="font-mono">Open in Figma</span> above.
-          </p>
           <div className="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-lg overflow-hidden border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-black/40">
             <iframe
               title={`${file.name} — live Figma file`}
