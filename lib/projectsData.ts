@@ -230,7 +230,27 @@ export const projects: Project[] = [
     results:
       'Delivered a suite of enterprise tools that improved client satisfaction and reduced support requests through clearer, more intuitive interfaces.',
   },
-  // Row 6: KROL (1) + LuBlend (1) + Azul de Metileno (1) = 3 — VonoaWeb studio work
+  // Row 6: Kampo (2) + KROL (1) = 3 — VonoaWeb studio work
+  {
+    id: 18,
+    title: 'Kampo – WhatsApp-Native Ordering & Payments',
+    role: 'Product Designer & Full-stack Developer · VonoaWeb',
+    image: '/images/sites/kampo.webp',
+    images: [
+      '/images/sites/kampo-hero.webp',
+      '/images/sites/kampo-flujo.webp',
+      '/images/sites/kampo-cotizar.webp',
+    ],
+    link: 'https://verduleriapp.vercel.app/',
+    size: 'medium',
+    tags: ['Mobile', 'Conversational UI', 'Payments', 'Product Design'],
+    problem:
+      'A produce supplier delivering into gated communities in Guadalajara was running the whole business by hand in WhatsApp. Customers are phone-only and already live in that thread, so shipping an app they had to install was the fastest way to lose them — but the owner was rebuilding the same weekly delivery route out of scattered chats, could not tell which baskets were actually paid, and was preparing produce for orders that never got paid for. Producers had no way to change a price without going through him.',
+    solution:
+      'I designed the product so the customer interface is WhatsApp itself — no install, no account, no password. A conversational assistant takes the order in plain Spanish, and the native WhatsApp catalogue hands its cart into the same flow, so browsing and chatting are one path instead of two. Three decisions shaped it. First, the delivery date is computed by the system and never by the assistant — Thursday 9–13, cutoff Wednesday 7pm — because a hallucinated date reads to a customer as a broken promise. Second, nothing is prepared until it is paid: the owner is notified only on payment, and an unpaid basket gets exactly one checkout reminder, 45 minutes later, once. Third, producers change prices by writing a sentence — "cambia el precio de la piña a 18 pesos kilo" — and the system reads the change back for a yes/no confirmation before it touches the catalogue. The owner runs the operation from that same thread with pedidos, ruta and pagos, while the web panel groups orders by tower with stable colour chips, a next-delivery banner and a QR per order for the doorstep.',
+    results:
+      'Live across 17 towers in Puerta de Hierro / Andares on a single weekly route, with the paid-versus-unpaid state machine driving what gets prepared, what gets reminded and what counts as revenue — the PDF sales report counts only collected sales and keeps unpaid baskets in a separate section so income is never overstated. Stripe Checkout is wired end to end and runs in demo mode until the client completes its account. Because the assistant is a public endpoint, the order flow sanitises input, caps what a quote can contain and verifies the webhook signature.',
+  },
   {
     id: 15,
     title: 'KROL Edificación Estructural – Construction Firm Site',
@@ -292,7 +312,7 @@ export const projects: Project[] = [
     results:
       'Six product presentations selling nationwide with the credibility layer built straight into the navigation: purity certificate, dosing, clinical notes and references are all one click from the storefront.',
   },
-  // Row 7: Gusanito (1 col) + AmazonProject (2 cols from page.tsx) = 3
+  // Row 7: LuBlend (1) + Azul (1) + Gusanito (1) = 3, then AmazonProject (2 cols from page.tsx)
   {
     id: 4,
     title: 'Gusanito – Greeting Card Platform Redesign',
